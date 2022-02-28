@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary"
+    tools:context=".ClaimActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/LAY_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/TX_appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_1"
+            android:layout_marginTop="@dimen/margin_1"
+            android:text="@string/app_name"
+            android:textColor="@color/accent"
+            android:textSize="@dimen/app_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/LAY_pageContent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_1"
+            android:layout_marginLeft="@dimen/margin_1"
+            android:layout_marginTop="@dimen/margin_1"
+            android:layout_marginEnd="@dimen/margin_1"
+            android:layout_marginRight="@dimen/margin_1"
+            android:layout_marginBottom="@dimen/margin_1"
+            android:background="@color/secondary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TX_appTitle">
+
+            <TextView
+                android:id="@+id/TX_claimTopic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_1"
+                android:layout_marginLeft="@dimen/margin_1"
+                android:layout_marginTop="@dimen/margin_1"
+                android:layout_marginEnd="@dimen/margin_1"
+                android:layout_marginRight="@dimen/margin_1"
+                android:text="@string/new_claim"
+                android:textColor="@color/accent"
+                android:textSize="@dimen/page_title_text_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ScrollView
+                android:id="@+id/SCROLL_claimForm"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_1"
+                android:layout_marginLeft="@dimen/margin_1"
+                android:layout_marginTop="@dimen/margin_1"
+                android:layout_marginEnd="@dimen/margin_1"
+                android:layout_marginRight="@dimen/margin_1"
+                android:layout_marginBottom="@dimen/margin_1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TX_claimTopic">
+
+                <LinearLayout
+                    android:id="@+id/LINLAY_claimDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/TX_topicSection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/topic"
+                        android:textSize="@dimen/form_section_text_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/TX_topicExplain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_1_half"
+                        android:text="Explain" />
+
+                    <EditText
+                        android:id="@+id/ED_claimTopic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Required"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/danger" />
+
+                    <TextView
+                        android:id="@+id/TX_farmerDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_1_half"
+                        android:text="driver details"
+                        android:textSize="@dimen/form_section_text_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/TX_agriServiceCenter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_1_half"
+                        android:layout_marginEnd="181dp"
+                        android:layout_marginRight="181dp"
+                        android:text="branch"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/TX_farmerDetails" />
+
+                    <EditText
+                        android:id="@+id/ED_agriServiceCenter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="driver name"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/danger" />
+
+                    <TextView
+                        android:id="@+id/TX_gramaNiladhariDiv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Branch details" />
+
+                    <EditText
+                        android:id="@+id/ED_gramaNiladhariDiv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+
+                    <TextView
+                        android:id="@+id/TX_farmerRegNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="driver license" />
+
+                    <EditText
+                        android:id="@+id/ED_farmerRegNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="required"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/danger" />
+
+                    <TextView
+                        android:id="@+id/TX_farmerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="driver name" />
+
+                    <EditText
+                        android:id="@+id/ED_farmerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="required"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/danger" />
+
+                    <TextView
+                        android:id="@+id/TX_farmerAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="driver address" />
+
+                    <EditText
+                        android:id="@+id/ED_farmerAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPersonName" />
+
+                    <TextView
+                        android:id="@+id/TX_farmerPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="contact no" />
+
+                    <Button
+                        android:id="@+id/BTN_submitEvidence"
+                        android:onClick="getEvidence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_2"
+                        android:layout_marginEnd="0dp"
+                        android:layout_marginRight="0dp"
+                        android:layout_marginBottom="@dimen/margin_1"
+                        android:text="@string/submit_evidence"
+                        android:background="@color/primary"
+                        app:backgroundTint="@color/primary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/SPINNER_damageCause" />
+
+                </LinearLayout>
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
