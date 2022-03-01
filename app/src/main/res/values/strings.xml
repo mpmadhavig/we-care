@@ -18,4 +18,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="language">en</string>
     <string name="topic">Topic</string>
+    <string name="new_claim_button">New Claim</string>
+    <string name="settings">Settings</string>
 </resources>

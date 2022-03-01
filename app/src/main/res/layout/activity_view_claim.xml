@@ -5,20 +5,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     tools:context=".ClaimActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/LAY_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="10dp"
         app:layout_constraintVertical_bias="1.0">
 
+        <TextView
+            android:id="@+id/TX_appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_1"
+            android:layout_marginTop="@dimen/margin_1"
+            android:text="@string/app_name"
+            android:textColor="@color/accent"
+            android:textSize="@dimen/app_title_text_size"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/LAY_pageContent"
@@ -27,12 +40,13 @@
             android:layout_marginStart="@dimen/margin_1"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="@dimen/margin_1"
+            android:layout_marginBottom="@dimen/margin_1"
             android:background="@color/accent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TX_appTitle"
             app:layout_constraintVertical_bias="0.0">
 
 
@@ -90,11 +104,11 @@
                         android:layout_margin="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/drivingLicense"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Driving License No"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:id="@+id/drivingLicense"
+                            android:hint="Driving License No" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -103,11 +117,11 @@
                         android:layout_margin="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/expirationDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Expiration Date"
-                            android:inputType="date" />
+                            android:inputType="date"
+                            android:id="@+id/expirationDate"
+                            android:hint="Expiration Date" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -121,74 +135,58 @@
                             android:hint="Address" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/contactNo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Contact Number"
-                            android:inputType="number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <EditText
-                        android:id="@+id/damageDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Vehicle Damage Details"
-                        android:textSize="20dp" />
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_margin="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:textSize="15dp"
-                            android:text="Was your vehicle damaged?" />
+                            android:layout_margin="10dp"
+                            android:id="@+id/address"
+                            android:gravity="left"
+                            android:layout_gravity="left">
 
-                        <RadioGroup
-                            android:layout_width="match_parent"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="No, Lane"
+                                android:id="@+id/addressTxt"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="100dp"
                             android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:id="@+id/lane"
+                            android:gravity="right"
+                            android:layout_gravity="right"
                             >
 
-                            <RadioButton
-                                android:id="@+id/yes"
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/laneTxt"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_horizontal"
-                                android:checked="true"
-                                android:text="Yes"
-                                android:textColorHighlight="#7C7474"
-                                android:textColorLink="#6A5A5A" />
+                                android:layout_height="wrap_content"
+                                android:hint="City" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                            <RadioButton
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:id="@+id/postalCode"
+                            android:gravity="right"
+                            android:layout_gravity="right"
+                            >
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/postalCodeTxt"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="No"
-                                android:id="@+id/no"
-                                android:layout_gravity="center_horizontal"
-                                android:checked="false" />
-                        </RadioGroup>
-                    </LinearLayout>
+                                android:layout_height="wrap_content"
+                                android:hint="Postal code" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/repairerDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Repairer Details"
-                        android:textSize="20dp" />
+                    </LinearLayout >
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -197,44 +195,9 @@
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/companyName"
-                            android:hint="Company name" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/companyLocation"
-                            android:hint="Location" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/contactPerson"
-                            android:hint="Contact Person Name" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/companyContactNo"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:id="@+id/contactNo"
                             android:hint="Contact Number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -242,17 +205,15 @@
             </ScrollView>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/nextPage"
+                android:id="@+id/floatingActionButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/primary"
                 android:clickable="true"
-                android:onClick="accidentDetails"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/primary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.99"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@android:drawable/ic_menu_send" />
 
