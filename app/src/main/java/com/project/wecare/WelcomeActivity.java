@@ -48,7 +48,6 @@ public class WelcomeActivity extends AppCompatActivity {
         claims.add(new Claim("2021/2/9 Susuki Maruti", "maruti"));
         claims.add(new Claim("2021/2/9 Susuki Maruti", "maruti"));
 
-
         ClaimRecViewAdapter adapter = new ClaimRecViewAdapter();
         adapter.setClaims(claims);
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
-    tools:context=".ClaimActivity">
+    android:focusable="false"
+    tools:context=".RecordActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/LAY_main"
@@ -15,16 +15,15 @@
         android:background="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/TX_appTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_1"
+            android:layout_marginLeft="@dimen/margin_1"
             android:layout_marginTop="@dimen/margin_1"
             android:text="@string/app_name"
             android:textColor="@color/accent"
@@ -38,184 +37,156 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/margin_1"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="@dimen/margin_1"
+            android:layout_marginTop="@dimen/margin_1"
             android:layout_marginEnd="@dimen/margin_1"
+            android:layout_marginRight="@dimen/margin_1"
             android:layout_marginBottom="@dimen/margin_1"
             android:background="@color/accent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TX_appTitle"
-            app:layout_constraintVertical_bias="0.0">
-
-
-            <ScrollView
-                android:id="@+id/SCROLL_claimForm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
-
-                <LinearLayout
-                    android:id="@+id/LINLAY_claimDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <EditText
-                        android:id="@+id/editTextTextPersonName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Driver Details"
-                        android:textSize="20dp" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="Name of Insured" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="NIC" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:id="@+id/drivingLicense"
-                            android:hint="Driving License No" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="date"
-                            android:id="@+id/expirationDate"
-                            android:hint="Expiration Date" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Address" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="100dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:id="@+id/address"
-                            android:gravity="left"
-                            android:layout_gravity="left">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:hint="No, Lane"
-                                android:id="@+id/addressTxt"/>
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="100dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:id="@+id/lane"
-                            android:gravity="right"
-                            android:layout_gravity="right"
-                            >
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/laneTxt"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="City" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="120dp"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:id="@+id/postalCode"
-                            android:gravity="right"
-                            android:layout_gravity="right"
-                            >
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/postalCodeTxt"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Postal code" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </LinearLayout >
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:id="@+id/contactNo"
-                            android:hint="Contact Number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-            </ScrollView>
+            app:layout_constraintTop_toBottomOf="@+id/TX_appTitle">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton2"
+                android:id="@+id/BT_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_1"
+                android:layout_marginEnd="@dimen/margin_1"
+                android:layout_marginRight="@dimen/margin_1"
                 android:clickable="true"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/primary"
+                android:contentDescription="click on camera"
+                android:focusable="true"
+                app:backgroundTint="@color/primary"
+                app:fabSize="auto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
+
+            <TextView
+                android:id="@+id/TX_maxAllowed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_1"
+                android:layout_marginTop="@dimen/margin_1_half"
+                android:layout_marginEnd="@dimen/margin_1"
+                android:text="Click on the camera icon to take photos"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/BT_camera" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/LAY_evidence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TX_maxAllowed">
+
+                <ImageView
+                    android:id="@+id/IMG_evidence"
+                    android:layout_width="@dimen/image_thumb_width"
+                    android:layout_height="@dimen/image_thumb_height"
+                    android:contentDescription="taken image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/CARD_evidence_desc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_1"
+                    android:layout_marginLeft="@dimen/margin_1"
+                    android:layout_marginTop="@dimen/margin_1_half"
+                    android:layout_marginEnd="@dimen/margin_1"
+                    android:layout_marginRight="@dimen/margin_1"
+                    android:visibility="invisible"
+                    app:cardBackgroundColor="@color/primary"
+                    app:cardCornerRadius="@dimen/card_1_corner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/IMG_evidence">
+
+                    <EditText
+                        android:id="@+id/ED_evidence_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_1_half"
+                        android:layout_marginLeft="@dimen/margin_1_half"
+                        android:layout_marginEnd="@dimen/margin_1_half"
+                        android:layout_marginRight="@dimen/margin_1_half"
+                        android:autofillHints=""
+                        android:ems="10"
+                        android:hint="evidence"
+                        android:inputType="textPersonName" />
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/BT_prevEvidence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_1"
+                android:layout_marginLeft="@dimen/margin_1"
+                android:layout_marginTop="@dimen/margin_1"
+                android:clickable="true"
+                android:contentDescription="prev button"
+                android:focusable="true"
+                android:visibility="invisible"
+                app:backgroundTint="@color/primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LAY_evidence"
+                app:srcCompat="@android:drawable/ic_media_rew" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/BT_nextEvidence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_1"
+                android:layout_marginEnd="@dimen/margin_1"
+                android:layout_marginRight="@dimen/margin_1"
+                android:clickable="true"
+                android:contentDescription="next button"
+                android:focusable="true"
+                android:visibility="invisible"
+                app:backgroundTint="@color/primary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/LAY_evidence"
+                app:srcCompat="@android:drawable/ic_media_ff" />
+
+            <Button
+                android:id="@+id/BT_remove_evidence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_1"
+                android:text="remove evidence"
+                android:visibility="invisible"
+                app:backgroundTint="@color/danger"
+                app:icon="@android:drawable/ic_menu_delete"
+                app:layout_constraintEnd_toStartOf="@+id/BT_nextEvidence"
+                app:layout_constraintStart_toEndOf="@+id/BT_prevEvidence"
+                app:layout_constraintTop_toBottomOf="@+id/LAY_evidence" />
+
+            <Button
+                android:id="@+id/BTN_finalize"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_1"
+                android:layout_marginLeft="@dimen/margin_1"
+                android:layout_marginEnd="@dimen/margin_1"
+                android:layout_marginRight="@dimen/margin_1"
+                android:layout_marginBottom="@dimen/margin_2"
+                android:text="finalize"
+                android:visibility="invisible"
+                app:backgroundTint="@color/secondary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.99"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@android:drawable/ic_menu_send" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

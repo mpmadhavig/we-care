@@ -36,7 +36,7 @@ public class ClaimActivity extends AppCompatActivity {
     }
 
     public void accidentDetails(View view){
-        Intent intent = new Intent(this, AccidentDetailsActivity.class);
+        Intent intent = new Intent(this, RecordActivity.class);
         startActivity(intent);
     }
 }

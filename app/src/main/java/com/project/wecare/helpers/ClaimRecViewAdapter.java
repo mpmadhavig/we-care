@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,19 +17,17 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
 
     private ArrayList<Claim> claims = new ArrayList<>();
 
-    public ClaimRecViewAdapter() {
-    }
+    public ClaimRecViewAdapter() {}
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.claim_list_item, parent, false);
-        return new ViewHolder((view));
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView.setText(claims.get(position).getName());
         holder.imageView.setImageResource(R.drawable.icon);
     }
 
@@ -45,14 +42,11 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView textView;
         private ImageView imageView;
 
         public ViewHolder(@NonNull View view){
             super(view);
-            textView = view.findViewById(R.id.claimName);
-            imageView = view.findViewById(R.id.claimSampleImage);
-
+            imageView = view.findViewById(R.id.imageId);
         }
     }
 }
