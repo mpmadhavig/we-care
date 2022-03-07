@@ -5,7 +5,7 @@
     android:padding="1dp"
     android:layout_height="match_parent">
     <ImageView
-        android:id="@+id/imageId"
+        android:id="@+id/image_id"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:scaleType="fitXY"

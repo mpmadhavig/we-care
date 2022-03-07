@@ -2,9 +2,9 @@ package com.project.wecare.models;
 
 public class Claim {
     private String name;
-    private String src;
+    private Integer src;
 
-    public Claim(String name, String src) {
+    public Claim(String name, Integer src) {
         this.name = name;
         this.src = src;
     }
@@ -17,11 +17,11 @@ public class Claim {
         this.name = name;
     }
 
-    public String getSrc() {
+    public Integer getSrc() {
         return src;
     }
 
-    public void setSrc(String src) {
+    public void setSrc(Integer src) {
         this.src = src;
     }
 }

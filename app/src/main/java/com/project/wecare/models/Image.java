@@ -1,17 +1,26 @@
 package com.project.wecare.models;
 
 public class Image {
-    private Integer src;
+    private Integer defaultImage;
+    private String imagePath;
 
-    public Integer getSrc() {
-        return src;
+    public Image(Integer defaultImage) {
+        this.defaultImage = defaultImage;
     }
 
-    public void setSrc(Integer src) {
-        this.src = src;
+    public Integer getDefaultImage() {
+        return defaultImage;
     }
 
-    public Image(Integer src) {
-        this.src = src;
+    public void setDefaultImage(Integer defaultImage) {
+        this.defaultImage = defaultImage;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

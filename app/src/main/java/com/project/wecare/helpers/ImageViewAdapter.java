@@ -2,6 +2,7 @@ package com.project.wecare.helpers;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.project.wecare.R;
-import com.project.wecare.models.Claim;
 import com.project.wecare.models.Image;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class ImageViewAdapter extends ArrayAdapter {
-    private ArrayList<Image> images = new ArrayList();
+    private ArrayList<Image> images;
 
     public ImageViewAdapter(Context context, int resource, ArrayList<Image> objects) {
         super(context, resource, objects);
@@ -33,8 +34,20 @@ public class ImageViewAdapter extends ArrayAdapter {
         View view = convertView;
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view = inflater.inflate(R.layout.image_grid_item, null);
-        ImageView imageView = view.findViewById(R.id.imageId);
-        imageView.setImageResource(images.get(position).getSrc());
+        ImageView imageView = view.findViewById(R.id.image_id);
+
+        /**
+         * default image => drawable camera icon
+         * captured image => resource path
+         **/
+        if (images.get(position).getImagePath() == null)
+            imageView.setImageResource(images.get(position).getDefaultImage());
+        else{
+            File imgFile = new  File(images.get(position).getImagePath());
+            imageView.setImageURI(Uri.fromFile(imgFile));
+        }
+
+
         return view;
     }
 }

@@ -12,9 +12,20 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeCare">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.project.wecare"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
+
         <activity
             android:name=".AccidentDetailsActivity"
             android:exported="false" />
@@ -34,16 +45,6 @@
         <activity
             android:name=".RecordActivity"
             android:exported="false" />
-            <provider
-                android:name="androidx.core.content.FileProvider"
-                android:authorities="com.project.wecare.fileprovider"
-                android:exported="false"
-                android:grantUriPermissions="true">
-                <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths" />
-        </provider>
-
         <activity
             android:name=".ClaimActivity"
             android:exported="false" />

@@ -1,9 +1,11 @@
 package com.project.wecare.helpers;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +30,8 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageResource(R.drawable.icon);
+        holder.imageView.setImageResource(claims.get(position).getSrc());
+        holder.textView.setText(claims.get(position).getName());
     }
 
     @Override
@@ -36,17 +39,20 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
         return claims.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setClaims(ArrayList<Claim> claims){
         this.claims = claims;
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView imageView;
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        private final ImageView imageView;
+        private final TextView textView;
 
         public ViewHolder(@NonNull View view){
             super(view);
-            imageView = view.findViewById(R.id.imageId);
+            imageView = view.findViewById(R.id.claimSampleImage);
+            textView = view.findViewById(R.id.claimName);
         }
     }
 }
