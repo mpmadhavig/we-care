@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_change_language"
+        android:id="@+id/action_new_claim2"
+        android:icon="@drawable/new_claim"
+        android:title="@string/new_claim_button"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_change_language_2"
         android:icon="@drawable/language"
         android:title="Language"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_settings_2"
         android:icon="@drawable/settings"
         android:title="@string/settings"
         app:showAsAction="ifRoom"/>

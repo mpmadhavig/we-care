@@ -19,15 +19,23 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <EditText
+<!--        <EditText-->
+<!--            android:id="@+id/repairerDetails"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:ems="10"-->
+<!--            android:inputType="textPersonName"-->
+<!--            android:text="Claims"-->
+<!--            android:textSize="20dp" />-->
+        <TextView
             android:id="@+id/repairerDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Claims"
-            android:textSize="20dp" />
-
+            android:gravity="center"
+            android:text="Vehicles"
+            android:textAllCaps="false"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
 
         <ScrollView
@@ -36,9 +44,9 @@
             android:layout_margin="5dp">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/claimRecView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/claimRecView"/>
+                android:layout_height="match_parent" />
 
         </ScrollView>
 
