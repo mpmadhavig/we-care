@@ -67,6 +67,11 @@ public class RecordActivity extends AppCompatActivity {
         });
     }
 
+    public void goToNextActivity(View view){
+        Intent intent = new Intent(this, ClaimActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         startActivity(new Intent(this,ClaimActivity.class));

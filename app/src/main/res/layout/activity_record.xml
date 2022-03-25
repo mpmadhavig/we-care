@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <GridView
-        android:id="@+id/image_capture_grid_view"
-        android:layout_width="fill_parent"
+    tools:context=".ClaimActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <GridView
+            android:id="@+id/image_capture_grid_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="2"
+            android:verticalSpacing="20dp"/>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/goToViewClaim1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numColumns="2"
-        android:verticalSpacing="20dp">
-    </GridView>
-</LinearLayout>
+        android:layout_margin="5dp"
+        android:backgroundTint="@color/primary"
+        android:clickable="true"
+        android:contentDescription="@string/nextButton"
+        android:focusable="true"
+        android:onClick="goToNextActivity"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.99"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:srcCompat="@android:drawable/ic_menu_send"
+        tools:ignore="OnClick,UsingOnClickInXml" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

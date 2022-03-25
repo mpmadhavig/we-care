@@ -20,4 +20,5 @@
     <string name="topic">Topic</string>
     <string name="new_claim_button">New Claim</string>
     <string name="settings">Settings</string>
+    <string name="nextButton">next</string>
 </resources>

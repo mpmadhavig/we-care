@@ -36,7 +36,8 @@ public class ClaimActivity extends AppCompatActivity {
     }
 
     public void accidentDetails(View view){
-        Intent intent = new Intent(this, RecordActivity.class);
+        // Todo: next activity
+        Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
     }
 }
