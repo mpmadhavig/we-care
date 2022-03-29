@@ -28,11 +28,11 @@
 <!--            android:text="Claims"-->
 <!--            android:textSize="20dp" />-->
         <TextView
-            android:id="@+id/repairerDetails"
+            android:id="@+id/titleReprerDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Vehicles"
+            android:text="@string/txt_vehicles"
             android:textAllCaps="false"
             android:textSize="24sp"
             android:textStyle="bold" />

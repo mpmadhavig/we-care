@@ -54,13 +54,13 @@
 
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName"
+                        android:id="@+id/titleDriverDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="textPersonName"
-                        android:text="Driver Details"
-                        android:textSize="20dp" />
+                        android:text="@string/txt_driverDetails"
+                        android:textSize="20sp" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -68,9 +68,11 @@
                         android:layout_margin="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtDriverName"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="Name of Insured" />
+                            android:hint="@string/txt_name"
+                            tools:ignore="TextContrastCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -79,9 +81,11 @@
                         android:layout_margin="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtDriverNIC"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="NIC" />
+                            android:hint="@string/txt_NIC"
+                            tools:ignore="TextContrastCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -90,11 +94,12 @@
                         android:layout_margin="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/drivingLicense"
+                            android:id="@+id/txtDriverLicense"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Driving License No"
-                            android:inputType="number" />
+                            android:hint="@string/txt_drivingLicenseNo"
+                            android:inputType="number"
+                            tools:ignore="TextContrastCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -103,11 +108,12 @@
                         android:layout_margin="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/expirationDate"
+                            android:id="@+id/txtDriverLicenseExpiration"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Expiration Date"
-                            android:inputType="date" />
+                            android:hint="@string/txt_expirationDate"
+                            android:inputType="date"
+                            tools:ignore="TextContrastCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -116,9 +122,11 @@
                         android:layout_margin="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txtDriverAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Address" />
+                            android:hint="@string/txt_address"
+                            tools:ignore="TextContrastCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -128,11 +136,12 @@
                         android:layout_margin="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/contactNo"
+                            android:id="@+id/txtDriverContactNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Contact Number"
-                            android:inputType="number" />
+                            android:hint="@string/txt_contactNo"
+                            android:inputType="number"
+                            tools:ignore="TextContrastCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <EditText
@@ -141,8 +150,8 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="textPersonName"
-                        android:text="Vehicle Damage Details"
-                        android:textSize="20dp" />
+                        android:text="@string/txt_accidentDetails"
+                        android:textSize="20sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -150,93 +159,212 @@
                         android:orientation="vertical"
                         android:layout_margin="10dp">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textSize="15dp"
-                            android:text="Was your vehicle damaged?" />
+                            android:orientation="vertical"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp">
 
-                        <RadioGroup
+                            <TextView
+                                android:id="@+id/txtDamagedArea"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/txt_damagedArea" />
+
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:srcCompat="@drawable/sketch" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="170dp"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <RadioButton
+                                        android:id="@+id/radioBtnDamage1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="1"
+                                        tools:ignore="TextContrastCheck" />
+
+                                    <RadioButton
+                                        android:id="@+id/radioBtnDamage2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="2"
+                                        tools:ignore="TextContrastCheck" />
+
+                                    <RadioButton
+                                        android:id="@+id/radioBtnDamage3"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="3" />
+
+                                    <RadioButton
+                                        android:id="@+id/radioBtnDamage4"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="4" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <RadioButton
+                                        android:id="@+id/radioBtnDamage5"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="5"
+                                        tools:ignore="TextContrastCheck" />
+
+                                    <RadioButton
+                                        android:id="@+id/radioBtnDamage6"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="6"
+                                        tools:ignore="TextContrastCheck" />
+
+                                    <RadioButton
+                                        android:id="@+id/radioBtnDamage7"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="7"
+                                        tools:ignore="TextContrastCheck" />
+
+                                    <RadioButton
+                                        android:id="@+id/radioBtnDamage8"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="8" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            >
+                            android:orientation="vertical"
+                            android:paddingTop="10dp">
 
-                            <RadioButton
-                                android:id="@+id/yes"
+                            <TextView
+                                android:id="@+id/txtQRoadStatus"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_gravity="center_horizontal"
-                                android:checked="true"
-                                android:text="Yes"
-                                android:textColorHighlight="#7C7474"
-                                android:textColorLink="#6A5A5A" />
+                                android:text="@string/txt_roadStatusQuestion"
+                                android:textSize="15sp" />
 
-                            <RadioButton
+                            <RadioGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnDry"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txt_dry" />
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnWet"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txt_wet" />
+                            </RadioGroup>
+
+                            <RadioGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnUphill"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txt_uphill" />
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnDownhill"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txt_downhill" />
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnFlat"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txt_flat" />
+                            </RadioGroup>
+
+                            <RadioGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnSmooth"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center_horizontal"
+                                    android:checked="true"
+                                    android:text="@string/txt_smooth"
+                                    android:textColorHighlight="#7C7474"
+                                    android:textColorLink="#6A5A5A" />
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnRough"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="48dp"
+                                    android:text="@string/txt_rough" />
+
+                            </RadioGroup>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingTop="10dp">
+
+                            <TextView
+                                android:id="@+id/txtQVisibility"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="No"
-                                android:id="@+id/no"
-                                android:layout_gravity="center_horizontal"
-                                android:checked="false" />
-                        </RadioGroup>
+                                android:text="@string/txt_visibilityQuestion"
+                                android:textSize="15sp" />
+
+                            <RadioGroup
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnGood"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txt_good" />
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnModerate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txt_moderate" />
+
+                                <RadioButton
+                                    android:id="@+id/radioBtnPoor"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/txt_poor" />
+                            </RadioGroup>
+                        </LinearLayout>
+
                     </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/repairerDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Repairer Details"
-                        android:textSize="20dp" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/companyName"
-                            android:hint="Company name" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/companyLocation"
-                            android:hint="Location" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/contactPerson"
-                            android:hint="Contact Person Name" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/companyContactNo"
-                            android:hint="Contact Number" />
-                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
             </ScrollView>
@@ -254,15 +382,14 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/primary"
         android:clickable="true"
+        android:contentDescription="@string/nextButton"
+        android:focusable="true"
         android:onClick="accidentDetails"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.99"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/ic_menu_send"
-        android:contentDescription="@string/nextButton"
-        android:focusable="true"
-        tools:ignore="UsingOnClickInXml" />
+        tools:ignore="UsingOnClickInXml,ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
