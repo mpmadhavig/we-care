@@ -69,7 +69,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_new_claim:
-                Intent intent = new Intent(this, RecordActivity.class);
+                Intent intent = new Intent(this, ClaimActivity.class);
                 startActivity(intent);
                 return true;
 

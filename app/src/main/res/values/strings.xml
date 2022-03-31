@@ -21,4 +21,21 @@
     <string name="new_claim_button">New Claim</string>
     <string name="settings">Settings</string>
     <string name="nextButton">next</string>
+    <string name="driver_details_hint">Driver Details</string>
+    <string name="driver_name_hint">Name of Insured</string>
+    <string name="nic_hint">NIC</string>
+    <string name="driving_license_no_hint">Driving License No</string>
+    <string name="license_expiration_date_hint">Expiration Date</string>
+    <string name="address_hint">Address</string>
+    <string name="contact_no_hint">Contact Number</string>
+    <string name="vehicle_damage_details_details">Vehicle Damage Details</string>
+    <string name="vehicle_damaged_hint">Was your vehicle damaged?</string>
+    <string name="vehicle_damage_yes">Yes</string>
+    <string name="vehicle_damage_no_hint">No</string>
+    <string name="repairer_details_hint">Repairer Details</string>
+    <string name="company_name_hint">Company name</string>
+    <string name="company_location_hint">Location</string>
+    <string name="contact_person_name_hint">Contact Person Name</string>
+    <string name="company_contact_no_hint">Contact Number</string>
+    <string name="claims_title">Claims</string>
 </resources>

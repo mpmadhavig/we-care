@@ -25,10 +25,10 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Claims"
-            android:textSize="20dp" />
-
-
+            android:text="@string/claims_title"
+            android:textSize="20sp"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/claimRecView"/>
 
         </ScrollView>

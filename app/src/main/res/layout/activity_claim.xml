@@ -8,242 +8,236 @@
     tools:context=".ClaimActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/LAY_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/LAY_pageContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/margin_1"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/margin_1"
+        android:background="@color/accent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="10dp"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/LAY_pageContent"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/margin_1"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="@dimen/margin_1"
-            android:background="@color/accent"
+        <ScrollView
+            android:id="@+id/scroll_claim_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">
 
-
-            <ScrollView
-                android:id="@+id/SCROLL_claimForm"
+            <LinearLayout
+                android:id="@+id/linear_layout_claim_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
+                android:orientation="vertical">
 
-                <LinearLayout
-                    android:id="@+id/LINLAY_claimDetails"
+                <EditText
+                    android:id="@+id/driver_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="@string/driver_details_hint"
+                    android:textSize="20sp"
+                    android:autofillHints="name"
+                    tools:ignore="LabelFor" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
 
-                    <EditText
-                        android:id="@+id/editTextTextPersonName"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:saveEnabled = "true"
+                        android:hint="@string/driver_name_hint"
+                        android:id="@+id/driver_name"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/driver_nic"
+                        android:hint="@string/nic_hint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Driver Details"
-                        android:textSize="20dp" />
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="Name of Insured" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="NIC" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/drivingLicense"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Driving License No"
-                            android:inputType="number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/expirationDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Expiration Date"
-                            android:inputType="date" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Address" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/contactNo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Contact Number"
-                            android:inputType="number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <EditText
-                        android:id="@+id/damageDetails"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/driver_driving_license_no"
+                        android:hint="@string/driving_license_no_hint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Vehicle Damage Details"
-                        android:textSize="20dp" />
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_margin="10dp">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:textSize="15dp"
-                            android:text="Was your vehicle damaged?" />
-
-                        <RadioGroup
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            >
-
-                            <RadioButton
-                                android:id="@+id/yes"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center_horizontal"
-                                android:checked="true"
-                                android:text="Yes"
-                                android:textColorHighlight="#7C7474"
-                                android:textColorLink="#6A5A5A" />
-
-                            <RadioButton
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="No"
-                                android:id="@+id/no"
-                                android:layout_gravity="center_horizontal"
-                                android:checked="false" />
-                        </RadioGroup>
-                    </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/repairerDetails"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/driver_license_expiration_date"
+                        android:hint="@string/license_expiration_date_hint"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Repairer Details"
-                        android:textSize="20dp" />
+                        android:inputType="date" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/driver_address"
+                        android:hint="@string/address_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/driver_contact_no"
+                        android:hint="@string/contact_no_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <EditText
+                    android:id="@+id/_vehicle_damage_details"
+                    android:text="@string/vehicle_damage_details_details"
+                    android:inputType="textPersonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:textSize="20sp"
+                    android:autofillHints="text"
+                    tools:ignore="LabelFor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:id="@+id/vehicle_damaged_or_not"
+                        android:text="@string/vehicle_damaged_hint"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp">
+                        android:textSize="15sp" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/companyName"
-                            android:hint="Company name" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
+                    <RadioGroup
+                        android:id="@+id/vehicle_damaged_answer"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp">
+                        >
 
-                        <com.google.android.material.textfield.TextInputEditText
+                        <RadioButton
+                            android:id="@+id/vehicle_damage_yes"
+                            android:text="@string/vehicle_damage_yes"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/companyLocation"
-                            android:hint="Location" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_gravity="center_horizontal"
+                            android:checked="true"
+                            android:textColorHighlight="#7C7474"
+                            android:textColorLink="#6A5A5A" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
+                        <RadioButton
+                            android:id="@+id/vehicle_damage_no"
+                            android:text="@string/vehicle_damage_no_hint"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/contactPerson"
-                            android:hint="Contact Person Name" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/companyContactNo"
-                            android:hint="Contact Number" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
+                            android:layout_gravity="center_horizontal"
+                            android:checked="false" />
+                    </RadioGroup>
                 </LinearLayout>
-            </ScrollView>
 
+                <EditText
+                    android:id="@+id/repairer_details"
+                    android:text="@string/repairer_details_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textSize="20sp"
+                    android:autofillHints="text"
+                    tools:ignore="LabelFor" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/company_name"
+                        android:hint="@string/company_name_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/company_location"
+                        android:hint="@string/company_location_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/contact_person_name"
+                        android:hint="@string/contact_person_name_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/company_contact_no"
+                        android:hint="@string/company_contact_no_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
