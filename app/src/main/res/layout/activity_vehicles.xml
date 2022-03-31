@@ -1,34 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".WelcomeActivity"
-    >
-
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_margin="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="19dp">
 
-
-<!--        <EditText-->
-<!--            android:id="@+id/repairerDetails"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:ems="10"-->
-<!--            android:inputType="textPersonName"-->
-<!--            android:text="Claims"-->
-<!--            android:textSize="20dp" />-->
         <TextView
-            android:id="@+id/repairerDetails"
+            android:id="@+id/vehiclesTxtView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -37,19 +22,16 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:background="#D0D3CF">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/claimRecView"
+                android:id="@+id/vehicleRecView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                android:layout_height="wrap_content" />
         </ScrollView>
-
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

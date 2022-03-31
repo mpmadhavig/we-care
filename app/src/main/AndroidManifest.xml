@@ -27,6 +27,9 @@
         </provider>
 
         <activity
+            android:name=".VehiclesActivity"
+            android:exported="false" />
+        <activity
             android:name=".AccidentDetailsActivity"
             android:exported="false" />
         <activity

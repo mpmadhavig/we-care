@@ -68,10 +68,10 @@ public class WelcomeActivity extends AppCompatActivity {
                 Toast.makeText(this, "action_settings", Toast.LENGTH_SHORT).show();
                 return true;
 
-            case R.id.action_new_claim:
-                Intent intent = new Intent(this, ClaimActivity.class);
-                startActivity(intent);
-                return true;
+//            case R.id.action_new_claim:
+//                Intent intent = new Intent(this, RecordActivity.class);
+//                startActivity(intent);
+//                return true;
 
             default:
                 // If we got here, the user's action was not recognized.
