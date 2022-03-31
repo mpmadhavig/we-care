@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, VehiclesActivity.class);
+        Intent intent = new Intent(this, ClaimActivity.class);
         startActivity(intent);
         finish();
     }

@@ -113,6 +113,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/txt_expirationDate"
                             android:inputType="date"
+                            android:focusable="false"
                             tools:ignore="TextContrastCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -140,7 +141,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/txt_contactNo"
-                            android:inputType="number"
+                            android:inputType="phone"
                             tools:ignore="TextContrastCheck" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,30 +189,32 @@
                                     android:layout_height="match_parent"
                                     android:orientation="vertical">
 
-                                    <RadioButton
-                                        android:id="@+id/radioBtnDamage1"
-                                        android:layout_width="match_parent"
+                                    <CheckBox
+                                        android:id="@+id/checkBox1"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="1"
-                                        tools:ignore="TextContrastCheck" />
+                                        android:layout_weight="1"
+                                        android:text="1" />
 
-                                    <RadioButton
-                                        android:id="@+id/radioBtnDamage2"
+                                    <CheckBox
+                                        android:id="@+id/checkBox2"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="2"
-                                        tools:ignore="TextContrastCheck" />
+                                        android:layout_weight="1"
+                                        android:text="2" />
 
-                                    <RadioButton
-                                        android:id="@+id/radioBtnDamage3"
+                                    <CheckBox
+                                        android:id="@+id/checkBox3"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_weight="1"
                                         android:text="3" />
 
-                                    <RadioButton
-                                        android:id="@+id/radioBtnDamage4"
+                                    <CheckBox
+                                        android:id="@+id/checkBox4"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:layout_weight="1"
                                         android:text="4" />
                                 </LinearLayout>
 
@@ -220,29 +223,26 @@
                                     android:layout_height="match_parent"
                                     android:orientation="vertical">
 
-                                    <RadioButton
-                                        android:id="@+id/radioBtnDamage5"
+                                    <CheckBox
+                                        android:id="@+id/checkBox5"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="5"
-                                        tools:ignore="TextContrastCheck" />
+                                        android:text="5" />
 
-                                    <RadioButton
-                                        android:id="@+id/radioBtnDamage6"
+                                    <CheckBox
+                                        android:id="@+id/checkBox6"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="6"
-                                        tools:ignore="TextContrastCheck" />
+                                        android:text="6" />
 
-                                    <RadioButton
-                                        android:id="@+id/radioBtnDamage7"
+                                    <CheckBox
+                                        android:id="@+id/checkBox7"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="7"
-                                        tools:ignore="TextContrastCheck" />
+                                        android:text="7" />
 
-                                    <RadioButton
-                                        android:id="@+id/radioBtnDamage8"
+                                    <CheckBox
+                                        android:id="@+id/checkBox8"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:text="8" />
@@ -265,6 +265,7 @@
                                 android:textSize="15sp" />
 
                             <RadioGroup
+                                android:id="@+id/radioGroupWetness"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
@@ -282,6 +283,7 @@
                             </RadioGroup>
 
                             <RadioGroup
+                                android:id="@+id/radioGroupSlant"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
@@ -305,6 +307,7 @@
                             </RadioGroup>
 
                             <RadioGroup
+                                android:id="@+id/radioGroupTexture"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
 
@@ -313,7 +316,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center_horizontal"
-                                    android:checked="true"
+                                    android:checked="false"
                                     android:text="@string/txt_smooth"
                                     android:textColorHighlight="#7C7474"
                                     android:textColorLink="#6A5A5A" />
@@ -375,7 +378,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/nextPage"
+        android:id="@+id/nextPage_claimForm1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

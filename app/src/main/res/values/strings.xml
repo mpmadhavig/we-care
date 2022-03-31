@@ -45,6 +45,5 @@
     <string name="txt_repairerDetails">Repairer Details</string>
     <string name="txt_companyName">Company Name</string>
     <string name="txt_location">Location</string>
-    <string name="txt_accidentDetails">Accident Details</string>
     <string name="txt_vehicles">Vehicles</string>
 </resources>
