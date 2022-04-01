@@ -24,11 +24,14 @@ import com.project.wecare.models.Claim;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class ClaimActivity extends AppCompatActivity {
+
+    private Claim claim;
 
     private EditText et_driverName, et_driverNIC, et_driverLicense, et_driverLicenseExp,
             et_driverAddress, et_driverContactNo ;
@@ -38,11 +41,12 @@ public class ClaimActivity extends AppCompatActivity {
         rb_roadSmooth, rb_roadRough, rb_visGood, rb_visModerate, rb_visPoor;
     private FloatingActionButton btn_next;
 
-    private String name,nic, licencesNo, licenseExp, address, contactNo;
+    private String name,nic, licencesNo, address, contactNo, roadVisibility;
+    private Date licenseExp;
     private ArrayList<String> damagedRegions;
     private ArrayList<String> roadStatus;
 
-    private final Calendar myCalendar= Calendar.getInstance();
+    private final Calendar LicenseExpCalendar= Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +72,7 @@ public class ClaimActivity extends AppCompatActivity {
         cb_damage7 = (CheckBox) findViewById(R.id.checkBox7);
         cb_damage8 = (CheckBox) findViewById(R.id.checkBox8);
         rb_roadDry = (RadioButton) findViewById(R.id.radioBtnDry);
+        rb_roadWet = (RadioButton) findViewById(R.id.radioBtnWet);
         rb_roadSmooth = (RadioButton) findViewById(R.id.radioBtnSmooth);
         rb_roadUphill = (RadioButton) findViewById(R.id.radioBtnUphill);
         rb_roadDownhill = (RadioButton) findViewById(R.id.radioBtnDownhill);
@@ -89,18 +94,29 @@ public class ClaimActivity extends AppCompatActivity {
         DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
+                LicenseExpCalendar.set(Calendar.YEAR, year);
+                LicenseExpCalendar.set(Calendar.MONTH,month);
+                LicenseExpCalendar.set(Calendar.DAY_OF_MONTH,day);
                 updateLabel();
             }
         };
         et_driverLicenseExp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(ClaimActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(ClaimActivity.this,date,LicenseExpCalendar.get(Calendar.YEAR),LicenseExpCalendar.get(Calendar.MONTH),LicenseExpCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        // Check whether to create a new claim or to view the previous
+//        Intent intent = getIntent();
+//        String possibleID = intent.getStringExtra(VIEW_CLAIM_ID);
+//        if (possibleID.length() > 0) {
+//            claim = AuthController.getInstance().getCurrentUser().getClaim(possibleID);
+//            adjustForViewingClaim();
+//        } else {
+            claim = ClaimManager.getInstance().createNewClaim();
+            adjustForNewClaim();
+//        }
 
     }
 
@@ -108,20 +124,23 @@ public class ClaimActivity extends AppCompatActivity {
     private void updateLabel(){
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
-        et_driverLicenseExp.setText(dateFormat.format(myCalendar.getTime()));
+        et_driverLicenseExp.setText(dateFormat.format(LicenseExpCalendar.getTime()));
         et_driverLicenseExp.setError(null);
     }
 
     public void next(){
+
         initialize();
+
         if (!validate()) {
             Toast.makeText(this, "Invalid information provided", Toast.LENGTH_SHORT).show();
         }else{
             Intent intent = new Intent(ClaimActivity.this, Claim2Activity.class);
+            extractFirstFormData();
+            ClaimManager.getInstance().setCurrentClaim(claim);
             startActivity(intent);
         }
     }
-
 
 
     public boolean validate(){
@@ -142,7 +161,7 @@ public class ClaimActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (licenseExp.isEmpty()){
+        if (et_driverLicenseExp.getText().toString().isEmpty()){
             et_driverLicenseExp.setError("Please enter license expiry date");
             valid = false;
         }
@@ -159,7 +178,7 @@ public class ClaimActivity extends AppCompatActivity {
         name = et_driverName.getText().toString().trim();
         nic = et_driverNIC.getText().toString().trim();
         licencesNo = et_driverLicense.getText().toString().trim();
-        licenseExp = et_driverLicenseExp.getText().toString().trim();
+        licenseExp = LicenseExpCalendar.getTime();
         address = et_driverAddress.getText().toString().trim();
         contactNo = et_driverContactNo.getText().toString().trim();
 
@@ -182,8 +201,30 @@ public class ClaimActivity extends AppCompatActivity {
         if(rb_roadSmooth.isChecked()){ roadStatus.add("Smooth");}
         if(rb_roadRough.isChecked()){ roadStatus.add("Rough");}
 
+        if(rb_visGood.isChecked()){ roadVisibility = "Good";}
+        if(rb_visModerate.isChecked()){ roadVisibility = "Moderate";}
+        if(rb_visPoor.isChecked()){ roadVisibility = "Poor";}
+
     }
 
+    //set the details of the claim in claim object
+    public void extractFirstFormData(){
+        claim.setDriverName(name);
+        claim.setDriverNic(nic);
+        claim.setDriverLicencesNo(licencesNo);
+        claim.setDriverLicenseExp(licenseExp); // Todo : Should pass in the date format
+        claim.setDriverAddress(address);
+        claim.setDriverContactNo(contactNo);
+
+        claim.setOwnVehicleDamagedRegions(damagedRegions);
+        claim.setRoadStatus(roadStatus);
+        claim.setRoadVisibility(roadVisibility);
+
+    }
+
+    public void adjustForNewClaim(){
+        // Todo : auto fill the form data for driver details
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -201,69 +242,6 @@ public class ClaimActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //    @Override
-//    public void onSaveInstanceState(Bundle savedInstanceState) {
-//        super.onSaveInstanceState(savedInstanceState);
-//        // Save UI state changes to the savedInstanceState.
-//        // This bundle will be passed to onCreate if the process is
-//        // killed and restarted.
-//        savedInstanceState.putString("name", name);
-//        savedInstanceState.putString("nic", nic);
-//        savedInstanceState.putString("licencesNo", licencesNo);
-//        savedInstanceState.putString("licenseExp", licenseExp);
-//        savedInstanceState.putString("address", address);
-//        savedInstanceState.putString("contactNo", contactNo);
-//        savedInstanceState.putBoolean("isDamaged1", cb_damage1.isChecked());
-//        savedInstanceState.putBoolean("isDamaged2", cb_damage2.isChecked());
-//        savedInstanceState.putBoolean("isDamaged3", cb_damage3.isChecked());
-//        savedInstanceState.putBoolean("isDamaged4", cb_damage4.isChecked());
-//        savedInstanceState.putBoolean("isDamaged5", cb_damage5.isChecked());
-//        savedInstanceState.putBoolean("isDamaged6", cb_damage6.isChecked());
-//        savedInstanceState.putBoolean("isDamaged7", cb_damage7.isChecked());
-//        savedInstanceState.putBoolean("isDamaged8", cb_damage8.isChecked());
-//        savedInstanceState.putBoolean("roadDry", rb_roadDry.isChecked());
-//        savedInstanceState.putBoolean("roadWet", rb_roadWet.isChecked());
-//        savedInstanceState.putBoolean("roadUphill", rb_roadUphill.isChecked());
-//        savedInstanceState.putBoolean("roadDownhill", rb_roadDownhill.isChecked());
-//        savedInstanceState.putBoolean("roadFlat", rb_roadFlat.isChecked());
-//        savedInstanceState.putBoolean("roadSmooth", rb_roadSmooth.isChecked());
-//        savedInstanceState.putBoolean("roadRough", rb_roadRough.isChecked());
-//        savedInstanceState.putBoolean("visGood", rb_visGood.isChecked());
-//        savedInstanceState.putBoolean("visPoor", rb_visPoor.isChecked());
-//        savedInstanceState.putBoolean("visModerate", rb_visModerate.isChecked());
-
-//    }
-
-//    @Override
-//    public void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        // Restore UI state from the savedInstanceState.
-//        // This bundle has also been passed to onCreate.
-//        et_driverName.setText(savedInstanceState.getString("name"));
-//        et_driverNIC.setText(savedInstanceState.getString("nic"));
-//        et_driverLicense.setText(String.valueOf(savedInstanceState.getString("licencesNo")));
-//        et_driverLicenseExp.setText(savedInstanceState.getString("licenseExp"));
-//        et_driverAddress.setText(savedInstanceState.getString("address"));
-//        et_driverContactNo.setText(String.valueOf(savedInstanceState.getString("contactNo")));
-//        cb_damage1.setChecked(savedInstanceState.getBoolean("isDamaged1"));
-//        cb_damage2.setChecked(savedInstanceState.getBoolean("isDamaged2"));
-//        cb_damage3.setChecked(savedInstanceState.getBoolean("isDamaged3"));
-//        cb_damage4.setChecked(savedInstanceState.getBoolean("isDamaged3"));
-//        cb_damage5.setChecked(savedInstanceState.getBoolean("isDamaged4"));
-//        cb_damage6.setChecked(savedInstanceState.getBoolean("isDamaged5"));
-//        cb_damage7.setChecked(savedInstanceState.getBoolean("isDamaged6"));
-//        cb_damage8.setChecked(savedInstanceState.getBoolean("isDamaged7"));
-//        rb_roadDry.setChecked(savedInstanceState.getBoolean("roadDry"));
-//        rb_roadWet.setChecked(savedInstanceState.getBoolean("roadWet"));
-//        rb_roadSmooth.setChecked(savedInstanceState.getBoolean("roadSmooth"));
-//        rb_roadUphill.setChecked(savedInstanceState.getBoolean("roadUphill"));
-//        rb_roadDownhill.setChecked(savedInstanceState.getBoolean("roadDownhill"));
-//        rb_roadFlat.setChecked(savedInstanceState.getBoolean("roadFlat"));
-//        rb_roadRough.setChecked(savedInstanceState.getBoolean("roadRough"));
-//        rb_visGood.setChecked(savedInstanceState.getBoolean("visGood"));
-//        rb_visModerate.setChecked(savedInstanceState.getBoolean("visModerate"));
-//        rb_visPoor.setChecked(savedInstanceState.getBoolean("visPoor"));
-//    }
     
 }
 
