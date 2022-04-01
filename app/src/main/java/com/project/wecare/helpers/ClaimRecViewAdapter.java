@@ -30,8 +30,8 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageResource(claims.get(position).getSrc());
-        holder.textView.setText(claims.get(position).getName());
+//        holder.imageView.setImageResource(claims.get(position).getSrc());
+        holder.textView.setText(claims.get(position).getClaimId());
     }
 
     @Override
@@ -46,12 +46,12 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
-        private final ImageView imageView;
+//        private final ImageView imageView;
         private final TextView textView;
 
         public ViewHolder(@NonNull View view){
             super(view);
-            imageView = view.findViewById(R.id.claimSampleImage);
+//            imageView = view.findViewById(R.id.claimSampleImage);
             textView = view.findViewById(R.id.claimName);
         }
     }

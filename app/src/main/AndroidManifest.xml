@@ -3,9 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.project.wecare">
 
-    <uses-feature android:name="android.hardware.camera"
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="18" />
 
     <application
@@ -15,15 +18,18 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.WeCare">
+        <activity
+            android:name=".Claim2Activity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.project.wecare"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
@@ -53,7 +59,7 @@
             android:exported="false" />
         <activity
             android:name=".WelcomeActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
