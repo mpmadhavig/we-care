@@ -107,16 +107,16 @@ public class ClaimActivity extends AppCompatActivity {
             }
         });
 
-        // Check whether to create a new claim or to view the previous
-//        Intent intent = getIntent();
-//        String possibleID = intent.getStringExtra(VIEW_CLAIM_ID);
-//        if (possibleID.length() > 0) {
-//            claim = AuthController.getInstance().getCurrentUser().getClaim(possibleID);
-//            adjustForViewingClaim();
-//        } else {
+        // Check whether to create a new claim or to access the currently working out claim
+        Intent intent = getIntent();
+        Boolean accessCurrentClaim = intent.getExtras().getBoolean("ACCESS_CURRENT_CLAIM");
+        if (accessCurrentClaim) {
+            claim = ClaimManager.getInstance().getCurrentClaim();
+            adjustForViewingClaim();
+        } else {
             claim = ClaimManager.getInstance().createNewClaim();
             adjustForNewClaim();
-//        }
+        }
 
     }
 
@@ -146,7 +146,7 @@ public class ClaimActivity extends AppCompatActivity {
     public boolean validate(){
         boolean valid = true;
 
-        if (name.isEmpty() | ! name.matches("[a-zA-Z]+") | !(name.length()>3)){
+        if (name.isEmpty() | ! name.matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*") | !(name.length()>3)){
             et_driverName.setError("Please enter a valid name");
             valid = false;
         }
@@ -163,6 +163,11 @@ public class ClaimActivity extends AppCompatActivity {
 
         if (et_driverLicenseExp.getText().toString().isEmpty()){
             et_driverLicenseExp.setError("Please enter license expiry date");
+            valid = false;
+        }
+
+        if (address.isEmpty()){
+            et_driverAddress.setError("Please enter your address");
             valid = false;
         }
 
@@ -212,7 +217,7 @@ public class ClaimActivity extends AppCompatActivity {
         claim.setDriverName(name);
         claim.setDriverNic(nic);
         claim.setDriverLicencesNo(licencesNo);
-        claim.setDriverLicenseExp(licenseExp); 
+        claim.setDriverLicenseExp(licenseExp);
         claim.setDriverAddress(address);
         claim.setDriverContactNo(contactNo);
 
@@ -224,6 +229,48 @@ public class ClaimActivity extends AppCompatActivity {
 
     public void adjustForNewClaim(){
         // Todo : auto fill the form data for driver details
+    }
+
+    public void adjustForViewingClaim(){
+        name = claim.getDriverName();
+        nic = claim.getDriverNic();
+        licencesNo = claim.getDriverLicencesNo();
+        licenseExp = claim.getDriverLicenseExp();
+        address = claim.getDriverAddress();
+        contactNo = claim.getDriverContactNo();
+
+        damagedRegions = claim.getOwnVehicleDamagedRegions();
+        roadStatus = claim.getRoadStatus();
+        roadVisibility = claim.getRoadVisibility();
+
+        et_driverName.setText(name);
+        et_driverNIC.setText(nic);
+        et_driverLicense.setText(licencesNo);
+        et_driverLicenseExp.setText(new SimpleDateFormat("MM/dd/yy", Locale.US).format(licenseExp));
+        et_driverAddress.setText(address);
+        et_driverContactNo.setText(contactNo);
+
+        if(damagedRegions.contains("1")){cb_damage1.setChecked(true);}
+        if(damagedRegions.contains("2")){cb_damage2.setChecked(true);}
+        if(damagedRegions.contains("3")){cb_damage3.setChecked(true);}
+        if(damagedRegions.contains("4")){cb_damage4.setChecked(true);}
+        if(damagedRegions.contains("5")){cb_damage5.setChecked(true);}
+        if(damagedRegions.contains("6")){cb_damage6.setChecked(true);}
+        if(damagedRegions.contains("7")){cb_damage7.setChecked(true);}
+        if(damagedRegions.contains("8")){cb_damage8.setChecked(true);}
+
+        if(roadStatus.contains("Dry")){rb_roadDry.setChecked(true);}
+        if(roadStatus.contains("Wet")){rb_roadWet.setChecked(true);}
+        if(roadStatus.contains("Uphill")){rb_roadUphill.setChecked(true);}
+        if(roadStatus.contains("Downhill")){rb_roadDownhill.setChecked(true);}
+        if(roadStatus.contains("Flat")){rb_roadFlat.setChecked(true);}
+        if(roadStatus.contains("Smooth")){rb_roadSmooth.setChecked(true);}
+        if(roadStatus.contains("Rough")){rb_roadRough.setChecked(true);}
+
+        if(roadVisibility == "Good"){rb_visGood.setChecked(true);}
+        if(roadVisibility == "Moderate"){rb_visModerate.setChecked(true);}
+        if(roadVisibility == "Poor"){rb_visPoor.setChecked(true);}
+
     }
 
     @Override

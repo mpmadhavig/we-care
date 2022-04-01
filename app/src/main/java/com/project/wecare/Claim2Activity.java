@@ -18,6 +18,7 @@ public class Claim2Activity extends AppCompatActivity {
 
     public void onClickBtn(View v) {
         Intent intent = new Intent(this, ClaimActivity.class);
+        intent.putExtra("ACCESS_CURRENT_CLAIM", true);
         startActivity(intent);
     }
 }
