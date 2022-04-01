@@ -8,8 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.project.wecare.models.Evidence;
-
 enum State {
     SUBMISSION_PENDING(0), SUBMITTED(1);
 
