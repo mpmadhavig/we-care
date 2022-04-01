@@ -1,21 +1,17 @@
 package com.project.wecare;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.EditText;
 
@@ -133,9 +129,9 @@ public class ClaimActivity extends AppCompatActivity {
         initialize();
 
         if (!validate()) {
-            Toast.makeText(this, "Invalid information provided", Toast.LENGTH_SHORT).show();
-        }else{
-            Intent intent = new Intent(ClaimActivity.this, Claim2Activity.class);
+//            Toast.makeText(this, "Invalid information provided", Toast.LENGTH_SHORT).show();
+//        } else{
+            Intent intent = new Intent(ClaimActivity.this, RecordActivity.class);
             extractFirstFormData();
             ClaimManager.getInstance().setCurrentClaim(claim);
             startActivity(intent);
@@ -241,7 +237,5 @@ public class ClaimActivity extends AppCompatActivity {
         Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
     }
-
-    
 }
 

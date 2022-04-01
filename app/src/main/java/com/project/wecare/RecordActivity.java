@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.project.wecare.helpers.ImageViewAdapter;
+import com.project.wecare.models.Claim;
+import com.project.wecare.models.Evidence;
 import com.project.wecare.models.Image;
 
 import java.io.File;
@@ -33,14 +35,16 @@ import java.util.Objects;
 public class RecordActivity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int NO_OF_GRIDS = 12;
+    static final int NO_OF_GRIDS = 8;
 
     private String currentPhotoPath;
     private Integer currentPosition;
 
     private GridView gridView;
+    private ImageViewAdapter adapter;
+    private ClaimManager claimManager;
 
-    private ArrayList<Image> imageArray;
+    private ArrayList<Evidence> imageArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +55,23 @@ public class RecordActivity extends AppCompatActivity {
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
 
         imageArray = new ArrayList<>();
-        imageArray.add(new Image(R.drawable.camera));
+        imageArray.add( new Evidence("", new Date(), 0.0, 0.0, ""));
 
+        claimManager = ClaimManager.getInstance();
+        claimManager.setCurrentClaim(claimManager.createNewClaim());
+        claimManager.getCurrentClaim().setOwnVehicleDamageEvidences(imageArray);
+
+        adapter = new ImageViewAdapter(this, R.layout.image_grid_item, imageArray);
 
         gridView = findViewById(R.id.image_capture_grid_view);
-
-        ImageViewAdapter adapter = new ImageViewAdapter(this, R.layout.image_grid_item, imageArray);
         gridView.setAdapter(adapter);
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                dispatchTakePictureIntent(view, position);
+                if (position>=NO_OF_GRIDS)
+                    Toast.makeText(RecordActivity.this, "Maximum no of media items exceeded", Toast.LENGTH_SHORT).show();
+                else
+                    dispatchTakePictureIntent(view, position);
             }
         });
     }
@@ -87,8 +96,9 @@ public class RecordActivity extends AppCompatActivity {
             {
                 ImageView image = this.gridView.getChildAt(this.currentPosition).findViewById(R.id.image_id);
                 image.setImageURI(Uri.fromFile(imgFile));
+                // Todo: set latitude, longitude, evidenceID, photoPath
                 imageArray.get(this.currentPosition).setImagePath(currentPhotoPath);
-                imageArray.add(new Image(R.drawable.camera));
+                imageArray.add(new Evidence("", new Date(), 0.0, 0.0, R.drawable.camera + ""));
             }
         }
     }
@@ -131,7 +141,6 @@ public class RecordActivity extends AppCompatActivity {
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
-        Toast.makeText(this, currentPhotoPath, Toast.LENGTH_SHORT).show();
         return image;
     }
 
