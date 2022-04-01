@@ -11,7 +11,7 @@
     <item
         android:id="@+id/action_change_language_2"
         android:icon="@drawable/language"
-        android:title="Language"
+        android:title="@string/language_title"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->

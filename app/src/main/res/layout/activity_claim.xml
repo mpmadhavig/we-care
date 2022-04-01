@@ -59,8 +59,10 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="textPersonName"
-                        android:text="Driver Details"
-                        android:textSize="20dp" />
+                        android:text="@string/driver_details_title"
+                        android:textSize="20sp"
+                        android:autofillHints=""
+                        tools:ignore="LabelFor" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -70,7 +72,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:hint="Name of Insured" />
+                            android:hint="@string/driver_name_title" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -81,7 +83,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="NIC" />
+                            android:hint="@string/nic_title" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -93,7 +95,7 @@
                             android:id="@+id/drivingLicense"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Driving License No"
+                            android:hint="@string/driving_license_no_title"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +108,7 @@
                             android:id="@+id/expirationDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Expiration Date"
+                            android:hint="@string/expiration_date_title"
                             android:inputType="date" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,7 +120,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Address" />
+                            android:hint="@string/address_title" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -131,7 +133,7 @@
                             android:id="@+id/contactNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Contact Number"
+                            android:hint="@string/contact_number_title"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,8 +143,10 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="textPersonName"
-                        android:text="Vehicle Damage Details"
-                        android:textSize="20dp" />
+                        android:text="@string/vehicle_damage_details_title"
+                        android:textSize="20sp"
+                        android:autofillHints=""
+                        tools:ignore="LabelFor" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -153,8 +157,8 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:textSize="15dp"
-                            android:text="Was your vehicle damaged?" />
+                            android:textSize="15sp"
+                            android:text="@string/was_your_vehicle_damaged_title" />
 
                         <RadioGroup
                             android:layout_width="match_parent"
@@ -167,75 +171,89 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center_horizontal"
                                 android:checked="true"
-                                android:text="Yes"
+                                android:text="@string/vehicle_damaged_yes"
                                 android:textColorHighlight="#7C7474"
                                 android:textColorLink="#6A5A5A" />
 
                             <RadioButton
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="No"
+                                android:text="@string/vehicle_damaged_no"
                                 android:id="@+id/no"
                                 android:layout_gravity="center_horizontal"
                                 android:checked="false" />
                         </RadioGroup>
                     </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/repairerDetails"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="textPersonName"
-                        android:text="Repairer Details"
-                        android:textSize="20dp" />
-
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
+                        android:layout_height="match_parent">
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/companyName"
-                            android:hint="Company name" />
+                            android:textSize="15sp"
+                            android:layout_marginStart="10sp"
+                            android:text="@string/parts_damaged_title" />
+
+                        <CheckBox
+                            android:id="@+id/headLights"
+                            android:layout_marginStart="10sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/head_lights" />
+
+                        <CheckBox
+                            android:id="@+id/bumpers"
+                            android:layout_marginStart="10sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/bumpers" />
+
+                        <CheckBox
+                            android:id="@+id/hoods"
+                            android:layout_marginStart="10sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/hoods" />
+
+                        <CheckBox
+                            android:id="@+id/mirrors"
+                            android:layout_marginStart="10sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mirrors" />
+
+                        <CheckBox
+                            android:id="@+id/radiatorSupports"
+                            android:layout_marginStart="10sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/radiator_supports" />
+                        <CheckBox
+                            android:id="@+id/grilles"
+                            android:layout_marginStart="10sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/grilles" />
+                        <CheckBox
+                            android:id="@+id/tailLights"
+                            android:layout_marginStart="10sp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tail_lights" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp">
+                        android:layout_marginTop="10dp">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/companyLocation"
-                            android:hint="Location" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/contactPerson"
-                            android:hint="Contact Person Name" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/companyContactNo"
-                            android:hint="Contact Number" />
+                            android:id="@+id/vehicleDamageDescription"
+                            android:hint="@string/vehicle_damage_description" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
