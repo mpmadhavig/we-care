@@ -30,21 +30,13 @@ public class WelcomeActivity extends AppCompatActivity {
         claimRecView = findViewById(R.id.claimRecView);
 
         ArrayList<Claim> claims = new ArrayList<>();
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_1));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_2));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_3));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_4));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_5));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_1));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_2));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_3));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_4));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_5));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_1));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_2));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_3));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_4));
-        claims.add(new Claim("2021/2/9 Susuki Maruti", R.drawable.car_5));
+        claims.add(new Claim("2021/2/9 Claim1"));
+        claims.add(new Claim("2021/2/9 Claim2"));
+        claims.add(new Claim("2021/2/9 Claim3"));
+        claims.add(new Claim("2021/2/9 Claim4"));
+        claims.add(new Claim("2021/2/9 Claim5"));
+        claims.add(new Claim("2021/2/9 Claim6"));
+        claims.add(new Claim("2021/2/9 Claim7"));
 
         ClaimRecViewAdapter adapter = new ClaimRecViewAdapter();
         adapter.setClaims(claims);
