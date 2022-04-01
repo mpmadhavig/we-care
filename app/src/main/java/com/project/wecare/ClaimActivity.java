@@ -212,7 +212,7 @@ public class ClaimActivity extends AppCompatActivity {
         claim.setDriverName(name);
         claim.setDriverNic(nic);
         claim.setDriverLicencesNo(licencesNo);
-        claim.setDriverLicenseExp(licenseExp); // Todo : Should pass in the date format
+        claim.setDriverLicenseExp(licenseExp); 
         claim.setDriverAddress(address);
         claim.setDriverContactNo(contactNo);
 
