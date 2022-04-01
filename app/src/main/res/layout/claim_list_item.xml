@@ -12,23 +12,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
-                android:layout_margin="10dp"
+                android:id="@+id/claimName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Ref No / Data / car Model / Location"
-                android:textStyle="bold"
-                android:id="@+id/claimName"/>
-
-            <ImageView
-                android:id="@+id/claimSampleImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/claimName"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/icon"/>
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="date/claim Id"
+                android:textStyle="bold" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
