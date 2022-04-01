@@ -32,8 +32,7 @@ public class Claim implements Parcelable, Serializable {
     private int state;
 
     //driver details
-    private String driverName,driverNic, driverAddress;
-    private Integer driverLicencesNo, driverContactNo ;
+    private String driverName,driverNic, driverAddress, driverLicencesNo, driverContactNo ;
     private Date driverLicenseExp;
 
     //accident details
@@ -48,7 +47,7 @@ public class Claim implements Parcelable, Serializable {
     private Boolean isOtherVehicleDamaged;
     private String otherVehicleRegNumber;
     private String otherPartyDriverName;
-    private Integer otherPartyDriverNumber; //Contact number
+    private String otherPartyDriverNumber; //Contact number
     private ArrayList<String> otherVehicleDamagedRegions;
     private Integer otherPartyAccNumber ;
     private String otherPartyBankName, otherPartyBankBranch;
@@ -57,7 +56,7 @@ public class Claim implements Parcelable, Serializable {
     // 3rd party property damage
     private Boolean isPropertyDamage;
     private String propertyContactPersonName , propertyContactPersonAddress;
-    private Integer propertyContactPersonNumber;
+    private String propertyContactPersonNumber;
     private String propertyDamage; // A brief description
     private Integer propertyContactPersonAccNumber ;
     private String propertyContactPersonBankName, propertyContactPersonBankBranch;
@@ -82,10 +81,10 @@ public class Claim implements Parcelable, Serializable {
         //driver details
         driverName = in.readString();
         driverNic = in.readString();
-        driverLicencesNo = in.readInt();
+        driverLicencesNo = in.readString();
         driverLicenseExp = new Date(in.readLong());
         driverAddress = in.readString();
-        driverContactNo = in.readInt();
+        driverContactNo = in.readString();
 
         //accident details
         ownVehicleDamagedRegions = in.createStringArrayList();
@@ -101,7 +100,7 @@ public class Claim implements Parcelable, Serializable {
         if(isOtherVehicleDamaged){
             otherVehicleRegNumber = in.readString();
             otherPartyDriverName = in.readString();
-            otherPartyDriverNumber = in.readInt(); //Contact number
+            otherPartyDriverNumber = in.readString(); //Contact number
             otherVehicleDamagedRegions = in.createStringArrayList();
             otherPartyAccNumber = in.readInt();
             otherPartyBankName = in.readString();
@@ -113,7 +112,7 @@ public class Claim implements Parcelable, Serializable {
         isPropertyDamage = in.readInt() != 0 ;
         if(isPropertyDamage){
             propertyContactPersonName = in.readString();
-            propertyContactPersonNumber = in.readInt() ;
+            propertyContactPersonNumber = in.readString() ;
             propertyContactPersonAddress = in.readString();
             propertyDamage = in.readString();
             propertyContactPersonAccNumber = in.readInt();
@@ -151,10 +150,10 @@ public class Claim implements Parcelable, Serializable {
         //driver details
         dest.writeString(driverName);
         dest.writeString(driverNic);
-        dest.writeInt(driverLicencesNo);
+        dest.writeString(driverLicencesNo);
         dest.writeLong(driverLicenseExp.getTime());
         dest.writeString(driverAddress);
-        dest.writeInt(driverContactNo);
+        dest.writeString(driverContactNo);
 
         //accident details
         dest.writeList(ownVehicleDamagedRegions);
@@ -170,7 +169,7 @@ public class Claim implements Parcelable, Serializable {
         if(isOtherVehicleDamaged){
             dest.writeString(otherVehicleRegNumber);
             dest.writeString(otherPartyDriverName);
-            dest.writeInt(otherPartyDriverNumber); //Contact number
+            dest.writeString(otherPartyDriverNumber); //Contact number
             dest.writeList(otherVehicleDamagedRegions);
             dest.writeInt(otherPartyAccNumber);
             dest.writeString(otherPartyBankName);
@@ -182,7 +181,7 @@ public class Claim implements Parcelable, Serializable {
         dest.writeInt(isPropertyDamage ? 1 : 0);
         if(isPropertyDamage){
             dest.writeString(propertyContactPersonName);
-            dest.writeInt(propertyContactPersonNumber) ;
+            dest.writeString(propertyContactPersonNumber) ;
             dest.writeString(propertyContactPersonAddress);
             dest.writeString(propertyDamage);
             dest.writeInt(propertyContactPersonAccNumber);
@@ -233,19 +232,19 @@ public class Claim implements Parcelable, Serializable {
         this.driverAddress = driverAddress;
     }
 
-    public Integer getDriverLicencesNo() {
+    public String getDriverLicencesNo() {
         return driverLicencesNo;
     }
 
-    public void setDriverLicencesNo(Integer driverLicencesNo) {
+    public void setDriverLicencesNo(String driverLicencesNo) {
         this.driverLicencesNo = driverLicencesNo;
     }
 
-    public Integer getDriverContactNo() {
+    public String getDriverContactNo() {
         return driverContactNo;
     }
 
-    public void setDriverContactNo(Integer driverContactNo) {
+    public void setDriverContactNo(String driverContactNo) {
         this.driverContactNo = driverContactNo;
     }
 
@@ -321,11 +320,11 @@ public class Claim implements Parcelable, Serializable {
         this.otherPartyDriverName = otherPartyDriverName;
     }
 
-    public Integer getOtherPartyDriverNumber() {
+    public String getOtherPartyDriverNumber() {
         return otherPartyDriverNumber;
     }
 
-    public void setOtherPartyDriverNumber(Integer otherPartyDriverNumber) {
+    public void setOtherPartyDriverNumber(String otherPartyDriverNumber) {
         this.otherPartyDriverNumber = otherPartyDriverNumber;
     }
 
@@ -429,11 +428,11 @@ public class Claim implements Parcelable, Serializable {
         this.propertyContactPersonAddress = propertyContactPersonAddress;
     }
 
-    public Integer getPropertyContactPersonNumber() {
+    public String getPropertyContactPersonNumber() {
         return propertyContactPersonNumber;
     }
 
-    public void setPropertyContactPersonNumber(Integer propertyContactPersonNumber) {
+    public void setPropertyContactPersonNumber(String propertyContactPersonNumber) {
         this.propertyContactPersonNumber = propertyContactPersonNumber;
     }
 
