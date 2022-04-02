@@ -366,8 +366,16 @@ public class Claim implements Parcelable, Serializable {
         this.otherVehicleDamageEvidences = otherVehicleDamageEvidences;
     }
 
-    public Boolean getPropertyDamage() {
-        return isPropertyDamage;
+    public boolean isPropertyDamage() {
+        return this.isPropertyDamage;
+    }
+
+    public void setIsPropertyDamage(boolean isPropertyDamage) {
+        this.isPropertyDamage = isPropertyDamage;
+    }
+
+    public String getPropertyDamage() {
+        return this.propertyDamage;
     }
 
     public void setPropertyDamage(String propertyDamage) {

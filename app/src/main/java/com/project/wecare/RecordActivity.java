@@ -16,10 +16,12 @@ import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.wecare.helpers.ImageViewAdapter;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Evidence;
@@ -41,6 +43,7 @@ public class RecordActivity extends AppCompatActivity {
     private Integer currentPosition;
 
     private GridView gridView;
+    private FloatingActionButton nextButton;
     private ImageViewAdapter adapter;
     private ClaimManager claimManager;
 
@@ -74,16 +77,20 @@ public class RecordActivity extends AppCompatActivity {
                     dispatchTakePictureIntent(view, position);
             }
         });
-    }
 
-    public void goToNextActivity(View view){
-        Intent intent = new Intent(this, ClaimActivity.class);
-        startActivity(intent);
+        nextButton = findViewById(R.id.goToClaim2Activity);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RecordActivity.this, Claim2Activity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        startActivity(new Intent(this,ClaimActivity.class));
+        startActivity(new Intent(this,RecordActivity.class));
         return super.onOptionsItemSelected(item);
     }
 

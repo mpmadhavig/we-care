@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, ClaimActivity.class);
+        Intent intent = new Intent(this, Claim2Activity.class);
         intent.putExtra("ACCESS_CURRENT_CLAIM", false); // Todo : Later should be removed
         startActivity(intent);
         finish();
