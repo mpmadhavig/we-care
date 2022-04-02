@@ -46,4 +46,7 @@
     <string name="txt_companyName">Company Name</string>
     <string name="txt_location">Location</string>
     <string name="txt_vehicles">Vehicles</string>
+    <string name="password">Password</string>
+    <string name="txt_nicNumber">NIC Number</string>
+    <string name="btn_login">Login</string>
 </resources>
