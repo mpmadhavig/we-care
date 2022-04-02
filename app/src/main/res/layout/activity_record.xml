@@ -21,7 +21,7 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/goToViewClaim1"
+        android:id="@+id/goToClaim2Activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -29,7 +29,6 @@
         android:clickable="true"
         android:contentDescription="@string/nextButton"
         android:focusable="true"
-        android:onClick="goToNextActivity"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

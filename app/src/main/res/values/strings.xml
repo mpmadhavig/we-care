@@ -46,4 +46,23 @@
     <string name="txt_companyName">Company Name</string>
     <string name="txt_location">Location</string>
     <string name="txt_vehicles">Vehicles</string>
+    <string name="is_other_property_damaged_title">Is other property damaged?</string>
+    <string name="isItAVehicle">Is the property vehicle?</string>
+    <string name="RadioYes">Yes</string>
+    <string name="RadioNo">No</string>
+    <string name="vehicle_registration_number_title">Vehicle Registration Number</string>
+    <string name="driver_name_title">Driver Name</string>
+    <string name="driver_contact_number_title">Driver Contact Number</string>
+    <string name="vehicle_damaged_regions_title">Vehicle Damaged Regions</string>
+    <string name="third_party_bank_account_details_title">Bank Account Details</string>
+    <string name="account_number_title">Account Number</string>
+    <string name="bank_name_title">Bank Name</string>
+    <string name="branch_name_title">Branch Name</string>
+    <string name="other_property_damage_details_title">Other Property Damage Details</string>
+    <string name="other_damaged_vehicle_details_title">Vehicle Details</string>
+    <string name="other_damaged_property_details_title">Property Details</string>
+    <string name="otherDamagedPropertyDescription">Description</string>
+    <string name="brief_description">Brief Description</string>
+    <string name="is_another_vehicle_damaged">Is another vehicle damaged?</string>
+    <string name="property_damaged_party_account_details">Bank Account details</string>
 </resources>
