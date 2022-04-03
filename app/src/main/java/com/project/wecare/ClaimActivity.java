@@ -1,21 +1,17 @@
 package com.project.wecare;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.EditText;
 
@@ -39,7 +35,6 @@ public class ClaimActivity extends AppCompatActivity {
             cb_damage7,cb_damage8;
     private RadioButton rb_roadDry ,rb_roadWet,  rb_roadUphill, rb_roadDownhill, rb_roadFlat,
         rb_roadSmooth, rb_roadRough, rb_visGood, rb_visModerate, rb_visPoor;
-    private FloatingActionButton btn_next;
 
     private String name,nic, licencesNo, address, contactNo, roadVisibility;
     private Date licenseExp;
@@ -82,7 +77,7 @@ public class ClaimActivity extends AppCompatActivity {
         rb_visGood = (RadioButton) findViewById(R.id.radioBtnGood);
         rb_visModerate = (RadioButton) findViewById(R.id.radioBtnModerate);
         rb_visPoor = (RadioButton) findViewById(R.id.radioBtnPoor);
-        btn_next = (FloatingActionButton) findViewById(R.id.nextPage_claimForm1);
+        FloatingActionButton btn_next = (FloatingActionButton) findViewById(R.id.nextPage_claimForm1);
 
         btn_next.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -109,7 +104,7 @@ public class ClaimActivity extends AppCompatActivity {
 
         // Check whether to create a new claim or to access the currently working out claim
         Intent intent = getIntent();
-        Boolean accessCurrentClaim = intent.getExtras().getBoolean("ACCESS_CURRENT_CLAIM");
+        boolean accessCurrentClaim = intent.getExtras().getBoolean("ACCESS_CURRENT_CLAIM");
         if (accessCurrentClaim) {
             claim = ClaimManager.getInstance().getCurrentClaim();
             adjustForViewingClaim();
@@ -133,9 +128,9 @@ public class ClaimActivity extends AppCompatActivity {
         initialize();
 
         if (!validate()) {
-            Toast.makeText(this, "Invalid information provided", Toast.LENGTH_SHORT).show();
-        }else{
-            Intent intent = new Intent(ClaimActivity.this, Claim2Activity.class);
+//            Toast.makeText(this, "Invalid information provided", Toast.LENGTH_SHORT).show();
+//        } else{
+            Intent intent = new Intent(ClaimActivity.this, RecordActivity.class);
             extractFirstFormData();
             ClaimManager.getInstance().setCurrentClaim(claim);
             startActivity(intent);
@@ -288,7 +283,5 @@ public class ClaimActivity extends AppCompatActivity {
         Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
     }
-
-    
 }
 
