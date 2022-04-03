@@ -35,7 +35,6 @@ public class ClaimActivity extends AppCompatActivity {
             cb_damage7,cb_damage8;
     private RadioButton rb_roadDry ,rb_roadWet,  rb_roadUphill, rb_roadDownhill, rb_roadFlat,
         rb_roadSmooth, rb_roadRough, rb_visGood, rb_visModerate, rb_visPoor;
-    private FloatingActionButton btn_next;
 
     private String name,nic, licencesNo, address, contactNo, roadVisibility;
     private Date licenseExp;
@@ -78,7 +77,7 @@ public class ClaimActivity extends AppCompatActivity {
         rb_visGood = (RadioButton) findViewById(R.id.radioBtnGood);
         rb_visModerate = (RadioButton) findViewById(R.id.radioBtnModerate);
         rb_visPoor = (RadioButton) findViewById(R.id.radioBtnPoor);
-        btn_next = (FloatingActionButton) findViewById(R.id.nextPage_claimForm1);
+        FloatingActionButton btn_next = (FloatingActionButton) findViewById(R.id.nextPage_claimForm1);
 
         btn_next.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -105,7 +104,7 @@ public class ClaimActivity extends AppCompatActivity {
 
         // Check whether to create a new claim or to access the currently working out claim
         Intent intent = getIntent();
-        Boolean accessCurrentClaim = intent.getExtras().getBoolean("ACCESS_CURRENT_CLAIM");
+        boolean accessCurrentClaim = intent.getExtras().getBoolean("ACCESS_CURRENT_CLAIM");
         if (accessCurrentClaim) {
             claim = ClaimManager.getInstance().getCurrentClaim();
             adjustForViewingClaim();

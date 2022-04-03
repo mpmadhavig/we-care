@@ -64,7 +64,7 @@ public class Claim2Activity extends AppCompatActivity {
                     Toast.makeText(Claim2Activity.this, "Invalid information provided", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Intent intent = new Intent(Claim2Activity.this, RecordActivity.class);
+                    Intent intent = new Intent(Claim2Activity.this, Record2Activity.class);
                     sendDataToClaimManager();
                     startActivity(intent);
                 }
