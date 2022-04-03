@@ -10,15 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import com.project.wecare.R;
+import com.project.wecare.models.Evidence;
 import com.project.wecare.models.Image;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class ImageViewAdapter extends ArrayAdapter {
-    private ArrayList<Image> images;
+    private ArrayList<Evidence> images;
 
-    public ImageViewAdapter(Context context, int resource, ArrayList<Image> objects) {
+    public ImageViewAdapter(Context context, int resource, ArrayList<Evidence> objects) {
         super(context, resource, objects);
         images = objects;
     }
@@ -40,14 +41,19 @@ public class ImageViewAdapter extends ArrayAdapter {
          * default image => drawable camera icon
          * captured image => resource path
          **/
-        if (images.get(position).getImagePath() == null)
-            imageView.setImageResource(images.get(position).getDefaultImage());
-        else{
+        if (images.get(position).getImagePath().equals(""))
+            imageView.setImageResource(R.drawable.camera);
+
+        else {
             File imgFile = new  File(images.get(position).getImagePath());
             imageView.setImageURI(Uri.fromFile(imgFile));
         }
 
 
         return view;
+    }
+
+    public void setImages(ArrayList<Evidence> images) {
+        this.images = images;
     }
 }

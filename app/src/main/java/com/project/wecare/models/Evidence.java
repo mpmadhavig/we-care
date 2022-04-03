@@ -3,21 +3,19 @@ package com.project.wecare.models;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 
 public class Evidence implements Parcelable, Serializable {
     private String evidenceID;
     private Date date;
-    private double latitude, longitude;
-    private String description;
-    private String photoPath;
+    private double latitude;
+    private double longitude;
+    private String imagePath;
 
     public static final int IMAGE_COMPRESSION_RATIO = 80;
 
@@ -26,8 +24,7 @@ public class Evidence implements Parcelable, Serializable {
         this.date = date;
         this.latitude = latitude;
         this.longitude = longitude;
-        description = "";
-        this.photoPath = photoPath;
+        this.imagePath = photoPath;
     }
 
     protected Evidence(Parcel in) {
@@ -35,8 +32,7 @@ public class Evidence implements Parcelable, Serializable {
         date = new Date(in.readLong());
         latitude = in.readDouble();
         longitude = in.readDouble();
-        description = in.readString();
-        photoPath = in.readString();
+        imagePath = in.readString();
     }
 
     public static final Creator<Evidence> CREATOR = new Creator<Evidence>() {
@@ -50,10 +46,6 @@ public class Evidence implements Parcelable, Serializable {
             return new Evidence[size];
         }
     };
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getEvidenceID() { return evidenceID; }
 
@@ -69,11 +61,27 @@ public class Evidence implements Parcelable, Serializable {
         return longitude;
     }
 
-    public String getDescription() {
-        return description;
+    public String getImagePath() { return imagePath; }
+
+    public void setEvidenceID(String evidenceID) {
+        this.evidenceID = evidenceID;
     }
 
-    public String getPhotoPath() { return photoPath; }
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     @Override
     public int describeContents() {
@@ -86,12 +94,11 @@ public class Evidence implements Parcelable, Serializable {
         dest.writeLong(date.getTime());
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
-        dest.writeString(description);
-        dest.writeString(photoPath);
+        dest.writeString(imagePath);
     }
 
     public byte[] getEvidenceImage() {
-        Bitmap bitmap = BitmapFactory.decodeFile(this.photoPath);
+        Bitmap bitmap = BitmapFactory.decodeFile(this.imagePath);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, IMAGE_COMPRESSION_RATIO, byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();

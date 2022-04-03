@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-public class RecordActivity extends AppCompatActivity {
+public class Record2Activity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int NO_OF_GRIDS = 8;
@@ -44,7 +44,7 @@ public class RecordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
+        setContentView(R.layout.activity_record2);
 
         // action bar initialize
         ActionBar actionBar = getSupportActionBar();
@@ -61,32 +61,32 @@ public class RecordActivity extends AppCompatActivity {
 
         // initialize image grid view recycler view
         ImageViewAdapter adapter = new ImageViewAdapter(this, R.layout.image_grid_item, evidenceArray);
-        gridView = findViewById(R.id.image_capture_grid_view);
+        gridView = findViewById(R.id.gatherPropertyEvidence);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                // Todo: check if position>=NO_OF_GRIDS
+                // Todo: check if position>=NO_OF_GRIDS correct
                 if (position>=NO_OF_GRIDS)
-                    Toast.makeText(RecordActivity.this, "Maximum no of media items exceeded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Record2Activity.this, "Maximum no of media items exceeded", Toast.LENGTH_SHORT).show();
                 else
                     dispatchTakePictureIntent(view, position);
             }
         });
 
-        FloatingActionButton nextButton = findViewById(R.id.goToClaim2Activity);
+        FloatingActionButton nextButton = findViewById(R.id.goToSubmitClaim);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isValidate()) {
-                    Intent intent = new Intent(RecordActivity.this, Claim2Activity.class);
+                    Intent intent = new Intent(Record2Activity.this, WelcomeActivity.class);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(RecordActivity.this, "Please add one or more captures as evidence", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Record2Activity.this, "Please add one or more captures as evidence", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
+
     }
 
     private boolean isValidate() {
@@ -95,7 +95,7 @@ public class RecordActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        startActivity(new Intent(this,RecordActivity.class));
+        startActivity(new Intent(this,Record2Activity.class));
         return super.onOptionsItemSelected(item);
     }
 
@@ -145,6 +145,7 @@ public class RecordActivity extends AppCompatActivity {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         }
+        // startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
     }
 
     private File createImageFile() throws IOException {
