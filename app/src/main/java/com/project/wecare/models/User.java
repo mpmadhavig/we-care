@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 public class User implements Serializable  {
-    private String name,nic,licenseNo, contactNo, address, occupation;
+    private String name,nic,licenseNo, contactNo, address, occupation, email;
     private Date licenseExp;
     private HashMap<String, Vehicle> vehicles;
 
@@ -24,7 +24,16 @@ public class User implements Serializable  {
         this.address = address;
         this.occupation = occupation;
 //        this.licenseExp = licenseExp; Todo : Add licenseExp . Look into ways
+//        this.email = email;
         this.preferredLocale = preferredLocale;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
