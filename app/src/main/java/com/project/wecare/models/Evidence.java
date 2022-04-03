@@ -13,8 +13,8 @@ import java.util.Date;
 public class Evidence implements Parcelable, Serializable {
     private String evidenceID;
     private Date date;
-    private double latitude, longitude;
-    private String description;
+    private double latitude;
+    private double longitude;
     private String imagePath;
 
     public static final int IMAGE_COMPRESSION_RATIO = 80;
@@ -24,7 +24,6 @@ public class Evidence implements Parcelable, Serializable {
         this.date = date;
         this.latitude = latitude;
         this.longitude = longitude;
-        description = "";
         this.imagePath = photoPath;
     }
 
@@ -33,7 +32,6 @@ public class Evidence implements Parcelable, Serializable {
         date = new Date(in.readLong());
         latitude = in.readDouble();
         longitude = in.readDouble();
-        description = in.readString();
         imagePath = in.readString();
     }
 
@@ -49,10 +47,6 @@ public class Evidence implements Parcelable, Serializable {
         }
     };
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getEvidenceID() { return evidenceID; }
 
     public Date getDate() {
@@ -65,10 +59,6 @@ public class Evidence implements Parcelable, Serializable {
 
     public double getLongitude() {
         return longitude;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getImagePath() { return imagePath; }
@@ -104,7 +94,6 @@ public class Evidence implements Parcelable, Serializable {
         dest.writeLong(date.getTime());
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
-        dest.writeString(description);
         dest.writeString(imagePath);
     }
 
