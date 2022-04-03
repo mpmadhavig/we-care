@@ -3,6 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_accident_details.xml" value="0.1" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_claim.xml" value="0.25" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_claim2.xml" value="0.10277777777777777" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_record.xml" value="0.20416666666666666" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_vehicles.xml" value="0.20416666666666666" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_view_claim.xml" value="0.20416666666666666" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/activity_welcome.xml" value="0.25" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/claim_list_item.xml" value="0.25" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/image_grid_item.xml" value="0.1" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/layout/vehicle_list_item.xml" value="0.1322463768115942" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/menu/menu.xml" value="0.1" />
+        <entry key="..\:/Academic/Semester 8/MC/Group Project - WeCare App/WeCare_App/we-care/app/src/main/res/menu/top_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/acer/Documents/WeCare/app/src/main/res/drawable-anydpi/click.xml" value="0.1" />
         <entry key="..\:/Users/acer/Documents/WeCare/app/src/main/res/drawable/bg_gradient.xml" value="0.1865" />
         <entry key="..\:/Users/acer/Documents/WeCare/app/src/main/res/drawable/splash_background.xml" value="0.1865" />
@@ -21,7 +36,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
