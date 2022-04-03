@@ -22,6 +22,9 @@
             android:name=".Record2Activity"
             android:exported="false" />
         <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".Claim2Activity"
             android:exported="false" />
 

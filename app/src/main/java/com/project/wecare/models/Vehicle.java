@@ -1,11 +1,17 @@
 package com.project.wecare.models;
 
+import java.util.Date;
+import java.util.HashMap;
+
 public class Vehicle {
 
     private String regNumber;
     private String model;
     private Integer year;
     private Integer src;
+    private Date insuredDate;
+    private String insuranceType;
+    private HashMap<String, Claim> claims;
 
     public Vehicle(String regNumber, String model, Integer year, Integer src) {
         this.regNumber = regNumber;
@@ -14,12 +20,13 @@ public class Vehicle {
         this.src = src;
     }
 
-    public String getRegNumber() {
-        return regNumber;
+
+    public Vehicle(String regNumber) {
+        this.regNumber = regNumber;
     }
 
-    public void setRegNumber(String regNumber) {
-        this.regNumber = regNumber;
+    public String getRegNumber() {
+        return regNumber;
     }
 
     public String getModel() {
@@ -46,7 +53,28 @@ public class Vehicle {
         this.src = src;
     }
 
+    public Date getInsuredDate() {
+        return insuredDate;
+    }
 
+    public void setInsuredDate(Date insuredDate) {
+        this.insuredDate = insuredDate;
+    }
 
+    public String getInsuranceType() {
+        return insuranceType;
+    }
+
+    public void setInsuranceType(String insuranceType) {
+        this.insuranceType = insuranceType;
+    }
+
+    public HashMap<String, Claim> getClaims() {
+        return claims;
+    }
+
+    public void setClaims(HashMap<String, Claim> claims) {
+        this.claims = claims;
+    }
 }
 
