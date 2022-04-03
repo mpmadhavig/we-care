@@ -1,4 +1,4 @@
-package com.project.wecare;
+package com.project.wecare.database.users;
 
 import android.content.Context;
 
@@ -11,15 +11,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Date;
 
 public class UserManager {
     private static User currentUser;
     private static final User anonymousUser = new User("EN");
 
     private static final String USER_DATA_FILE = "userdata.ser";
-
-    public static final String USER_URL = "users/";
 
     // Singleton
     private static UserManager instance;
@@ -30,6 +27,10 @@ public class UserManager {
     public static UserManager getInstance() {
         if (instance == null) instance = new UserManager();
         return instance;
+    }
+
+    public static User getAnonymousUser() {
+        return anonymousUser;
     }
 
     public boolean saveUser(Context context) {
@@ -83,6 +84,7 @@ public class UserManager {
     public User getCurrentUser() {
         return currentUser;
     }
+
 
     public void logoutUser(Context context) {
         currentUser.setAuthenticated(false);
