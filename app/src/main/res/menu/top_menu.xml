@@ -2,11 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_new_claim2"
-        android:icon="@drawable/new_claim"
-        android:title="@string/new_claim_button"
-        app:showAsAction="ifRoom"/>
+
 
     <item
         android:id="@+id/action_change_language_2"

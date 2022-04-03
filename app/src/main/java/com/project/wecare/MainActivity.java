@@ -1,9 +1,17 @@
 package com.project.wecare;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.project.wecare.services.GPSTracker;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,10 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, ClaimActivity.class);
-        intent.putExtra("ACCESS_CURRENT_CLAIM", false); // Todo : Later should be removed
+        Intent intent = new Intent(this, VehiclesActivity.class);
         startActivity(intent);
         finish();
     }
-
 }
