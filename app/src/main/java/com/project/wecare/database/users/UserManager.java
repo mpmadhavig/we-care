@@ -81,6 +81,11 @@ public class UserManager {
         }
     }
 
+    public void setCurrentUser(Context context, User user) {
+        this.currentUser = user;
+        saveUser(context);
+    }
+
     public User getCurrentUser() {
         return currentUser;
     }

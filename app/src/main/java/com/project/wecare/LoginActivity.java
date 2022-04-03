@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.project.wecare.database.users.UserDatabaseManager;
 import com.project.wecare.database.users.UserManager;
+import com.project.wecare.models.User;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -66,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Log.d(TAG, "NicMappingEmailRetrieve : success");
                                         email = document.getData().get("email").toString();
                                         isNicValid = true;
-                                        authenticate(email, password);
+                                        authenticate(email, password, nic);
                                         break;
                                     }
                                 }
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void authenticate(String email, String password){
+    public void authenticate(String email, String password, String nic){
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -96,8 +97,11 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d(TAG, "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-//                            updateUI(user);
+                                    FirebaseUser user = mAuth.getCurrentUser(); // info locally cached
+//
+                                    //Create new user with the personal information
+                                    setNewUser(nic);
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -110,6 +114,37 @@ public class LoginActivity extends AppCompatActivity {
                         });
     }
 
+    public void setNewUser(String nic){
+        //Get authenticated user informations
+        UserDatabaseManager.getInstance().getUser(nic,
+                new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (nic.equals(document.getId().toString().trim())) {
+                                    User user = new User(
+                                            document.getData().get("name").toString(),
+                                            document.getData().get("nic").toString(),
+                                            document.getData().get("licenseNo").toString(),
+                                            document.getData().get("contactNo").toString(),
+                                            document.getData().get("address").toString(),
+                                            document.getData().get("occupation").toString(),
+                                            "EN"
+                                    );
+                                    user.setAuthenticated(true);
+                                    UserManager.getInstance().setCurrentUser(LoginActivity.this, user);
+                                    break;
+                                }
+                            }
+
+                        } else {
+                            Log.w(TAG, "DocumentsRetrieve : error", task.getException());
+                        }
+                    }
+                });
+
+    }
     public Boolean validate(){
         Boolean valid = true;
 

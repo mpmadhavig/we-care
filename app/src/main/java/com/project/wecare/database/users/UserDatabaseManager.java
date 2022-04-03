@@ -31,5 +31,11 @@ public class UserDatabaseManager {
                 .addOnCompleteListener( listenerObj);
     }
 
+    public void getUser(String nic, OnCompleteListener<QuerySnapshot> listenerObj){
+        db.collection(COLLECTION_USERS)
+                .get()
+                .addOnCompleteListener( listenerObj);
+    }
+
 
 }
