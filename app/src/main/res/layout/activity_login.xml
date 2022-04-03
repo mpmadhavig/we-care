@@ -37,7 +37,7 @@
             android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="301dp"
-            app:srcCompat="@drawable/loginImage" />
+            app:srcCompat="@drawable/logo300" />
 
         <EditText
             android:id="@+id/txtLoginNIC"

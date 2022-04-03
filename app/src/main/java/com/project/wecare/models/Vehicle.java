@@ -25,7 +25,7 @@ public class Vehicle {
         this.regNumber = regNumber;
     }
 
-    private String getRegNumber() {
+    public String getRegNumber() {
         return regNumber;
     }
 
