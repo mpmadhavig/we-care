@@ -4,7 +4,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -22,7 +21,7 @@ import java.util.Objects;
 
 public class Claim2Activity extends AppCompatActivity {
 
-    private Claim claim;
+    private Claim currentClaim;
 
     // View elements
     private TextView isPropertyDamageTxt, isOtherVehicleDamagedTxt;
@@ -64,6 +63,12 @@ public class Claim2Activity extends AppCompatActivity {
                     Toast.makeText(Claim2Activity.this, "Invalid information provided", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    if (currentClaim != null) {
+                        Toast.makeText(Claim2Activity.this, "currentClaim not NULL", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Claim2Activity.this, "currentClaim is NULL", Toast.LENGTH_SHORT).show();
+                    }
+
                     Intent intent = new Intent(Claim2Activity.this, Record2Activity.class);
                     sendDataToClaimManager();
                     startActivity(intent);
@@ -92,7 +97,7 @@ public class Claim2Activity extends AppCompatActivity {
         // Access the currently working out claim
         ClaimManager claimManager = ClaimManager.getInstance();
         claimManager.setCurrentClaim(claimManager.createNewClaim());
-        claim = claimManager.getCurrentClaim();
+        currentClaim = claimManager.getCurrentClaim();
 
         // Todo: set empty values if no value exists
 
@@ -107,7 +112,7 @@ public class Claim2Activity extends AppCompatActivity {
         if (isOtherVehicleDamagedYes.isChecked()) {
 
             if (  otherVehicleRegNumber.getText().toString().equals("")
-                    | otherVehicleRegNumber.getText().toString().matches("^(KA|DL)(10|0[1-9])([A-Z]{1,2})([1-9][0-9]{3})$")
+                    | !otherVehicleRegNumber.getText().toString().matches("^(KA|DL)(10|0[1-9])([A-Z]{1,2})([1-9][0-9]{3})$")
             ) {
                 otherVehicleRegNumber.setError("Please enter a valid Registration Number");
                 valid = false;
@@ -165,8 +170,7 @@ public class Claim2Activity extends AppCompatActivity {
         if (isPropertyDamageYes.isChecked()) {
 
             if (  propertyContactPersonName.getText().toString().equals("")
-                    | propertyContactPersonName.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
-                    | !(propertyContactPersonName.getText().toString().length()>3)
+                    | !propertyContactPersonName.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
             ) {
                 propertyContactPersonName.setError("Please enter a valid name");
                 valid = false;
@@ -197,16 +201,12 @@ public class Claim2Activity extends AppCompatActivity {
             }
 
             if (  propertyContactPersonBankName.getText().toString().equals("")
-                    | propertyContactPersonBankName.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
-                    | !(propertyContactPersonBankName.getText().toString().length()>3)
             ) {
                 propertyContactPersonBankName.setError("Please enter a valid name");
                 valid = false;
             }
 
             if (  propertyContactPersonBankBranch.getText().toString().equals("")
-                    | propertyContactPersonBankBranch.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
-                    | !(propertyContactPersonBankBranch.getText().toString().length()>3)
             ) {
                 propertyContactPersonBankBranch.setError("Please enter a valid name");
                 valid = false;
@@ -228,13 +228,13 @@ public class Claim2Activity extends AppCompatActivity {
     }
 
     private void sendDataToClaimManager() {
+        currentClaim.setOtherVehicleDamaged(isOtherVehicleDamagedYes.isChecked());
+        currentClaim.setIsPropertyDamage(isPropertyDamageYes.isChecked());
 
         if (isOtherVehicleDamagedYes.isChecked()) {
-            claim.setOtherVehicleDamaged(isOtherVehicleDamagedYes.isChecked());
-
-            claim.setOtherVehicleRegNumber(otherVehicleRegNumber.getText().toString());
-            claim.setOtherPartyDriverName(otherPartyDriverName.getText().toString());
-            claim.setOtherPartyDriverNumber(otherPartyDriverNumber.getText().toString());
+            currentClaim.setOtherVehicleRegNumber(otherVehicleRegNumber.getText().toString());
+            currentClaim.setOtherPartyDriverName(otherPartyDriverName.getText().toString());
+            currentClaim.setOtherPartyDriverNumber(otherPartyDriverNumber.getText().toString());
 
             ArrayList<String> damagedRegions = new ArrayList<>();
             if (checkBox_2_1.isChecked()) damagedRegions.add("1");
@@ -245,64 +245,62 @@ public class Claim2Activity extends AppCompatActivity {
             if (checkBox_2_6.isChecked()) damagedRegions.add("6");
             if (checkBox_2_7.isChecked()) damagedRegions.add("7");
             if (checkBox_2_8.isChecked()) damagedRegions.add("8");
-            claim.setOtherVehicleDamagedRegions(damagedRegions);
+            currentClaim.setOtherVehicleDamagedRegions(damagedRegions);
 
-            claim.setOtherPartyAccNumber(Integer.parseInt(otherPartyAccNumber.getText().toString()));
-            claim.setOtherPartyBankName(otherPartyBankName.getText().toString());
-            claim.setOtherPartyBankBranch(otherPartyBankBranch.getText().toString());
+            currentClaim.setOtherPartyAccNumber(Integer.parseInt(otherPartyAccNumber.getText().toString()));
+            currentClaim.setOtherPartyBankName(otherPartyBankName.getText().toString());
+            currentClaim.setOtherPartyBankBranch(otherPartyBankBranch.getText().toString());
         }
 
         if (isPropertyDamageYes.isChecked()) {
-            claim.setIsPropertyDamage(isPropertyDamageYes.isChecked());
+            currentClaim.setPropertyContactPersonName(propertyContactPersonName.getText().toString());
+            currentClaim.setPropertyContactPersonAddress(propertyContactPersonAddress.getText().toString());
+            currentClaim.setPropertyContactPersonNumber(propertyContactPersonNumber.getText().toString());
+            currentClaim.setPropertyDamage(propertyDamage.getText().toString());
 
-            claim.setPropertyContactPersonName(propertyContactPersonName.getText().toString());
-            claim.setPropertyContactPersonAddress(propertyContactPersonAddress.getText().toString());
-            claim.setPropertyContactPersonNumber(propertyContactPersonNumber.getText().toString());
-            claim.setPropertyDamage(propertyDamage.getText().toString());
-
-            claim.setPropertyContactPersonAccNumber(Integer.parseInt(propertyContactPersonAccNumber.getText().toString()));
-            claim.setPropertyContactPersonBankName(propertyContactPersonBankName.getText().toString());
-            claim.setPropertyContactPersonBankBranch(propertyContactPersonBankBranch.getText().toString());
+            currentClaim.setPropertyContactPersonAccNumber(Integer.parseInt(propertyContactPersonAccNumber.getText().toString()));
+            currentClaim.setPropertyContactPersonBankName(propertyContactPersonBankName.getText().toString());
+            currentClaim.setPropertyContactPersonBankBranch(propertyContactPersonBankBranch.getText().toString());
         }
 
-        ClaimManager.getInstance().setCurrentClaim(claim);
+        ClaimManager.getInstance().setCurrentClaim(currentClaim);
 
     }
 
     private void getDataFromClaimManager(){
-        isOtherVehicleDamagedYes.setChecked(claim.getOtherVehicleDamaged());
-        isOtherVehicleDamagedNo.setChecked(!claim.getOtherVehicleDamaged());
+        isOtherVehicleDamagedYes.setChecked(currentClaim.getOtherVehicleDamaged());
+        isOtherVehicleDamagedNo.setChecked(!currentClaim.getOtherVehicleDamaged());
 
-        otherVehicleRegNumber.setText(claim.getOtherVehicleRegNumber());
-        otherPartyDriverName.setText(claim.getOtherPartyDriverName());
-        otherPartyDriverNumber.setText(claim.getOtherPartyDriverNumber());
+        otherVehicleRegNumber.setText(currentClaim.getOtherVehicleRegNumber());
+        otherPartyDriverName.setText(currentClaim.getOtherPartyDriverName());
+        otherPartyDriverNumber.setText(currentClaim.getOtherPartyDriverNumber());
 
-        checkBox_2_1.setChecked(claim.getOtherVehicleDamagedRegions().contains("1"));
-        checkBox_2_2.setChecked(claim.getOtherVehicleDamagedRegions().contains("2"));
-        checkBox_2_3.setChecked(claim.getOtherVehicleDamagedRegions().contains("3"));
-        checkBox_2_4.setChecked(claim.getOtherVehicleDamagedRegions().contains("4"));
-        checkBox_2_5.setChecked(claim.getOtherVehicleDamagedRegions().contains("5"));
-        checkBox_2_6.setChecked(claim.getOtherVehicleDamagedRegions().contains("6"));
-        checkBox_2_7.setChecked(claim.getOtherVehicleDamagedRegions().contains("7"));
-        checkBox_2_8.setChecked(claim.getOtherVehicleDamagedRegions().contains("8"));
+        checkBox_2_1.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("1"));
+        checkBox_2_2.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("2"));
+        checkBox_2_3.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("3"));
+        checkBox_2_4.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("4"));
+        checkBox_2_5.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("5"));
+        checkBox_2_6.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("6"));
+        checkBox_2_7.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("7"));
+        checkBox_2_8.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("8"));
 
-        otherPartyAccNumber.setText(claim.getOtherPartyAccNumber());
-        otherPartyBankName.setText(claim.getOtherPartyBankName());
-        otherPartyBankBranch.setText(claim.getOtherPartyBankBranch());
+        otherPartyAccNumber.setText(currentClaim.getOtherPartyAccNumber());
+        otherPartyBankName.setText(currentClaim.getOtherPartyBankName());
+        otherPartyBankBranch.setText(currentClaim.getOtherPartyBankBranch());
 
 
 
-        isPropertyDamageYes.setChecked(claim.isPropertyDamage());
-        isPropertyDamageNo.setChecked(!claim.isPropertyDamage());
+        isPropertyDamageYes.setChecked(currentClaim.isPropertyDamage());
+        isPropertyDamageNo.setChecked(!currentClaim.isPropertyDamage());
 
-        propertyContactPersonName.setText(claim.getPropertyContactPersonName());
-        propertyContactPersonAddress.setText(claim.getPropertyContactPersonAddress());
-        propertyContactPersonNumber.setText(claim.getPropertyContactPersonNumber());
-        propertyDamage.setText(claim.getPropertyDamage());
+        propertyContactPersonName.setText(currentClaim.getPropertyContactPersonName());
+        propertyContactPersonAddress.setText(currentClaim.getPropertyContactPersonAddress());
+        propertyContactPersonNumber.setText(currentClaim.getPropertyContactPersonNumber());
+        propertyDamage.setText(currentClaim.getPropertyDamage());
 
-        propertyContactPersonAccNumber.setText(claim.getPropertyContactPersonAccNumber());
-        propertyContactPersonBankName.setText(claim.getPropertyContactPersonBankName());
-        propertyContactPersonBankBranch.setText(claim.getPropertyContactPersonBankBranch());
+        propertyContactPersonAccNumber.setText(currentClaim.getPropertyContactPersonAccNumber());
+        propertyContactPersonBankName.setText(currentClaim.getPropertyContactPersonBankName());
+        propertyContactPersonBankBranch.setText(currentClaim.getPropertyContactPersonBankBranch());
     }
 
 

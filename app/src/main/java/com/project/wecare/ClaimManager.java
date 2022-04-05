@@ -1,16 +1,19 @@
 package com.project.wecare;
 
 import android.content.Context;
+import android.location.Location;
 
 //import com.example.govimithuruapp.accountManagement.AuthController;
 
 import com.project.wecare.models.Claim;
+import com.project.wecare.services.GPSTracker;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class ClaimManager {
 
+    private GPSTracker gps;
     private ArrayList<Claim> queue; // claims to be submitted
     private Claim currentClaim;
 
@@ -45,4 +48,11 @@ public class ClaimManager {
 //        EvidenceManager.getInstance().uploadEvidences(claim, context);
     }
 
+    public GPSTracker getGps() {
+        return gps;
+    }
+
+    public void setGps(GPSTracker gps) {
+        this.gps = gps;
+    }
 }

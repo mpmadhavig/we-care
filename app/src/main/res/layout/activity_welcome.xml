@@ -28,7 +28,7 @@
 <!--            android:text="Claims"-->
 <!--            android:textSize="20dp" />-->
         <TextView
-            android:id="@+id/titleReprerDetails"
+            android:id="@+id/titleVehicles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

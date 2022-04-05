@@ -16,7 +16,7 @@ import com.project.wecare.models.Vehicle;
 
 import java.util.ArrayList;
 
-public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAdapter.ViewHolder> {
+public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAdapter.ViewHolder>{
 
     private ArrayList<Vehicle> vehicles = new ArrayList<>();
     private ItemClickListener clickListener;
