@@ -116,37 +116,36 @@ public class Claim2Activity extends AppCompatActivity {
         if (isOtherVehicleDamagedYes.isChecked()) {
 
             if (  otherVehicleRegNumber.getText().toString().equals("")
-                    | !otherVehicleRegNumber.getText().toString().matches("^(KA|DL)(10|0[1-9])([A-Z]{1,2})([1-9][0-9]{3})$")
+//                    | !otherVehicleRegNumber.getText().toString().matches("^(KA|DL)(10|0[1-9])([A-Z]{1,2})([1-9][0-9]{3})$")
             ) {
                 otherVehicleRegNumber.setError("Please enter a valid Registration Number");
                 valid = false;
             }
 
             if (  otherPartyDriverName.getText().toString().equals("")
-                    | otherPartyDriverName.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
-                    | !(otherPartyDriverName.getText().toString().length()>3)
             ) {
                 otherPartyDriverName.setError("Please enter a valid name");
                 valid = false;
             }
 
             if (  otherPartyDriverNumber.getText().toString().equals("")
-                    | !(otherPartyDriverNumber.getText().toString().length()==10)
+                    | (otherPartyDriverNumber.getText().toString().length()>10)
             ) {
                 otherPartyDriverNumber.setError("Please enter a valid contact Number");
                 valid = false;
             }
 
-            if ( checkBox_2_1.isChecked() |
+            if ( !(checkBox_2_1.isChecked() |
                 checkBox_2_2.isChecked() |
                 checkBox_2_3.isChecked() |
                 checkBox_2_4.isChecked() |
                 checkBox_2_5.isChecked() |
                 checkBox_2_6.isChecked() |
                 checkBox_2_7.isChecked() |
-                checkBox_2_8.isChecked()
+                checkBox_2_8.isChecked())
             ) {
                 txtDamagedArea.setError("Please select one or more area");
+                valid = false;
             }
 
             if (  otherPartyAccNumber.getText().toString().equals("") ) {
@@ -155,16 +154,12 @@ public class Claim2Activity extends AppCompatActivity {
             }
 
             if (  otherPartyBankName.getText().toString().equals("")
-                    | otherPartyBankName.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
-                    | !(otherPartyBankName.getText().toString().length()>3)
             ) {
                 otherPartyBankName.setError("Please enter a valid name");
                 valid = false;
             }
 
             if (  otherPartyBankBranch.getText().toString().equals("")
-                    | otherPartyBankBranch.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
-                    | !(otherPartyBankBranch.getText().toString().length()>3)
             ) {
                 otherPartyBankBranch.setError("Please enter a valid name");
                 valid = false;
@@ -187,7 +182,7 @@ public class Claim2Activity extends AppCompatActivity {
             }
 
             if (  propertyContactPersonNumber.getText().toString().equals("")
-                    | !(propertyContactPersonNumber.getText().toString().length()==10)
+                    | (propertyContactPersonNumber.getText().toString().length()>10)
             ) {
                 propertyContactPersonNumber.setError("Please enter a valid contact Number");
                 valid = false;
@@ -349,6 +344,7 @@ public class Claim2Activity extends AppCompatActivity {
         checkBox_2_6.setError(null);
         checkBox_2_7.setError(null);
         checkBox_2_8.setError(null);
+        txtDamagedArea.setError(null);
         isOtherVehicleDamagedTxt.setError(null);
     }
 
