@@ -12,19 +12,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.project.wecare.helpers.ItemClickListener;
 import com.project.wecare.helpers.VehicleRecViewAdapter;
 import com.project.wecare.models.Vehicle;
 import com.project.wecare.services.GPSTracker;
 
 import java.util.ArrayList;
 
-public class VehiclesActivity extends AppCompatActivity {
+public class VehiclesActivity extends AppCompatActivity implements ItemClickListener {
 
     Context mContext;
     GPSTracker gps;
@@ -51,11 +53,17 @@ public class VehiclesActivity extends AppCompatActivity {
 
         VehicleRecViewAdapter adapter = new VehicleRecViewAdapter();
         adapter.setVehicles(vehicles);
+        adapter.setClickListener(this);
 
         vehicleRecView.setAdapter(adapter);
         vehicleRecView.setLayoutManager(new GridLayoutManager(this, 1));
 
         initiateGPSTracker();
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        // The onClick implementation of the RecyclerView item click
     }
 
     public void initiateGPSTracker() {

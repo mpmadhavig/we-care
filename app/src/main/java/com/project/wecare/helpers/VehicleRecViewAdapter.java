@@ -15,11 +15,16 @@ import com.project.wecare.models.Vehicle;
 
 import java.util.ArrayList;
 
-public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAdapter.ViewHolder> {
+public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAdapter.ViewHolder>{
 
     private ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private ItemClickListener clickListener;
 
     public VehicleRecViewAdapter() {}
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
 
     @NonNull
     @Override
@@ -46,7 +51,7 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ImageView imageView;
         private final TextView textView;
 
@@ -54,6 +59,12 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
             super(view);
             imageView = view.findViewById(R.id.vehicleImage);
             textView = view.findViewById(R.id.vehicleName);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAbsoluteAdapterPosition());
         }
     }
 }

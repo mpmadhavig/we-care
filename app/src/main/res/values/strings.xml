@@ -65,4 +65,6 @@
     <string name="brief_description">Brief Description</string>
     <string name="is_another_vehicle_damaged">Is another vehicle damaged?</string>
     <string name="property_damaged_party_account_details">Bank Account details</string>
+    <string name="property_damage_evidence">Property damage evidence</string>
+    <string name="vehicle_damage_evidence">Vehicle damage evidence</string>
 </resources>
