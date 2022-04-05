@@ -128,8 +128,8 @@ public class ClaimActivity extends AppCompatActivity {
         initialize();
 
         if (!validate()) {
-//            Toast.makeText(this, "Invalid information provided", Toast.LENGTH_SHORT).show();
-//        } else{
+            Toast.makeText(this, "Invalid information provided", Toast.LENGTH_SHORT).show();
+        } else{
             Intent intent = new Intent(ClaimActivity.this, RecordActivity.class);
             extractFirstFormData();
             ClaimManager.getInstance().setCurrentClaim(claim);
@@ -166,8 +166,8 @@ public class ClaimActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (contactNo.isEmpty()){
-            et_driverContactNo.setError("Please enter contact Number");
+        if (contactNo.isEmpty() | !(contactNo.length()==10)){
+            et_driverContactNo.setError("Please enter a valid contact Number");
             valid = false;
         }
 

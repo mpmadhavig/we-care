@@ -70,4 +70,9 @@
     <string name="password">Password</string>
     <string name="txt_nicNumber">NIC Number</string>
     <string name="btn_login">Login</string>
+    <string name="txt_finalizing_claim">Finalizing Claim</string>
+    <string name="txt_claimVerification">I hereby verify that the details in this form are correct.</string>
+    <string name="txt_submitClaim">Submit Claim</string>
+    <string name="txt_submittingClaim">Submitting Claim</string>
+    <string name="txt_PleaseWait">Please Wait...</string>
 </resources>
