@@ -27,8 +27,9 @@ public class Claim3Activity extends AppCompatActivity {
             public void onClick(View view) {
                 if (cb_pledgeChecked.isChecked()){
                     Intent intent = new Intent(Claim3Activity.this , Claim4Activity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    finish();
                 }else{
                     Toast.makeText(Claim3Activity.this, "Please check the pledge to submit the form.",
                             Toast.LENGTH_LONG).show();
