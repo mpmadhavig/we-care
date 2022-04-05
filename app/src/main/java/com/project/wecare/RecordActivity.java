@@ -102,7 +102,7 @@ public class RecordActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        startActivity(new Intent(this,RecordActivity.class));
+        startActivity(new Intent(this, ClaimActivity.class));
         return super.onOptionsItemSelected(item);
     }
 

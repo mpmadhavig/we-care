@@ -68,14 +68,8 @@ public class Record2Activity extends AppCompatActivity {
         currentClaim = claimManager.getCurrentClaim();
         gps = claimManager.getGps();
 
-        // initialize local evidence array
-        propertyDamageEvidences = new ArrayList<>();
-        otherVehicleDamageEvidences = new ArrayList<>();
-
         // set currentClaim
         this.getDataFromClaimManager();
-        currentClaim.setPropertyDamageEvidences(propertyDamageEvidences);
-        currentClaim.setOtherVehicleDamageEvidences(otherVehicleDamageEvidences);
 
         // initialize image grid view recycler view
         ImageViewAdapter adapterProperty = new ImageViewAdapter(this, R.layout.image_grid_item, propertyDamageEvidences);
@@ -145,7 +139,7 @@ public class Record2Activity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "NO isThirdPartyEvidence "
                     + currentClaim.getOtherVehicleDamageEvidences().size() + " "
-                    + currentClaim.getPropertyDamageEvidences()
+                    + currentClaim.getPropertyDamageEvidences().size()
                     , Toast.LENGTH_SHORT).show();
             this.propertyDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
             this.otherVehicleDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
@@ -168,7 +162,12 @@ public class Record2Activity extends AppCompatActivity {
         }
         if (validate) {
             claimManager.setThirdPartyEvidence(true);
-            Toast.makeText(this, "Validated setThirdPartyEvidence " + claimManager.isThirdPartyEvidence(), Toast.LENGTH_SHORT).show();
+            if (propertyDamageEvidences.get(propertyDamageEvidences.size() - 1).getImagePath().equals("")) {
+                propertyDamageEvidences.remove(propertyDamageEvidences.size() - 1);
+            }
+            if (otherVehicleDamageEvidences.get(otherVehicleDamageEvidences.size() - 1).getImagePath().equals("")) {
+                otherVehicleDamageEvidences.remove(otherVehicleDamageEvidences.size() - 1);
+            }
         }
 
         return validate;
@@ -220,11 +219,11 @@ public class Record2Activity extends AppCompatActivity {
                 }
 
                 if (isVehicleEvidenceView) {
-                    if (otherVehicleDamageEvidences.size() == NO_OF_GRIDS) {
+                    if (otherVehicleDamageEvidences.size() < NO_OF_GRIDS) {
                         otherVehicleDamageEvidences.add(new Evidence("", new Date(), 0.0, 0.0, ""));
                     }
                 } else {
-                    if (propertyDamageEvidences.size() == NO_OF_GRIDS) {
+                    if (propertyDamageEvidences.size() < NO_OF_GRIDS) {
                         propertyDamageEvidences.add(new Evidence("", new Date(), 0.0, 0.0, ""));
                     }
                 }

@@ -2,6 +2,7 @@ package com.project.wecare;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 
 //import com.example.govimithuruapp.accountManagement.AuthController;
 
@@ -33,7 +34,10 @@ public class ClaimManager {
     }
 
     public static ClaimManager getInstance() {
-        if (instance == null) instance = new ClaimManager();
+        if (instance == null) {
+            Log.d("MAD", "getInstance: ClaimManager");
+            instance = new ClaimManager();
+        }
         return instance;
     }
 

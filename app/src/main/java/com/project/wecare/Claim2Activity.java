@@ -282,10 +282,10 @@ public class Claim2Activity extends AppCompatActivity {
 
                 propertyContactPersonName.setText(currentClaim.getPropertyContactPersonName());
                 propertyContactPersonAddress.setText(currentClaim.getPropertyContactPersonAddress());
-                propertyContactPersonNumber.setText(currentClaim.getPropertyContactPersonNumber());
+                propertyContactPersonNumber.setText((currentClaim.getPropertyContactPersonNumber()));
                 propertyDamage.setText(currentClaim.getPropertyDamage());
 
-                propertyContactPersonAccNumber.setText(currentClaim.getPropertyContactPersonAccNumber());
+                propertyContactPersonAccNumber.setText(String.valueOf(currentClaim.getPropertyContactPersonAccNumber()));
                 propertyContactPersonBankName.setText(currentClaim.getPropertyContactPersonBankName());
                 propertyContactPersonBankBranch.setText(currentClaim.getPropertyContactPersonBankBranch());
             }
@@ -311,7 +311,7 @@ public class Claim2Activity extends AppCompatActivity {
                 checkBox_2_7.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("7"));
                 checkBox_2_8.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("8"));
 
-                otherPartyAccNumber.setText(currentClaim.getOtherPartyAccNumber());
+                otherPartyAccNumber.setText(String.valueOf(currentClaim.getOtherPartyAccNumber()));
                 otherPartyBankName.setText(currentClaim.getOtherPartyBankName());
                 otherPartyBankBranch.setText(currentClaim.getOtherPartyBankBranch());
             }
