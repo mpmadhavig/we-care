@@ -50,6 +50,7 @@ public class Record2Activity extends AppCompatActivity {
     private ArrayList<Evidence> propertyDamageEvidences;
     private ArrayList<Evidence> otherVehicleDamageEvidences;
 
+    private ClaimManager claimManager;
     private GPSTracker gps;
     private Claim currentClaim;
 
@@ -63,16 +64,16 @@ public class Record2Activity extends AppCompatActivity {
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
 
         // get the currently processing claim
-        ClaimManager claimManager = ClaimManager.getInstance();
+        claimManager = ClaimManager.getInstance();
         currentClaim = claimManager.getCurrentClaim();
         gps = claimManager.getGps();
 
         // initialize local evidence array
         propertyDamageEvidences = new ArrayList<>();
         otherVehicleDamageEvidences = new ArrayList<>();
-        propertyDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
-        otherVehicleDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
 
+        // set currentClaim
+        this.getDataFromClaimManager();
         currentClaim.setPropertyDamageEvidences(propertyDamageEvidences);
         currentClaim.setOtherVehicleDamageEvidences(otherVehicleDamageEvidences);
 
@@ -85,12 +86,8 @@ public class Record2Activity extends AppCompatActivity {
         gridViewProperty.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                if (position>=NO_OF_GRIDS)
-                    Toast.makeText(Record2Activity.this, "Maximum no of media items exceeded", Toast.LENGTH_SHORT).show();
-                else {
-                    isVehicleEvidenceView = false;
-                    dispatchTakePictureIntent(view, position);
-                }
+                isVehicleEvidenceView = false;
+                dispatchTakePictureIntent(view, position);
             }
         });
 
@@ -103,12 +100,8 @@ public class Record2Activity extends AppCompatActivity {
         gridViewVehicle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                if (position>=NO_OF_GRIDS)
-                    Toast.makeText(Record2Activity.this, "Maximum no of media items exceeded", Toast.LENGTH_SHORT).show();
-                else {
-                    isVehicleEvidenceView = true;
-                    dispatchTakePictureIntent(view, position);
-                }
+                isVehicleEvidenceView = true;
+                dispatchTakePictureIntent(view, position);
             }
         });
 
@@ -119,23 +112,46 @@ public class Record2Activity extends AppCompatActivity {
                 if (isValidate()) {
                     // Todo: disable taking photos and remove these lines
                     if (!currentClaim.getOtherVehicleDamaged()) {
-                        currentClaim.setOtherVehicleDamageEvidences(null);
+                        currentClaim.setOtherVehicleDamageEvidences(new ArrayList<>());
                     }
                     if (!currentClaim.isPropertyDamage()) {
-                        currentClaim.setPropertyDamageEvidences(null);
+                        currentClaim.setPropertyDamageEvidences(new ArrayList<>());
                     }
 
                     Intent intent = new Intent(Record2Activity.this, VehiclesActivity.class);
                     startActivity(intent);
+
                 } else {
                     Toast.makeText(Record2Activity.this, "Please add one or more captures as evidence", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
     }
 
-    // Todo: remove last element from the array
+    private void getDataFromClaimManager() {
+        this.propertyDamageEvidences = currentClaim.getPropertyDamageEvidences();
+        this.otherVehicleDamageEvidences = currentClaim.getOtherVehicleDamageEvidences();
+
+        if (claimManager.isThirdPartyEvidence()) {
+            Toast.makeText(this, "isThirdPartyEvidence", Toast.LENGTH_SHORT).show();
+            if (this.propertyDamageEvidences.size() < NO_OF_GRIDS) {
+                this.propertyDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
+            }
+
+            if (this.otherVehicleDamageEvidences.size() < NO_OF_GRIDS) {
+                this.otherVehicleDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
+            }
+
+        } else {
+            Toast.makeText(this, "NO isThirdPartyEvidence "
+                    + currentClaim.getOtherVehicleDamageEvidences().size() + " "
+                    + currentClaim.getPropertyDamageEvidences()
+                    , Toast.LENGTH_SHORT).show();
+            this.propertyDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
+            this.otherVehicleDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
+        }
+    }
+
     private boolean isValidate() {
         boolean validate = true;
         if (currentClaim.isPropertyDamage()) {
@@ -145,18 +161,23 @@ public class Record2Activity extends AppCompatActivity {
             }
         }
         if (currentClaim.getOtherVehicleDamaged()) {
-            Toast.makeText(Record2Activity.this, "func: getOtherVehicleDamaged", Toast.LENGTH_SHORT).show();
             if (otherVehicleDamageEvidences.size() == 0) {
                 vehicleEvidenceTitle.setError("Add one or more evidences");
                 validate = false;
             }
         }
+        if (validate) {
+            claimManager.setThirdPartyEvidence(true);
+            Toast.makeText(this, "Validated setThirdPartyEvidence " + claimManager.isThirdPartyEvidence(), Toast.LENGTH_SHORT).show();
+        }
+
         return validate;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        startActivity(new Intent(this,Claim2Activity.class));
+        if (isValidate())
+            startActivity(new Intent(Record2Activity.this,Claim2Activity.class));
         return super.onOptionsItemSelected(item);
     }
 
@@ -172,6 +193,7 @@ public class Record2Activity extends AppCompatActivity {
                 if (isVehicleEvidenceView) {
                     image = this.gridViewVehicle.getChildAt(this.currentPosition).findViewById(R.id.image_id);
                     currentEvidence = otherVehicleDamageEvidences.get(this.currentPosition);
+
                 } else {
                     image = this.gridViewProperty.getChildAt(this.currentPosition).findViewById(R.id.image_id);
                     currentEvidence = propertyDamageEvidences.get(this.currentPosition);
@@ -198,11 +220,11 @@ public class Record2Activity extends AppCompatActivity {
                 }
 
                 if (isVehicleEvidenceView) {
-                    if (otherVehicleDamageEvidences.size() == (currentPosition+1) && (currentPosition+1)<=NO_OF_GRIDS) {
+                    if (otherVehicleDamageEvidences.size() == NO_OF_GRIDS) {
                         otherVehicleDamageEvidences.add(new Evidence("", new Date(), 0.0, 0.0, ""));
                     }
                 } else {
-                    if (propertyDamageEvidences.size() == (currentPosition+1) && (currentPosition+1)<=NO_OF_GRIDS) {
+                    if (propertyDamageEvidences.size() == NO_OF_GRIDS) {
                         propertyDamageEvidences.add(new Evidence("", new Date(), 0.0, 0.0, ""));
                     }
                 }
