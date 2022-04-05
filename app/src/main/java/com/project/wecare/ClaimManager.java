@@ -26,6 +26,10 @@ public class ClaimManager {
 
     private ClaimManager() {
         queue = new ArrayList<>();
+        accidentDetails = false;
+        accidentEvidence = false;
+        thirdPartDetails = false;
+        thirdPartyEvidence = false;
     }
 
     public static ClaimManager getInstance() {
