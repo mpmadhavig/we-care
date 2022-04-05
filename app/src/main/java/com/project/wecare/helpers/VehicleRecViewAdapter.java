@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.wecare.R;
+import com.project.wecare.interfaces.ItemClickListener;
 import com.project.wecare.models.Vehicle;
 
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.imageView.setImageResource(vehicles.get(position).getSrc());
         holder.textView.setText(vehicles.get(position).getRegNumber() + " : " +
                 vehicles.get(position).getModel() + " (" + vehicles.get(position).getYear() + ")");
     }
@@ -51,13 +51,11 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private final ImageView imageView;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView textView;
 
-        public ViewHolder(@NonNull View view){
+        public ViewHolder(View view){
             super(view);
-            imageView = view.findViewById(R.id.vehicleImage);
             textView = view.findViewById(R.id.vehicleName);
             view.setOnClickListener(this);
         }
