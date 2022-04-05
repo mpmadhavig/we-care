@@ -115,21 +115,18 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
             ActivityCompat.requestPermissions(VehiclesActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         } else {
-            Toast.makeText(mContext,"You need have granted permission",Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "initiateGPSTracker: You need have granted permission");
             gps = new GPSTracker(mContext, VehiclesActivity.this);
 
             // Check if GPS enabled
             if (gps.canGetLocation()) {
-
                 double latitude = gps.getLatitude();
                 double longitude = gps.getLongitude();
 
                 ClaimManager.getInstance().setGps(gps);
+                Log.d(TAG, "initiateGPSTracker: Your Location is - \nLat: " + latitude + "\nLong: " + longitude);
 
-                Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
             } else {
-                // Can't get location.
-                // GPS or network is not enabled.
                 // Ask user to enable GPS/network in settings.
                 gps.showSettingsAlert();
             }
@@ -154,7 +151,6 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
 
             case R.id.action_new_claim2:
                 Intent intent = new Intent(VehiclesActivity.this, ClaimActivity.class);
-                intent.putExtra("ACCESS_CURRENT_CLAIM", false); // Todo : Later should be removed
                 startActivity(intent);
                 return true;
 

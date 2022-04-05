@@ -51,7 +51,7 @@ public class Claim2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim2);
-        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
+        setTitle("Details: Third Party Property Damage");
 
         // action bar on top of the screen
         ActionBar actionBar = getSupportActionBar();
@@ -59,9 +59,6 @@ public class Claim2Activity extends AppCompatActivity {
 
         // Access the currently working out claim
         claimManager = ClaimManager.getInstance();
-        // Todo: remove
-        if (!claimManager.isThirdPartDetails())
-            claimManager.setCurrentClaim(claimManager.createNewClaim());
         currentClaim = claimManager.getCurrentClaim();
 
         this.initializeViewElements();
@@ -75,9 +72,7 @@ public class Claim2Activity extends AppCompatActivity {
                     Toast.makeText(Claim2Activity.this, "Invalid information provided", Toast.LENGTH_SHORT).show();
 
                 } else {
-
                     Intent intent = new Intent(Claim2Activity.this, Record2Activity.class);
-                    sendDataToClaimManager();
                     startActivity(intent);
                 }
             }
@@ -223,9 +218,10 @@ public class Claim2Activity extends AppCompatActivity {
             valid = false;
         }
 
-        if (valid)
+        if (valid) {
             claimManager.setThirdPartDetails(true);
-
+            sendDataToClaimManager();
+        }
         return valid;
     }
 

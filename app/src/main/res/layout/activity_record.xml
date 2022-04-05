@@ -12,6 +12,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/evidenceTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:text="@string/own_vehicle_damage_evidence"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
         <GridView
             android:id="@+id/image_capture_grid_view"
             android:layout_width="fill_parent"

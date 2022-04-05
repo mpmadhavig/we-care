@@ -70,4 +70,5 @@
     <string name="password">Password</string>
     <string name="txt_nicNumber">NIC Number</string>
     <string name="btn_login">Login</string>
+    <string name="own_vehicle_damage_evidence">Own Vehicle damage Evidence</string>
 </resources>
