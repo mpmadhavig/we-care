@@ -16,12 +16,20 @@ public class ClaimManager {
     private GPSTracker gps;
     private ArrayList<Claim> queue; // claims to be submitted
     private Claim currentClaim;
+    private boolean accidentDetails;
+    private boolean accidentEvidence;
+    private boolean thirdPartDetails;
+    private boolean thirdPartyEvidence;
 
     // Singleton
     private static ClaimManager instance;
 
     private ClaimManager() {
         queue = new ArrayList<>();
+        accidentDetails = false;
+        accidentEvidence = false;
+        thirdPartDetails = false;
+        thirdPartyEvidence = false;
     }
 
     public static ClaimManager getInstance() {
@@ -54,5 +62,37 @@ public class ClaimManager {
 
     public void setGps(GPSTracker gps) {
         this.gps = gps;
+    }
+
+    public boolean isAccidentDetails() {
+        return accidentDetails;
+    }
+
+    public void setAccidentDetails(boolean accidentDetails) {
+        this.accidentDetails = accidentDetails;
+    }
+
+    public boolean isAccidentEvidence() {
+        return accidentEvidence;
+    }
+
+    public void setAccidentEvidence(boolean accidentEvidence) {
+        this.accidentEvidence = accidentEvidence;
+    }
+
+    public boolean isThirdPartDetails() {
+        return thirdPartDetails;
+    }
+
+    public void setThirdPartDetails(boolean thirdPartDetails) {
+        this.thirdPartDetails = thirdPartDetails;
+    }
+
+    public boolean isThirdPartyEvidence() {
+        return thirdPartyEvidence;
+    }
+
+    public void setThirdPartyEvidence(boolean thirdPartyEvidence) {
+        this.thirdPartyEvidence = thirdPartyEvidence;
     }
 }

@@ -133,6 +133,7 @@ public class ClaimActivity extends AppCompatActivity {
             Intent intent = new Intent(ClaimActivity.this, RecordActivity.class);
             extractFirstFormData();
             ClaimManager.getInstance().setCurrentClaim(claim);
+            ClaimManager.getInstance().setAccidentDetails(true);
             startActivity(intent);
         }
     }

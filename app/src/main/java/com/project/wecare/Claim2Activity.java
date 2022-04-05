@@ -1,10 +1,12 @@
 package com.project.wecare;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,6 +24,7 @@ import java.util.Objects;
 public class Claim2Activity extends AppCompatActivity {
 
     private Claim currentClaim;
+    private ClaimManager claimManager;
 
     // View elements
     private TextView isPropertyDamageTxt, isOtherVehicleDamagedTxt;
@@ -48,12 +51,21 @@ public class Claim2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim2);
+        Toast.makeText(this, "onCreate", Toast.LENGTH_SHORT).show();
 
         // action bar on top of the screen
         ActionBar actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
 
-        initializeViewElements();
+        // Access the currently working out claim
+        claimManager = ClaimManager.getInstance();
+        // Todo: remove
+        if (!claimManager.isThirdPartDetails())
+            claimManager.setCurrentClaim(claimManager.createNewClaim());
+        currentClaim = claimManager.getCurrentClaim();
+
+        this.initializeViewElements();
+        this.getDataFromClaimManager();
 
         FloatingActionButton nextButton = findViewById(R.id.goToRecordActivity2);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +75,6 @@ public class Claim2Activity extends AppCompatActivity {
                     Toast.makeText(Claim2Activity.this, "Invalid information provided", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    if (currentClaim != null) {
-                        Toast.makeText(Claim2Activity.this, "currentClaim not NULL", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(Claim2Activity.this, "currentClaim is NULL", Toast.LENGTH_SHORT).show();
-                    }
 
                     Intent intent = new Intent(Claim2Activity.this, Record2Activity.class);
                     sendDataToClaimManager();
@@ -93,18 +100,15 @@ public class Claim2Activity extends AppCompatActivity {
                 changeEnablePropertyForVehicle(enable);
             }
         });
-
-        // Access the currently working out claim
-        ClaimManager claimManager = ClaimManager.getInstance();
-        claimManager.setCurrentClaim(claimManager.createNewClaim());
-        currentClaim = claimManager.getCurrentClaim();
-
-        // Todo: set empty values if no value exists
-
-        // set if default values exists
-        //this.getDataFromClaimManager();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (isValidate()) {
+            startActivity(new Intent(Claim2Activity.this, RecordActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private boolean isValidate(){
         boolean valid = true;
@@ -112,37 +116,36 @@ public class Claim2Activity extends AppCompatActivity {
         if (isOtherVehicleDamagedYes.isChecked()) {
 
             if (  otherVehicleRegNumber.getText().toString().equals("")
-                    | !otherVehicleRegNumber.getText().toString().matches("^(KA|DL)(10|0[1-9])([A-Z]{1,2})([1-9][0-9]{3})$")
+//                    | !otherVehicleRegNumber.getText().toString().matches("^(KA|DL)(10|0[1-9])([A-Z]{1,2})([1-9][0-9]{3})$")
             ) {
                 otherVehicleRegNumber.setError("Please enter a valid Registration Number");
                 valid = false;
             }
 
             if (  otherPartyDriverName.getText().toString().equals("")
-                    | otherPartyDriverName.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
-                    | !(otherPartyDriverName.getText().toString().length()>3)
             ) {
                 otherPartyDriverName.setError("Please enter a valid name");
                 valid = false;
             }
 
             if (  otherPartyDriverNumber.getText().toString().equals("")
-                    | !(otherPartyDriverNumber.getText().toString().length()==10)
+                    | (otherPartyDriverNumber.getText().toString().length()>10)
             ) {
                 otherPartyDriverNumber.setError("Please enter a valid contact Number");
                 valid = false;
             }
 
-            if ( checkBox_2_1.isChecked() |
+            if ( !(checkBox_2_1.isChecked() |
                 checkBox_2_2.isChecked() |
                 checkBox_2_3.isChecked() |
                 checkBox_2_4.isChecked() |
                 checkBox_2_5.isChecked() |
                 checkBox_2_6.isChecked() |
                 checkBox_2_7.isChecked() |
-                checkBox_2_8.isChecked()
+                checkBox_2_8.isChecked())
             ) {
                 txtDamagedArea.setError("Please select one or more area");
+                valid = false;
             }
 
             if (  otherPartyAccNumber.getText().toString().equals("") ) {
@@ -151,16 +154,12 @@ public class Claim2Activity extends AppCompatActivity {
             }
 
             if (  otherPartyBankName.getText().toString().equals("")
-                    | otherPartyBankName.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
-                    | !(otherPartyBankName.getText().toString().length()>3)
             ) {
                 otherPartyBankName.setError("Please enter a valid name");
                 valid = false;
             }
 
             if (  otherPartyBankBranch.getText().toString().equals("")
-                    | otherPartyBankBranch.getText().toString().matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*")
-                    | !(otherPartyBankBranch.getText().toString().length()>3)
             ) {
                 otherPartyBankBranch.setError("Please enter a valid name");
                 valid = false;
@@ -183,7 +182,7 @@ public class Claim2Activity extends AppCompatActivity {
             }
 
             if (  propertyContactPersonNumber.getText().toString().equals("")
-                    | !(propertyContactPersonNumber.getText().toString().length()==10)
+                    | (propertyContactPersonNumber.getText().toString().length()>10)
             ) {
                 propertyContactPersonNumber.setError("Please enter a valid contact Number");
                 valid = false;
@@ -223,6 +222,9 @@ public class Claim2Activity extends AppCompatActivity {
             isOtherVehicleDamagedTxt.setError("Please mark your choice");
             valid = false;
         }
+
+        if (valid)
+            claimManager.setThirdPartDetails(true);
 
         return valid;
     }
@@ -267,43 +269,54 @@ public class Claim2Activity extends AppCompatActivity {
 
     }
 
-    private void getDataFromClaimManager(){
-        isOtherVehicleDamagedYes.setChecked(currentClaim.getOtherVehicleDamaged());
-        isOtherVehicleDamagedNo.setChecked(!currentClaim.getOtherVehicleDamaged());
+    private void getDataFromClaimManager() {
 
-        otherVehicleRegNumber.setText(currentClaim.getOtherVehicleRegNumber());
-        otherPartyDriverName.setText(currentClaim.getOtherPartyDriverName());
-        otherPartyDriverNumber.setText(currentClaim.getOtherPartyDriverNumber());
+        if (claimManager.isThirdPartDetails()) {
+            if (!currentClaim.isPropertyDamage()) {
+                isPropertyDamageYes.setChecked(currentClaim.isPropertyDamage());
+                isPropertyDamageNo.setChecked(!currentClaim.isPropertyDamage());
 
-        checkBox_2_1.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("1"));
-        checkBox_2_2.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("2"));
-        checkBox_2_3.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("3"));
-        checkBox_2_4.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("4"));
-        checkBox_2_5.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("5"));
-        checkBox_2_6.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("6"));
-        checkBox_2_7.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("7"));
-        checkBox_2_8.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("8"));
+            } else {
+                isPropertyDamageYes.setChecked(currentClaim.isPropertyDamage());
+                isPropertyDamageNo.setChecked(!currentClaim.isPropertyDamage());
 
-        otherPartyAccNumber.setText(currentClaim.getOtherPartyAccNumber());
-        otherPartyBankName.setText(currentClaim.getOtherPartyBankName());
-        otherPartyBankBranch.setText(currentClaim.getOtherPartyBankBranch());
+                propertyContactPersonName.setText(currentClaim.getPropertyContactPersonName());
+                propertyContactPersonAddress.setText(currentClaim.getPropertyContactPersonAddress());
+                propertyContactPersonNumber.setText(currentClaim.getPropertyContactPersonNumber());
+                propertyDamage.setText(currentClaim.getPropertyDamage());
 
+                propertyContactPersonAccNumber.setText(currentClaim.getPropertyContactPersonAccNumber());
+                propertyContactPersonBankName.setText(currentClaim.getPropertyContactPersonBankName());
+                propertyContactPersonBankBranch.setText(currentClaim.getPropertyContactPersonBankBranch());
+            }
 
+            if (!currentClaim.getOtherVehicleDamaged()) {
+                isOtherVehicleDamagedYes.setChecked(currentClaim.getOtherVehicleDamaged());
+                isOtherVehicleDamagedNo.setChecked(!currentClaim.getOtherVehicleDamaged());
 
-        isPropertyDamageYes.setChecked(currentClaim.isPropertyDamage());
-        isPropertyDamageNo.setChecked(!currentClaim.isPropertyDamage());
+            } else {
+                isOtherVehicleDamagedYes.setChecked(currentClaim.getOtherVehicleDamaged());
+                isOtherVehicleDamagedNo.setChecked(!currentClaim.getOtherVehicleDamaged());
 
-        propertyContactPersonName.setText(currentClaim.getPropertyContactPersonName());
-        propertyContactPersonAddress.setText(currentClaim.getPropertyContactPersonAddress());
-        propertyContactPersonNumber.setText(currentClaim.getPropertyContactPersonNumber());
-        propertyDamage.setText(currentClaim.getPropertyDamage());
+                otherVehicleRegNumber.setText(currentClaim.getOtherVehicleRegNumber());
+                otherPartyDriverName.setText(currentClaim.getOtherPartyDriverName());
+                otherPartyDriverNumber.setText(currentClaim.getOtherPartyDriverNumber());
 
-        propertyContactPersonAccNumber.setText(currentClaim.getPropertyContactPersonAccNumber());
-        propertyContactPersonBankName.setText(currentClaim.getPropertyContactPersonBankName());
-        propertyContactPersonBankBranch.setText(currentClaim.getPropertyContactPersonBankBranch());
+                checkBox_2_1.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("1"));
+                checkBox_2_2.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("2"));
+                checkBox_2_3.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("3"));
+                checkBox_2_4.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("4"));
+                checkBox_2_5.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("5"));
+                checkBox_2_6.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("6"));
+                checkBox_2_7.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("7"));
+                checkBox_2_8.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("8"));
+
+                otherPartyAccNumber.setText(currentClaim.getOtherPartyAccNumber());
+                otherPartyBankName.setText(currentClaim.getOtherPartyBankName());
+                otherPartyBankBranch.setText(currentClaim.getOtherPartyBankBranch());
+            }
+        }
     }
-
-
 
     private void clearPropertyErrorMessage() {
         propertyContactPersonName.setError(null);
@@ -331,6 +344,7 @@ public class Claim2Activity extends AppCompatActivity {
         checkBox_2_6.setError(null);
         checkBox_2_7.setError(null);
         checkBox_2_8.setError(null);
+        txtDamagedArea.setError(null);
         isOtherVehicleDamagedTxt.setError(null);
     }
 
