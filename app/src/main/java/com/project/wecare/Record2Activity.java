@@ -112,10 +112,10 @@ public class Record2Activity extends AppCompatActivity {
                 if (isValidate()) {
                     // Todo: disable taking photos and remove these lines
                     if (!currentClaim.getOtherVehicleDamaged()) {
-                        currentClaim.setOtherVehicleDamageEvidences(null);
+                        currentClaim.setOtherVehicleDamageEvidences(new ArrayList<>());
                     }
                     if (!currentClaim.isPropertyDamage()) {
-                        currentClaim.setPropertyDamageEvidences(null);
+                        currentClaim.setPropertyDamageEvidences(new ArrayList<>());
                     }
 
                     Intent intent = new Intent(Record2Activity.this, VehiclesActivity.class);
@@ -129,23 +129,26 @@ public class Record2Activity extends AppCompatActivity {
     }
 
     private void getDataFromClaimManager() {
+        this.propertyDamageEvidences = currentClaim.getPropertyDamageEvidences();
+        this.otherVehicleDamageEvidences = currentClaim.getOtherVehicleDamageEvidences();
+
         if (claimManager.isThirdPartyEvidence()) {
             Toast.makeText(this, "isThirdPartyEvidence", Toast.LENGTH_SHORT).show();
-            this.propertyDamageEvidences = currentClaim.getPropertyDamageEvidences();
             if (this.propertyDamageEvidences.size() < NO_OF_GRIDS) {
                 this.propertyDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
             }
 
-            this.otherVehicleDamageEvidences = currentClaim.getOtherVehicleDamageEvidences();
             if (this.otherVehicleDamageEvidences.size() < NO_OF_GRIDS) {
                 this.otherVehicleDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
             }
 
         } else {
-            Toast.makeText(this, "NO isThirdPartyEvidence", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "NO isThirdPartyEvidence "
+                    + currentClaim.getOtherVehicleDamageEvidences().size() + " "
+                    + currentClaim.getPropertyDamageEvidences()
+                    , Toast.LENGTH_SHORT).show();
             this.propertyDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
             this.otherVehicleDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
-
         }
     }
 
@@ -190,6 +193,7 @@ public class Record2Activity extends AppCompatActivity {
                 if (isVehicleEvidenceView) {
                     image = this.gridViewVehicle.getChildAt(this.currentPosition).findViewById(R.id.image_id);
                     currentEvidence = otherVehicleDamageEvidences.get(this.currentPosition);
+
                 } else {
                     image = this.gridViewProperty.getChildAt(this.currentPosition).findViewById(R.id.image_id);
                     currentEvidence = propertyDamageEvidences.get(this.currentPosition);
