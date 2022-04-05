@@ -65,10 +65,10 @@
     <string name="brief_description">Brief Description</string>
     <string name="is_another_vehicle_damaged">Is another vehicle damaged?</string>
     <string name="property_damaged_party_account_details">Bank Account details</string>
-    <string name="property_damage_evidence">Property damage evidence</string>
-    <string name="vehicle_damage_evidence">Vehicle damage evidence</string>
+    <string name="property_damage_evidence"> </string>
+    <string name="vehicle_damage_evidence"> </string>
     <string name="password">Password</string>
     <string name="txt_nicNumber">NIC Number</string>
     <string name="btn_login">Login</string>
-    <string name="own_vehicle_damage_evidence">Own Vehicle damage Evidence</string>
+    <string name="own_vehicle_damage_evidence"> </string>
 </resources>
