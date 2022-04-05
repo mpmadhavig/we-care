@@ -3,6 +3,7 @@ package com.project.wecare;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.project.wecare.database.users.UserDatabaseManager;
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.models.User;
 
+import java.util.ArrayList;
+
 
 public class LoginActivity extends AppCompatActivity {
     
@@ -28,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private String nic, password, email;
     private Button btn_login;
 
-    private String TAG = "AppLogin";
+    private String TAG = "WeCare";
     private FirebaseAuth mAuth;
 
     @Override
@@ -133,7 +136,14 @@ public class LoginActivity extends AppCompatActivity {
                                             "EN"
                                     );
                                     user.setAuthenticated(true);
+                                    user.setVehiclesRegNumber( (ArrayList<String>) document.get("vehicles"));
                                     UserManager.getInstance().setCurrentUser(LoginActivity.this, user);
+
+                                    // Move to the screen that displays the vehicles own by the user
+                                    Intent intent = new Intent(LoginActivity.this, VehiclesActivity.class);
+                                    startActivity(intent);
+                                    finish();
+
                                     break;
                                 }
                             }

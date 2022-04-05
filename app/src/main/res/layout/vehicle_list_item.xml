@@ -1,37 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content">
-
-<com.google.android.material.card.MaterialCardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:elevation="5dp"
-    android:background="@color/accent"
-    android:layout_margin="10dp">
-    <RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="RegNumber : Model (Year)"
-            android:textStyle="bold"
-            android:id="@+id/vehicleName"/>
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/accent"
+        android:elevation="5dp"
+        android:foregroundGravity="center_vertical"
+        app:cardBackgroundColor="@color/primary">
 
-        <ImageView
-            android:id="@+id/vehicleImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/vehicleName"
-            android:layout_marginTop="10dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/icon"/>
+        <LinearLayout
+            android:layout_width="381dp"
+            android:layout_height="89dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/accent"
+            android:orientation="horizontal">
 
-    </RelativeLayout>
-</com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/vehicleName"
+                android:layout_width="305dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:paddingLeft="20dp"
+                android:text="RegNumber : Model (Year)"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>

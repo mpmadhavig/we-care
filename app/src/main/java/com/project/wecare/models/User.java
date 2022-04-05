@@ -1,13 +1,14 @@
 package com.project.wecare.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 public class User implements Serializable  {
     private String name,nic,licenseNo, contactNo, address, occupation, email;
     private Date licenseExp;
-    private HashMap<String, Vehicle> vehicles;
+    private ArrayList<String> vehiclesRegNumber;
 
     private boolean isAuthenticated;
     private String preferredLocale;
@@ -92,14 +93,6 @@ public class User implements Serializable  {
         this.licenseExp = licenseExp;
     }
 
-    public HashMap<String, Vehicle> getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(HashMap<String, Vehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
-
     public boolean isAuthenticated() {
         return isAuthenticated;
     }
@@ -114,5 +107,13 @@ public class User implements Serializable  {
 
     public void setPreferredLocale(String preferredLocale) {
         this.preferredLocale = preferredLocale;
+    }
+
+    public ArrayList<String> getVehiclesRegNumber() {
+        return vehiclesRegNumber;
+    }
+
+    public void setVehiclesRegNumber(ArrayList<String> vehiclesRegNumber) {
+        this.vehiclesRegNumber = vehiclesRegNumber;
     }
 }
