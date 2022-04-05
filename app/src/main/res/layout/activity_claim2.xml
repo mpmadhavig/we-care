@@ -189,7 +189,6 @@
                                 android:id="@+id/propertyContactPersonBankName"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="number"
                                 android:hint="@string/bank_name_title"
                                 tools:ignore="TextContrastCheck" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -202,7 +201,6 @@
                                 android:id="@+id/propertyContactPersonBankBranch"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="number"
                                 android:hint="@string/branch_name_title"
                                 tools:ignore="TextContrastCheck" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -422,7 +420,6 @@
                                     android:id="@+id/otherPartyBankName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:inputType="number"
                                     android:hint="@string/bank_name_title"
                                     tools:ignore="TextContrastCheck" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -435,7 +432,6 @@
                                     android:id="@+id/otherPartyBankBranch"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:inputType="number"
                                     android:hint="@string/branch_name_title"
                                     tools:ignore="TextContrastCheck" />
                             </com.google.android.material.textfield.TextInputLayout>

@@ -7,6 +7,7 @@ import androidx.core.content.FileProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.wecare.helpers.ImageViewAdapter;
 import com.project.wecare.models.Evidence;
+import com.project.wecare.services.GPSTracker;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +43,8 @@ public class RecordActivity extends AppCompatActivity {
     private GridView gridView;
     private ArrayList<Evidence> evidenceArray;
 
+    private GPSTracker gps;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,7 @@ public class RecordActivity extends AppCompatActivity {
         ClaimManager claimManager = ClaimManager.getInstance();
         claimManager.setCurrentClaim(claimManager.createNewClaim());
         claimManager.getCurrentClaim().setOwnVehicleDamageEvidences(evidenceArray);
+        gps = claimManager.getGps();
 
         // initialize image grid view recycler view
         ImageViewAdapter adapter = new ImageViewAdapter(this, R.layout.image_grid_item, evidenceArray);
@@ -89,8 +94,9 @@ public class RecordActivity extends AppCompatActivity {
         });
     }
 
+    // Todo: 0 -> 1
     private boolean isValidate() {
-        return evidenceArray.size() > 1;
+        return evidenceArray.size() > 0;
     }
 
     @Override
@@ -108,14 +114,26 @@ public class RecordActivity extends AppCompatActivity {
             {
                 ImageView image = this.gridView.getChildAt(this.currentPosition).findViewById(R.id.image_id);
                 image.setImageURI(Uri.fromFile(imgFile));
-
                 Evidence currentEvidence = evidenceArray.get(this.currentPosition);
                 currentEvidence.setEvidenceID(UUID.randomUUID().toString());
                 currentEvidence.setDate(new Date());
                 currentEvidence.setImagePath(currentPhotoPath);
-                // Todo: set latitude, longitude
 
-                System.out.println("evidenceArray.size() vs currentPosition =>" + evidenceArray.size() + " =? " + currentPosition);
+                try {
+                    final ExifInterface exifInterface = new ExifInterface(currentPhotoPath);
+                    double[] latlng = exifInterface.getLatLong();
+                    if (latlng != null) {
+                        currentEvidence.setLatitude(latlng[0]);
+                        currentEvidence.setLongitude(latlng[1]);
+                    }
+                    else {
+                        currentEvidence.setLatitude(gps.getLatitude());
+                        currentEvidence.setLongitude(gps.getLongitude());
+                    }
+                } catch (IOException e) {
+                    Toast.makeText(gps, "Couldn't read exif info: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+
                 if (evidenceArray.size() == (currentPosition+1)) {
                     evidenceArray.add(new Evidence("", new Date(), 0.0, 0.0, ""));
                 }

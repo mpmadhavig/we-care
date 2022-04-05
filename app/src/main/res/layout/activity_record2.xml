@@ -6,39 +6,83 @@
     android:layout_height="match_parent"
     tools:context=".Record2Activity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <GridView
-            android:id="@+id/gatherPropertyEvidence"
-            android:layout_margin="10sp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="2"
-            android:verticalSpacing="20dp"/>
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/goToSubmitClaim"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:backgroundTint="@color/primary"
-        android:clickable="true"
-        android:contentDescription="@string/nextButton"
-        android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/LAY_pageContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/margin_1"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="@dimen/margin_1"
+        android:background="@color/accent"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.99"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:srcCompat="@android:drawable/ic_menu_send"
-        tools:ignore="OnClick,UsingOnClickInXml" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/propertyEvidenceTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:text="@string/property_damage_evidence"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <GridView
+                android:id="@+id/gatherPropertyEvidence"
+                android:layout_margin="10sp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"
+                android:verticalSpacing="20dp"/>
+
+            <TextView
+                android:id="@+id/vehicleEvidenceTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textAlignment="center"
+                android:text="@string/vehicle_damage_evidence"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <GridView
+                android:id="@+id/gatherVehicleEvidence"
+                android:layout_margin="10sp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="2"
+                android:verticalSpacing="20dp"/>
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/goToSubmitClaim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/primary"
+            android:clickable="true"
+            android:contentDescription="@string/nextButton"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.99"
+            app:layout_constraintHorizontal_bias="0.95"
+            app:srcCompat="@android:drawable/ic_menu_send"
+            tools:ignore="OnClick,UsingOnClickInXml" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
