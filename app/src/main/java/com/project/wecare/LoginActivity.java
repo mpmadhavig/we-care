@@ -22,7 +22,9 @@ import com.project.wecare.database.users.UserDatabaseManager;
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.models.User;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -135,6 +137,10 @@ public class LoginActivity extends AppCompatActivity {
                                             document.getData().get("occupation").toString(),
                                             "EN"
                                     );
+                                    //Todo : Add licenseExp info
+//                                    Timestamp licenseExpTimestamp = (Timestamp)document.getData().get("licenseExp");
+//                                    user.setLicenseExp(new Date(licenseExpTimestamp.getTime()));
+                                    
                                     user.setAuthenticated(true);
                                     user.setVehiclesRegNumber( (ArrayList<String>) document.get("vehicles"));
                                     UserManager.getInstance().setCurrentUser(LoginActivity.this, user);
