@@ -60,7 +60,6 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
         initiateGPSTracker();
     }
 
-
     public void setUserVehicles(ArrayList<String> regNumbers){
         // get vehicles information of the user from firestore database
         VehiclesDatabaseManager.getInstance().getVehicles(regNumbers,
@@ -106,6 +105,7 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
         Vehicle vehicle = VehiclesManager.getInstance().getVehicles().get(position);
         Intent intent = new Intent(VehiclesActivity.this, WelcomeActivity.class );
         intent.putExtra("regNumber" , vehicle.getRegNumber());
+        startActivity(intent);
     }
 
     public void initiateGPSTracker() {
