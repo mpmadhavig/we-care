@@ -13,13 +13,11 @@ public class Vehicle {
     private String insuranceType;
     private HashMap<String, Claim> claims;
 
-    public Vehicle(String regNumber, String model, Integer year, Integer src) {
+    public Vehicle(String regNumber, String model, Integer year) {
         this.regNumber = regNumber;
         this.model = model;
         this.year = year;
-        this.src = src;
     }
-
 
     public Vehicle(String regNumber) {
         this.regNumber = regNumber;
@@ -43,14 +41,6 @@ public class Vehicle {
 
     public void setYear(Integer year) {
         this.year = year;
-    }
-
-    public Integer getSrc() {
-        return src;
-    }
-
-    public void setSrc(Integer src) {
-        this.src = src;
     }
 
     public Date getInsuredDate() {
