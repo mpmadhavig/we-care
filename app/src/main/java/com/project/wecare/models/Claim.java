@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 enum State {
-    SUBMISSION_PENDING(0), SUBMITTED(1);
+    SUBMISSION_PENDING(0),
+    SUBMITTED(1);
 
     private int value;
 

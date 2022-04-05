@@ -84,6 +84,7 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValidate()) {
+                    claimManager.setAccidentEvidence(true);
                     Intent intent = new Intent(RecordActivity.this, Claim2Activity.class);
                     startActivity(intent);
                 } else {

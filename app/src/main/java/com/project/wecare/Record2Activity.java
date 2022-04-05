@@ -124,9 +124,10 @@ public class Record2Activity extends AppCompatActivity {
                     if (!currentClaim.isPropertyDamage()) {
                         currentClaim.setPropertyDamageEvidences(null);
                     }
-
+                    claimManager.setThirdPartyEvidence(true);
                     Intent intent = new Intent(Record2Activity.this, VehiclesActivity.class);
                     startActivity(intent);
+
                 } else {
                     Toast.makeText(Record2Activity.this, "Please add one or more captures as evidence", Toast.LENGTH_SHORT).show();
                 }
