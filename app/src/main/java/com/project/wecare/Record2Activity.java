@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.helpers.ImageViewAdapter;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Evidence;

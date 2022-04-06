@@ -16,6 +16,7 @@ import android.widget.Toast;
 import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.models.Claim;
 
 import java.text.SimpleDateFormat;

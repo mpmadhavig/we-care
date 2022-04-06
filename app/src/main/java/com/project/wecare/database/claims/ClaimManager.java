@@ -1,7 +1,6 @@
-package com.project.wecare;
+package com.project.wecare.database.claims;
 
 import android.content.Context;
-import android.location.Location;
 import android.util.Log;
 
 //import com.example.govimithuruapp.accountManagement.AuthController;
@@ -10,7 +9,6 @@ import com.project.wecare.models.Claim;
 import com.project.wecare.services.GPSTracker;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 public class ClaimManager {
 

@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.database.vehicles.VehiclesDatabaseManager;
 import com.project.wecare.database.vehicles.VehiclesManager;
