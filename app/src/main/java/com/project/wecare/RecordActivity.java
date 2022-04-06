@@ -17,10 +17,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.wecare.helpers.ImageViewAdapter;
+import com.project.wecare.models.Claim;
 import com.project.wecare.models.Evidence;
 import com.project.wecare.services.GPSTracker;
 
@@ -41,14 +43,18 @@ public class RecordActivity extends AppCompatActivity {
     private Integer currentPosition;
 
     private GridView gridView;
+    private TextView evidenceTitle;
     private ArrayList<Evidence> evidenceArray;
 
     private GPSTracker gps;
+    private ClaimManager claimManager;
+    private Claim currentClaim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record);
+        setTitle("Evidence: Own Vehicle Damage");
 
         // action bar initialize
         ActionBar actionBar = getSupportActionBar();
@@ -59,23 +65,23 @@ public class RecordActivity extends AppCompatActivity {
         evidenceArray.add( new Evidence("", new Date(), 0.0, 0.0, ""));
 
         // get the currently processing claim
-        ClaimManager claimManager = ClaimManager.getInstance();
-        claimManager.setCurrentClaim(claimManager.createNewClaim());
-        claimManager.getCurrentClaim().setOwnVehicleDamageEvidences(evidenceArray);
+        claimManager = ClaimManager.getInstance();
+        currentClaim = claimManager.getCurrentClaim();
         gps = claimManager.getGps();
+
+        // set currentClaim
+        this.getDataFromClaimManager();
 
         // initialize image grid view recycler view
         ImageViewAdapter adapter = new ImageViewAdapter(this, R.layout.image_grid_item, evidenceArray);
         gridView = findViewById(R.id.image_capture_grid_view);
+        evidenceTitle = findViewById(R.id.evidenceTitle);
+
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                // Todo: check if position>=NO_OF_GRIDS
-                if (position>=NO_OF_GRIDS)
-                    Toast.makeText(RecordActivity.this, "Maximum no of media items exceeded", Toast.LENGTH_SHORT).show();
-                else
-                    dispatchTakePictureIntent(view, position);
+                dispatchTakePictureIntent(view, position);
             }
         });
 
@@ -84,9 +90,9 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValidate()) {
-                    claimManager.setAccidentEvidence(true);
                     Intent intent = new Intent(RecordActivity.this, Claim2Activity.class);
                     startActivity(intent);
+
                 } else {
                     Toast.makeText(RecordActivity.this, "Please add one or more captures as evidence", Toast.LENGTH_SHORT).show();
                 }
@@ -95,14 +101,42 @@ public class RecordActivity extends AppCompatActivity {
         });
     }
 
+    private void getDataFromClaimManager() {
+        this.evidenceArray = currentClaim.getOwnVehicleDamageEvidences();
+        if (claimManager.isAccidentEvidence()) {
+            if (this.evidenceArray.size() < NO_OF_GRIDS) {
+                this.evidenceArray.add(new Evidence("", new Date(), 0.0, 0.0, ""));
+            }
+
+        } else {
+            this.evidenceArray.add(new Evidence("", new Date(), 0.0, 0.0, ""));
+        }
+    }
+
     // Todo: 0 -> 1
     private boolean isValidate() {
-        return evidenceArray.size() > 0;
+        boolean validate = true;
+        if (evidenceArray.size() == 1) {
+            if (evidenceArray.get(0).getImagePath().equals("")) {
+                validate = false;
+                evidenceTitle.setError("Add one or more evidences");
+            }
+        }
+
+        if (validate) {
+            claimManager.setAccidentEvidence(true);
+            if (evidenceArray.get(evidenceArray.size() - 1).getImagePath().equals("")) {
+                evidenceArray.remove(evidenceArray.size() - 1);
+            }
+        }
+
+        return validate;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        startActivity(new Intent(this,RecordActivity.class));
+        if (isValidate())
+            startActivity(new Intent(RecordActivity.this, ClaimActivity.class));
         return super.onOptionsItemSelected(item);
     }
 
@@ -135,7 +169,7 @@ public class RecordActivity extends AppCompatActivity {
                     Toast.makeText(gps, "Couldn't read exif info: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
 
-                if (evidenceArray.size() == (currentPosition+1)) {
+                if (evidenceArray.size() < NO_OF_GRIDS) {
                     evidenceArray.add(new Evidence("", new Date(), 0.0, 0.0, ""));
                 }
             }
