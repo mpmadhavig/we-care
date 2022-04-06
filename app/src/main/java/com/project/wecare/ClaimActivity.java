@@ -170,8 +170,8 @@ public class ClaimActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (contactNo.isEmpty()){
-            et_driverContactNo.setError("Please enter contact Number");
+        if (contactNo.isEmpty() | !(contactNo.length()==10)){
+            et_driverContactNo.setError("Please enter a valid contact Number");
             valid = false;
         }
 

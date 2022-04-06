@@ -111,7 +111,9 @@ public class Record2Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isValidate()) {
-                    Intent intent = new Intent(Record2Activity.this, VehiclesActivity.class);
+
+                    
+                    Intent intent = new Intent(Record2Activity.this, Claim3Activity.class);
                     startActivity(intent);
 
                 } else {
