@@ -22,19 +22,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeCare">
         <activity
-            android:name=".Claim4Activity"
+            android:name=".screens.newClaimForm.Claim4Activity"
             android:exported="false" />
         <activity
-            android:name=".Claim3Activity"
+            android:name=".screens.newClaimForm.Claim3Activity"
             android:exported="false" />
         <activity
-            android:name=".Record2Activity"
+            android:name=".screens.newClaimForm.Record2Activity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".screens.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".Claim2Activity"
+            android:name=".screens.newClaimForm.Claim2Activity"
             android:exported="false" />
 
         <provider
@@ -48,16 +48,13 @@
         </provider>
 
         <activity
-            android:name=".VehiclesActivity"
+            android:name=".screens.viewVehicles.VehiclesActivity"
             android:exported="false" />
         <activity
-            android:name=".AccidentDetailsActivity"
+            android:name=".screens.viewClaims.ViewClaimActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewClaimActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SplashScreenActivity"
+            android:name=".screens.login.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -67,16 +64,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RecordActivity"
+            android:name=".screens.newClaimForm.RecordActivity"
             android:exported="false" />
         <activity
-            android:name=".ClaimActivity"
+            android:name=".screens.newClaimForm.ClaimActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewClaimsListActivity"
+            android:name=".screens.viewClaims.ViewClaimsListActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".screens.login.MainActivity"
             android:exported="false" />
     </application>
 

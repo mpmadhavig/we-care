@@ -1,8 +1,10 @@
-package com.project.wecare;
+package com.project.wecare.screens.viewClaims;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.project.wecare.R;
 
 public class ViewClaimActivity extends AppCompatActivity {
 

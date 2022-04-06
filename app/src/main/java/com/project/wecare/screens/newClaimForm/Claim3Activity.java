@@ -1,4 +1,4 @@
-package com.project.wecare;
+package com.project.wecare.screens.newClaimForm;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
+
+import com.project.wecare.R;
 
 public class Claim3Activity extends AppCompatActivity {
 

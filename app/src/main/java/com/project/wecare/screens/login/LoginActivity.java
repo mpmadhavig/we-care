@@ -1,4 +1,4 @@
-package com.project.wecare;
+package com.project.wecare.screens.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,13 +18,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.project.wecare.R;
+import com.project.wecare.screens.viewVehicles.VehiclesActivity;
 import com.project.wecare.database.users.UserDatabaseManager;
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.models.User;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class LoginActivity extends AppCompatActivity {

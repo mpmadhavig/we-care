@@ -1,4 +1,4 @@
-package com.project.wecare;
+package com.project.wecare.screens.viewClaims;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,10 +14,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.project.wecare.R;
 import com.project.wecare.database.vehicles.VehiclesManager;
 import com.project.wecare.helpers.ClaimRecViewAdapter;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Vehicle;
+import com.project.wecare.screens.newClaimForm.ClaimActivity;
+import com.project.wecare.screens.newClaimForm.RecordActivity;
 
 import java.util.ArrayList;
 
