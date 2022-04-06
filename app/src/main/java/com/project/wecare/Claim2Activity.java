@@ -51,7 +51,7 @@ public class Claim2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim2);
-        setTitle("Details: Third Party Property Damage");
+        setTitle("New Claim : Step 3");
 
         // action bar on top of the screen
         ActionBar actionBar = getSupportActionBar();

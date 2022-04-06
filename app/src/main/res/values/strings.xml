@@ -76,4 +76,7 @@
     <string name="txt_submitClaim">Submit Claim</string>
     <string name="txt_submittingClaim">Submitting Claim</string>
     <string name="txt_PleaseWait">Please Wait...</string>
+    <string name="txt_model">Model</string>
+    <string name="txt_basicDetails">Basic Details : </string>
+    <string name="txt_Claims">Claims : </string>
 </resources>

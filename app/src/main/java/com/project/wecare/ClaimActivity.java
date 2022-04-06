@@ -48,7 +48,7 @@ public class ClaimActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim);
-        setTitle("Details: Own Vehicle Damage");
+        setTitle("New Claim : Step 1");
 
         ActionBar actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
@@ -274,7 +274,7 @@ public class ClaimActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        startActivity(new Intent(this,WelcomeActivity.class));
+        startActivity(new Intent(this, ViewClaimsListActivity.class));
         return super.onOptionsItemSelected(item);
     }
 
@@ -284,7 +284,7 @@ public class ClaimActivity extends AppCompatActivity {
 
     public void accidentDetails(View view){
         // Todo: next activity
-        Intent intent = new Intent(this, WelcomeActivity.class);
+        Intent intent = new Intent(this, ViewClaimsListActivity.class);
         startActivity(intent);
     }
 }

@@ -73,7 +73,7 @@
             android:name=".ClaimActivity"
             android:exported="false" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".ViewClaimsListActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
