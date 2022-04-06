@@ -28,13 +28,14 @@ public class ViewClaimsListActivity extends AppCompatActivity {
 
     private RecyclerView claimRecView;
     private TextView tv_vehicleTitle, tv_model, tv_year, tv_insuranceType, tv_insuredDate;
+    private String regNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_claims_list);
         Intent intent = getIntent();
-        String regNumber = intent.getStringExtra("regNumber");
+        regNumber = intent.getStringExtra("regNumber");
 
         claimRecView = findViewById(R.id.claimRecView);
         tv_vehicleTitle = findViewById(R.id.titleVehicle);
@@ -88,6 +89,7 @@ public class ViewClaimsListActivity extends AppCompatActivity {
 
             case R.id.action_new_claim2:
                 Intent intent = new Intent(ViewClaimsListActivity.this, ClaimActivity.class);
+                intent.putExtra("regNumber",regNumber);
                 startActivity(intent);
                 return true;
 

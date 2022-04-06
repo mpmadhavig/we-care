@@ -115,7 +115,8 @@ public class ClaimActivity extends AppCompatActivity {
             currentClaim = claimManager.getCurrentClaim();
             adjustForViewingClaim();
         } else {
-            currentClaim = claimManager.createNewClaim();
+            String regNumber = intent.getStringExtra("regNumber");
+            currentClaim = claimManager.createNewClaim(regNumber);
             adjustForNewClaim();
         }
 
