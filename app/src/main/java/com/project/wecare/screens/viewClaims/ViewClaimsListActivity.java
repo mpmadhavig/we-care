@@ -31,6 +31,7 @@ public class ViewClaimsListActivity extends AppCompatActivity {
     private TextView tv_year;
     private TextView tv_insuranceType;
     private TextView tv_insuredDate;
+    private String regNumber;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -43,7 +44,7 @@ public class ViewClaimsListActivity extends AppCompatActivity {
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String regNumber = intent.getStringExtra("regNumber");
+        regNumber = intent.getStringExtra("regNumber");
 
         RecyclerView claimRecView = findViewById(R.id.claimRecView);
         TextView tv_vehicleTitle = findViewById(R.id.titleVehicle);
@@ -98,6 +99,7 @@ public class ViewClaimsListActivity extends AppCompatActivity {
 
             case R.id.action_new_claim2:
                 Intent intent = new Intent(ViewClaimsListActivity.this, ClaimActivity.class);
+                intent.putExtra("regNumber",regNumber);
                 startActivity(intent);
                 return true;
 

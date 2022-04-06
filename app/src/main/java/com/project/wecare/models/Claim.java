@@ -37,6 +37,7 @@ public class Claim implements Parcelable, Serializable {
     //accident details
     private ArrayList<String> ownVehicleDamagedRegions, roadStatus;
     private String roadVisibility;
+    private Date date;
 
     //own vehicle details
     private String ownVehicleRegNumber;
@@ -253,6 +254,14 @@ public class Claim implements Parcelable, Serializable {
 
     public void setDriverLicenseExp(Date driverLicenseExp) {
         this.driverLicenseExp = driverLicenseExp;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public ArrayList<String> getOwnVehicleDamagedRegions() {

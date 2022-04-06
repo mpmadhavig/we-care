@@ -42,13 +42,16 @@ public class ClaimManager {
         return instance;
     }
 
-    public Claim createNewClaim() {
+    public Claim createNewClaim(String regNumber) {
         String userNIC = UserManager.getInstance().getCurrentUser().getNic();
         String currentTimestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         currentTimestamp = currentTimestamp.replace(".","");
         String claimId = userNIC + currentTimestamp;
 
-        return new Claim(claimId);
+        Claim claim =  new Claim(claimId);
+        claim.setOwnVehicleRegNumber(regNumber);
+
+        return claim;
     }
 
     public Claim getCurrentClaim() {
