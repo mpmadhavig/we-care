@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -22,9 +24,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.project.wecare.R;
+import com.project.wecare.screens.login.LoginActivity;
 import com.project.wecare.screens.viewClaims.ViewClaimsListActivity;
 import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
@@ -59,6 +63,10 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
         Log.d(TAG, "Vehicles reg numbers"+ regNumbers.toString());
         setUserVehicles(regNumbers);
         initiateGPSTracker();
+
+        //Alert dialogue for logout
+
+
     }
 
     public void setUserVehicles(ArrayList<String> regNumbers){
@@ -146,14 +154,37 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Toast.makeText(this, "action_settings", Toast.LENGTH_SHORT).show();
+            case R.id.action_logout:
+
+                //Prompt an alert dialogue to user for verification
+                new AlertDialog.Builder(this)
+                        .setTitle("Confirmation logout")
+                        .setMessage("Are you sure you want to logout?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Update locally stored user authentication info
+                                UserManager.getInstance().logoutUser(VehiclesActivity.this);
+
+                                //Update the firebase user info
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(VehiclesActivity.this, LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_lock_power_off)
+                        .show();
+
+
                 return true;
 
-//            case R.id.action_new_claim2:
-//                Intent intent = new Intent(VehiclesActivity.this, ClaimActivity.class);
-//                startActivity(intent);
-//                return true;
 
             default:
                 // If we got here, the user's action was not recognized.

@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,11 +16,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.project.wecare.R;
+import com.project.wecare.database.users.UserManager;
 import com.project.wecare.database.vehicles.VehiclesManager;
 import com.project.wecare.helpers.ClaimRecViewAdapter;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Vehicle;
+import com.project.wecare.screens.login.LoginActivity;
 import com.project.wecare.screens.newClaimForm.ClaimActivity;
 import com.project.wecare.screens.newClaimForm.RecordActivity;
 
@@ -83,8 +88,34 @@ public class ViewClaimsListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Toast.makeText(this, "action_settings", Toast.LENGTH_SHORT).show();
+            case R.id.action_logout:
+
+                //Prompt an alert dialogue to user for verification
+                new AlertDialog.Builder(this)
+                        .setTitle("Confirmation logout")
+                        .setMessage("Are you sure you want to logout?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Update locally stored user authentication info
+                                UserManager.getInstance().logoutUser(ViewClaimsListActivity.this);
+
+                                //Update the firebase user info
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(ViewClaimsListActivity.this, LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_lock_power_off)
+                        .show();
+
                 return true;
 
             case R.id.action_new_claim2:
