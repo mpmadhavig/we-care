@@ -31,11 +31,14 @@
                 android:id="@+id/propertyEvidenceTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textAlignment="center"
+                android:padding="5sp"
+                android:layout_marginStart="20sp"
                 android:text="@string/property_damage_evidence"
+                android:textAlignment="viewStart"
+                android:textAllCaps="true"
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textStyle="italic" />
 
             <GridView
                 android:id="@+id/gatherPropertyEvidence"
@@ -49,11 +52,14 @@
                 android:id="@+id/vehicleEvidenceTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textAlignment="center"
+                android:padding="5sp"
+                android:layout_marginStart="20sp"
                 android:text="@string/vehicle_damage_evidence"
+                android:textAlignment="viewStart"
+                android:textAllCaps="true"
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="16sp"
+                android:textStyle="italic" />
 
             <GridView
                 android:id="@+id/gatherVehicleEvidence"

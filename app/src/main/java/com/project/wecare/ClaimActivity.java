@@ -27,7 +27,8 @@ import java.util.Objects;
 
 public class ClaimActivity extends AppCompatActivity {
 
-    private Claim claim;
+    private Claim currentClaim;
+    private ClaimManager claimManager;
 
     private EditText et_driverName, et_driverNIC, et_driverLicense, et_driverLicenseExp,
             et_driverAddress, et_driverContactNo ;
@@ -47,6 +48,7 @@ public class ClaimActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim);
+        setTitle("Details: Own Vehicle Damage");
 
         ActionBar actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
@@ -104,12 +106,13 @@ public class ClaimActivity extends AppCompatActivity {
 
         // Check whether to create a new claim or to access the currently working out claim
         Intent intent = getIntent();
-        boolean accessCurrentClaim = intent.getExtras().getBoolean("ACCESS_CURRENT_CLAIM");
+        claimManager = ClaimManager.getInstance();
+        boolean accessCurrentClaim = claimManager.isAccidentDetails();
         if (accessCurrentClaim) {
-            claim = ClaimManager.getInstance().getCurrentClaim();
+            currentClaim = claimManager.getCurrentClaim();
             adjustForViewingClaim();
         } else {
-            claim = ClaimManager.getInstance().createNewClaim();
+            currentClaim = claimManager.createNewClaim();
             adjustForNewClaim();
         }
 
@@ -132,8 +135,8 @@ public class ClaimActivity extends AppCompatActivity {
         } else{
             Intent intent = new Intent(ClaimActivity.this, RecordActivity.class);
             extractFirstFormData();
-            ClaimManager.getInstance().setCurrentClaim(claim);
-            ClaimManager.getInstance().setAccidentDetails(true);
+            claimManager.setCurrentClaim(currentClaim);
+            claimManager.setAccidentDetails(true);
             startActivity(intent);
         }
     }
@@ -210,16 +213,16 @@ public class ClaimActivity extends AppCompatActivity {
 
     //set the details of the claim in claim object
     public void extractFirstFormData(){
-        claim.setDriverName(name);
-        claim.setDriverNic(nic);
-        claim.setDriverLicencesNo(licencesNo);
-        claim.setDriverLicenseExp(licenseExp);
-        claim.setDriverAddress(address);
-        claim.setDriverContactNo(contactNo);
+        currentClaim.setDriverName(name);
+        currentClaim.setDriverNic(nic);
+        currentClaim.setDriverLicencesNo(licencesNo);
+        currentClaim.setDriverLicenseExp(licenseExp);
+        currentClaim.setDriverAddress(address);
+        currentClaim.setDriverContactNo(contactNo);
 
-        claim.setOwnVehicleDamagedRegions(damagedRegions);
-        claim.setRoadStatus(roadStatus);
-        claim.setRoadVisibility(roadVisibility);
+        currentClaim.setOwnVehicleDamagedRegions(damagedRegions);
+        currentClaim.setRoadStatus(roadStatus);
+        currentClaim.setRoadVisibility(roadVisibility);
 
     }
 
@@ -228,21 +231,21 @@ public class ClaimActivity extends AppCompatActivity {
     }
 
     public void adjustForViewingClaim(){
-        name = claim.getDriverName();
-        nic = claim.getDriverNic();
-        licencesNo = claim.getDriverLicencesNo();
-        licenseExp = claim.getDriverLicenseExp();
-        address = claim.getDriverAddress();
-        contactNo = claim.getDriverContactNo();
+        name = currentClaim.getDriverName();
+        nic = currentClaim.getDriverNic();
+        licencesNo = currentClaim.getDriverLicencesNo();
+        licenseExp = currentClaim.getDriverLicenseExp();
+        address = currentClaim.getDriverAddress();
+        contactNo = currentClaim.getDriverContactNo();
 
-        damagedRegions = claim.getOwnVehicleDamagedRegions();
-        roadStatus = claim.getRoadStatus();
-        roadVisibility = claim.getRoadVisibility();
+        damagedRegions = currentClaim.getOwnVehicleDamagedRegions();
+        roadStatus = currentClaim.getRoadStatus();
+        roadVisibility = currentClaim.getRoadVisibility();
 
         et_driverName.setText(name);
         et_driverNIC.setText(nic);
         et_driverLicense.setText(licencesNo);
-        et_driverLicenseExp.setText(new SimpleDateFormat("MM/dd/yy", Locale.US).format(licenseExp));
+        et_driverLicenseExp.setText(new SimpleDateFormat("MM/dd/yy", Locale.US).format(licenseExp).toString());
         et_driverAddress.setText(address);
         et_driverContactNo.setText(contactNo);
 
