@@ -29,13 +29,10 @@ import com.project.wecare.database.vehicles.VehiclesDatabaseManager;
 import com.project.wecare.database.vehicles.VehiclesManager;
 import com.project.wecare.helpers.VehicleRecViewAdapter;
 import com.project.wecare.interfaces.ItemClickListener;
-import com.project.wecare.models.User;
 import com.project.wecare.models.Vehicle;
 import com.project.wecare.services.GPSTracker;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class VehiclesActivity extends AppCompatActivity implements ItemClickListener {
     Context mContext;
@@ -50,6 +47,7 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles);
+        setTitle("Welcome to We Care");
 
         Log.d(TAG, "Vehicles activity arrived: success");
         vehicleRecView = findViewById(R.id.vehicleRecView);
@@ -103,7 +101,7 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
     public void onClick(View view, int position) {
         // The onClick implementation of the RecyclerView item click
         Vehicle vehicle = VehiclesManager.getInstance().getVehicles().get(position);
-        Intent intent = new Intent(VehiclesActivity.this, WelcomeActivity.class );
+        Intent intent = new Intent(VehiclesActivity.this, ViewClaimsListActivity.class );
         intent.putExtra("regNumber" , vehicle.getRegNumber());
         startActivity(intent);
     }
@@ -137,7 +135,7 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.top_menu, menu);
         return true;
     }
 
@@ -149,10 +147,10 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
                 Toast.makeText(this, "action_settings", Toast.LENGTH_SHORT).show();
                 return true;
 
-            case R.id.action_new_claim2:
-                Intent intent = new Intent(VehiclesActivity.this, ClaimActivity.class);
-                startActivity(intent);
-                return true;
+//            case R.id.action_new_claim2:
+//                Intent intent = new Intent(VehiclesActivity.this, ClaimActivity.class);
+//                startActivity(intent);
+//                return true;
 
             default:
                 // If we got here, the user's action was not recognized.

@@ -38,4 +38,14 @@ public class VehiclesManager {
     public ArrayList<Vehicle> getVehicles() {
         return vehicles;
     }
+
+    public Vehicle getVehicleByRegNumber(String regNumber){
+        for (int i = 0; i < vehicles.size(); i++){
+            Vehicle v = vehicles.get(i);
+            if (v.getRegNumber().equals(regNumber)){
+                return v;
+            }
+        }
+        return null;
+    }
 }
