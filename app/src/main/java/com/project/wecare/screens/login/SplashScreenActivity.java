@@ -1,4 +1,4 @@
-package com.project.wecare;
+package com.project.wecare.screens.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 

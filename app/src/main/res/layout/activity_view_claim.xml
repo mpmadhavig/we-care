@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     android:focusable="false"
-    tools:context=".RecordActivity">
+    tools:context=".screens.newClaimForm.RecordActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/LAY_main"

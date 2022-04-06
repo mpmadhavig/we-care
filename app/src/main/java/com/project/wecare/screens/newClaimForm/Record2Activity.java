@@ -1,13 +1,13 @@
-package com.project.wecare;
+package com.project.wecare.screens.newClaimForm;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.exifinterface.media.ExifInterface;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import androidx.exifinterface.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.project.wecare.R;
+import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.helpers.ImageViewAdapter;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Evidence;
@@ -34,35 +36,35 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-public class RecordActivity extends AppCompatActivity {
+public class Record2Activity extends AppCompatActivity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int NO_OF_GRIDS = 8;
+    static final int NO_OF_GRIDS = 2;
 
     private String currentPhotoPath;
     private Integer currentPosition;
+    private boolean isVehicleEvidenceView = false;
 
-    private GridView gridView;
-    private TextView evidenceTitle;
-    private ArrayList<Evidence> evidenceArray;
+    private GridView gridViewProperty;
+    private GridView gridViewVehicle;
+    private TextView propertyEvidenceTitle;
+    private TextView vehicleEvidenceTitle;
+    private ArrayList<Evidence> propertyDamageEvidences;
+    private ArrayList<Evidence> otherVehicleDamageEvidences;
 
-    private GPSTracker gps;
     private ClaimManager claimManager;
+    private GPSTracker gps;
     private Claim currentClaim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record);
-        setTitle("New Claim : Step 2");
+        setContentView(R.layout.activity_record2);
+        setTitle("New Claim : Step 4");
 
         // action bar initialize
         ActionBar actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
-
-        // initialize local evidence array
-        evidenceArray = new ArrayList<>();
-        evidenceArray.add( new Evidence("", new Date(), 0.0, 0.0, ""));
 
         // get the currently processing claim
         claimManager = ClaimManager.getInstance();
@@ -73,60 +75,100 @@ public class RecordActivity extends AppCompatActivity {
         this.getDataFromClaimManager();
 
         // initialize image grid view recycler view
-        ImageViewAdapter adapter = new ImageViewAdapter(this, R.layout.image_grid_item, evidenceArray);
-        gridView = findViewById(R.id.image_capture_grid_view);
-        evidenceTitle = findViewById(R.id.evidenceTitle);
+        ImageViewAdapter adapterProperty = new ImageViewAdapter(this, R.layout.image_grid_item, propertyDamageEvidences);
+        gridViewProperty = findViewById(R.id.gatherPropertyEvidence);
+        propertyEvidenceTitle = findViewById(R.id.propertyEvidenceTitle);
 
-        gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridViewProperty.setAdapter(adapterProperty);
+        gridViewProperty.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                dispatchTakePictureIntent(view, position);
+                isVehicleEvidenceView = false;
+                if (!currentClaim.isPropertyDamage())
+                    view.setEnabled(false);
+                else
+                    dispatchTakePictureIntent(view, position);
             }
         });
 
-        FloatingActionButton nextButton = findViewById(R.id.goToClaim2Activity);
+        // initialize image grid view recycler view
+        ImageViewAdapter adapterVehicle = new ImageViewAdapter(this, R.layout.image_grid_item, otherVehicleDamageEvidences);
+        gridViewVehicle = findViewById(R.id.gatherVehicleEvidence);
+        vehicleEvidenceTitle = findViewById(R.id.vehicleEvidenceTitle);
+
+        gridViewVehicle.setAdapter(adapterVehicle);
+        gridViewVehicle.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                isVehicleEvidenceView = true;
+                if (!currentClaim.getOtherVehicleDamaged())
+                    view.setEnabled(false);
+                else
+                    dispatchTakePictureIntent(view, position);
+            }
+        });
+
+        FloatingActionButton nextButton = findViewById(R.id.goToSubmitClaim);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isValidate()) {
-                    Intent intent = new Intent(RecordActivity.this, Claim2Activity.class);
+
+                    
+                    Intent intent = new Intent(Record2Activity.this, Claim3Activity.class);
                     startActivity(intent);
 
                 } else {
-                    Toast.makeText(RecordActivity.this, "Please add one or more captures as evidence", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Record2Activity.this, "Please add one or more captures as evidence", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
     }
 
     private void getDataFromClaimManager() {
-        this.evidenceArray = currentClaim.getOwnVehicleDamageEvidences();
-        if (claimManager.isAccidentEvidence()) {
-            if (this.evidenceArray.size() < NO_OF_GRIDS) {
-                this.evidenceArray.add(new Evidence("", new Date(), 0.0, 0.0, ""));
+        this.propertyDamageEvidences = currentClaim.getPropertyDamageEvidences();
+        this.otherVehicleDamageEvidences = currentClaim.getOtherVehicleDamageEvidences();
+
+        if (claimManager.isThirdPartyEvidence()) {
+            if (this.propertyDamageEvidences.size() < NO_OF_GRIDS) {
+                this.propertyDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
+            }
+
+            if (this.otherVehicleDamageEvidences.size() < NO_OF_GRIDS) {
+                this.otherVehicleDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
             }
 
         } else {
-            this.evidenceArray.add(new Evidence("", new Date(), 0.0, 0.0, ""));
+            this.propertyDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
+            this.otherVehicleDamageEvidences.add( new Evidence("", new Date(), 0.0, 0.0, ""));
         }
     }
 
-    // Todo: 0 -> 1
     private boolean isValidate() {
         boolean validate = true;
-        if (evidenceArray.size() == 1) {
-            if (evidenceArray.get(0).getImagePath().equals("")) {
-                validate = false;
-                evidenceTitle.setError("Add one or more evidences");
+        if (currentClaim.isPropertyDamage()) {
+            if (propertyDamageEvidences.size() == 1) {
+                if (propertyDamageEvidences.get(0).getImagePath().equals("")) {
+                    validate = false;
+                    propertyEvidenceTitle.setError("Please add one or more evidences");
+                }
             }
         }
-
+        if (currentClaim.getOtherVehicleDamaged()) {
+            if (otherVehicleDamageEvidences.size() == 1) {
+                if (otherVehicleDamageEvidences.get(0).getImagePath().equals("")) {
+                    vehicleEvidenceTitle.setError("Add one or more evidences");
+                    validate = false;
+                }
+            }
+        }
         if (validate) {
-            claimManager.setAccidentEvidence(true);
-            if (evidenceArray.get(evidenceArray.size() - 1).getImagePath().equals("")) {
-                evidenceArray.remove(evidenceArray.size() - 1);
+            claimManager.setThirdPartyEvidence(true);
+            if (propertyDamageEvidences.get(propertyDamageEvidences.size() - 1).getImagePath().equals("")) {
+                propertyDamageEvidences.remove(propertyDamageEvidences.size() - 1);
+            }
+            if (otherVehicleDamageEvidences.get(otherVehicleDamageEvidences.size() - 1).getImagePath().equals("")) {
+                otherVehicleDamageEvidences.remove(otherVehicleDamageEvidences.size() - 1);
             }
         }
 
@@ -136,7 +178,7 @@ public class RecordActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (isValidate())
-            startActivity(new Intent(RecordActivity.this, ClaimActivity.class));
+            startActivity(new Intent(Record2Activity.this, Claim2Activity.class));
         return super.onOptionsItemSelected(item);
     }
 
@@ -147,9 +189,18 @@ public class RecordActivity extends AppCompatActivity {
             File imgFile = new  File(currentPhotoPath);
             if(imgFile.exists())
             {
-                ImageView image = this.gridView.getChildAt(this.currentPosition).findViewById(R.id.image_id);
+                ImageView image;
+                Evidence currentEvidence;
+                if (isVehicleEvidenceView) {
+                    image = this.gridViewVehicle.getChildAt(this.currentPosition).findViewById(R.id.image_id);
+                    currentEvidence = otherVehicleDamageEvidences.get(this.currentPosition);
+
+                } else {
+                    image = this.gridViewProperty.getChildAt(this.currentPosition).findViewById(R.id.image_id);
+                    currentEvidence = propertyDamageEvidences.get(this.currentPosition);
+                }
                 image.setImageURI(Uri.fromFile(imgFile));
-                Evidence currentEvidence = evidenceArray.get(this.currentPosition);
+
                 currentEvidence.setEvidenceID(UUID.randomUUID().toString());
                 currentEvidence.setDate(new Date());
                 currentEvidence.setImagePath(currentPhotoPath);
@@ -169,9 +220,16 @@ public class RecordActivity extends AppCompatActivity {
                     Toast.makeText(gps, "Couldn't read exif info: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
 
-                if (evidenceArray.size() < NO_OF_GRIDS) {
-                    evidenceArray.add(new Evidence("", new Date(), 0.0, 0.0, ""));
+                if (isVehicleEvidenceView) {
+                    if (otherVehicleDamageEvidences.size() < NO_OF_GRIDS) {
+                        otherVehicleDamageEvidences.add(new Evidence("", new Date(), 0.0, 0.0, ""));
+                    }
+                } else {
+                    if (propertyDamageEvidences.size() < NO_OF_GRIDS) {
+                        propertyDamageEvidences.add(new Evidence("", new Date(), 0.0, 0.0, ""));
+                    }
                 }
+
             }
         }
     }

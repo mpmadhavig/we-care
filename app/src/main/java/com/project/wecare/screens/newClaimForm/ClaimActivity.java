@@ -1,4 +1,4 @@
-package com.project.wecare;
+package com.project.wecare.screens.newClaimForm;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -16,6 +16,9 @@ import android.widget.Toast;
 import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.project.wecare.R;
+import com.project.wecare.screens.viewClaims.ViewClaimsListActivity;
+import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.models.Claim;
 
 import java.text.SimpleDateFormat;
