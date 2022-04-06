@@ -58,7 +58,7 @@ public class Record2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record2);
-        setTitle("Evidence: Third Party Property Damage");
+        setTitle("New Claim : Step 4");
 
         // action bar initialize
         ActionBar actionBar = getSupportActionBar();

@@ -18,6 +18,7 @@ public class Claim3Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim3);
+        setTitle("New Claim : Step 5");
 
         cb_pledgeChecked = findViewById(R.id.cbCheckPledge);
         btn_submitClaim = findViewById(R.id.btnSubmitClaim);

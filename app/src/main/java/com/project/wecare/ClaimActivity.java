@@ -48,7 +48,7 @@ public class ClaimActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim);
-        setTitle("Details: Own Vehicle Damage");
+        setTitle("New Claim : Step 1");
 
         ActionBar actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
