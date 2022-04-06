@@ -5,10 +5,13 @@ import android.util.Log;
 
 //import com.example.govimithuruapp.accountManagement.AuthController;
 
+import com.project.wecare.database.users.UserManager;
 import com.project.wecare.models.Claim;
 import com.project.wecare.services.GPSTracker;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ClaimManager {
 
@@ -40,7 +43,11 @@ public class ClaimManager {
     }
 
     public Claim createNewClaim() {
-        String claimId = "testclaim"; // Todo: Add a unique ID
+        String userNIC = UserManager.getInstance().getCurrentUser().getNic();
+        String currentTimestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        currentTimestamp = currentTimestamp.replace(".","");
+        String claimId = userNIC + currentTimestamp;
+
         return new Claim(claimId);
     }
 
@@ -97,4 +104,5 @@ public class ClaimManager {
     public void setThirdPartyEvidence(boolean thirdPartyEvidence) {
         this.thirdPartyEvidence = thirdPartyEvidence;
     }
+
 }
