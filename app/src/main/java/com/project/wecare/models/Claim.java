@@ -30,6 +30,11 @@ public class Claim implements Parcelable, Serializable {
     //claim submission status
     private int state;
 
+    //claim evidences submission status;
+    private int ownVehicleEvidenceUploadedCount = 0;
+    private int otherVehicleEvidenceUploadedCount = 0;
+    private int propertyEvidenceUploadedCount = 0;
+
     //driver details
     private String driverName,driverNic, driverAddress, driverLicencesNo, driverContactNo ;
     private Date driverLicenseExp;
@@ -450,6 +455,34 @@ public class Claim implements Parcelable, Serializable {
 
     public void setPropertyContactPersonNumber(String propertyContactPersonNumber) {
         this.propertyContactPersonNumber = propertyContactPersonNumber;
+    }
+
+    public synchronized void incOwnVehicleEvidenceUploadedCount(){
+        this.ownVehicleEvidenceUploadedCount ++;
+    }
+
+    public synchronized  void incOtherVehicleEvidenceUploadedCount(){
+        this.otherVehicleEvidenceUploadedCount ++;
+    }
+
+    public synchronized void incPropertyEvidenceUploadedCount(){
+        this.propertyEvidenceUploadedCount ++;
+    }
+
+    public boolean isAllEvidencesSubmitted(){
+        Boolean isSubmitted = true;
+
+        if (!(ownVehicleDamageEvidences.size() == ownVehicleEvidenceUploadedCount)){
+            isSubmitted=false;
+        }
+        if(!(otherVehicleDamageEvidences.size() == otherVehicleEvidenceUploadedCount)){
+            isSubmitted=false;
+        }
+        if(!(propertyDamageEvidences.size() == propertyEvidenceUploadedCount)){
+            isSubmitted=false;
+        }
+
+        return isSubmitted;
     }
 
     public void postClaimToBackend (Context context){

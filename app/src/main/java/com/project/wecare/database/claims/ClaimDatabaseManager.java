@@ -31,7 +31,7 @@ public class ClaimDatabaseManager {
         return instance;
     }
 
-    public void addClaim(Claim claim, OnSuccessListener<DocumentReference> successListenerObj, OnFailureListener failureListenerObj){
+    public void addClaim(Claim claim, OnSuccessListener<Void> successListenerObj, OnFailureListener failureListenerObj){
 
         Map<String, Object> newClaim = new HashMap<>();
 
@@ -85,7 +85,8 @@ public class ClaimDatabaseManager {
         Log.d("Wecare", "Claim initialization for firebase success");
 
         db.collection(COLLECTION_CLAIMS)
-                .add(newClaim)
+                .document(claim.getClaimId())
+                .set(newClaim)
                 .addOnSuccessListener( successListenerObj)
                 .addOnFailureListener(failureListenerObj);
     }
