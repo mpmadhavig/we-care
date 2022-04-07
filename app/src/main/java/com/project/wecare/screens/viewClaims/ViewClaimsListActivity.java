@@ -74,12 +74,14 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
         claims.add(new Claim("2021/2/9 Claim5"));
         claims.add(new Claim("2021/2/9 Claim6"));
         claims.add(new Claim("2021/2/9 Claim7"));
+        ClaimManager.getInstance().setQueue(claims);
 
         ArrayList<String> regNumbers = UserManager.getInstance().getCurrentUser().getVehiclesRegNumber();
         Log.d("Claim", "claim id numbers"+ regNumbers.toString());
 
         ClaimRecViewAdapter adapter = new ClaimRecViewAdapter();
         adapter.setClaims(claims);
+        adapter.setClickListener((ItemClickListener) ViewClaimsListActivity.this);
 
         claimRecView.setAdapter(adapter);
         claimRecView.setLayoutManager(new GridLayoutManager(this, 1));
@@ -90,9 +92,12 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
         // The onClick implementation of the RecyclerView item click
         Claim claim = ClaimManager.getInstance().getQueue().get(position);
 
+        Toast.makeText(this, "claim: " + claim.getClaimId(), Toast.LENGTH_LONG).show();
+
         Intent intent = new Intent(ViewClaimsListActivity.this, ViewClaimActivity.class );
         intent.putExtra("claimNumber" , claim.getClaimId());
-        startActivity(intent);
+        // todo: complete claim storing
+        // startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")

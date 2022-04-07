@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,7 +35,6 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.imageView.setImageResource(claims.get(position).getSrc());
         holder.textView.setText(claims.get(position).getClaimId());
     }
 
