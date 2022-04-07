@@ -98,6 +98,7 @@ public class Claim4Activity extends AppCompatActivity {
                             e.setRemoteUri(remoteUri);
                             Log.d("Wecare" , "Remote uri : "+ remoteUri);
 
+                            // Increment the count of uploaded images under respective catefories
                             if(evidenceType == 0){
                                 //own vehicle damage
                                 claim.incOwnVehicleEvidenceUploadedCount();
@@ -120,7 +121,15 @@ public class Claim4Activity extends AppCompatActivity {
                                                 claim.setState(1);
                                                 //Todo : Save the claim in local device
 
-                                                ClaimManager.getInstance().setCurrentClaim(null);
+                                                //Update the claim manager
+                                                ClaimManager claimManager = ClaimManager.getInstance();
+                                                claimManager.setCurrentClaim(null);
+                                                claimManager.setAccidentDetails(false);
+                                                claimManager.setAccidentEvidence(false);
+                                                claimManager.setThirdPartDetails(false);
+                                                claimManager.setThirdPartyEvidence(false);
+
+                                                //Redirect
                                                 Intent intent = new Intent(Claim4Activity.this, ViewClaimsListActivity.class);
                                                 intent.putExtra("regNumber", claim.getOwnVehicleRegNumber());
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
