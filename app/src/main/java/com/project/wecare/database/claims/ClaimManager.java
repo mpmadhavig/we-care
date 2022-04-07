@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.models.Claim;
+import com.project.wecare.models.Vehicle;
 import com.project.wecare.services.GPSTracker;
 
 import java.text.SimpleDateFormat;
@@ -108,4 +109,21 @@ public class ClaimManager {
         this.thirdPartyEvidence = thirdPartyEvidence;
     }
 
+    public ArrayList<Claim> getQueue() {
+        return queue;
+    }
+
+    public void setQueue(ArrayList<Claim> queue) {
+        this.queue = queue;
+    }
+
+    public Claim getClaimByRegNumber(String claimNumber){
+        for (int i = 0; i < queue.size(); i++){
+            Claim claim = queue.get(i);
+            if (claim.getClaimId().equals(claimNumber)){
+                return claim;
+            }
+        }
+        return null;
+    }
 }

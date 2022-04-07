@@ -10,17 +10,21 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.project.wecare.R;
+import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.database.vehicles.VehiclesManager;
 import com.project.wecare.helpers.ClaimRecViewAdapter;
+import com.project.wecare.interfaces.ItemClickListener;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Vehicle;
 import com.project.wecare.screens.login.LoginActivity;
@@ -30,7 +34,7 @@ import com.project.wecare.screens.viewVehicles.VehiclesActivity;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ViewClaimsListActivity extends AppCompatActivity {
+public class ViewClaimsListActivity extends AppCompatActivity implements ItemClickListener {
 
     private TextView tv_model;
     private TextView tv_year;
@@ -71,11 +75,24 @@ public class ViewClaimsListActivity extends AppCompatActivity {
         claims.add(new Claim("2021/2/9 Claim6"));
         claims.add(new Claim("2021/2/9 Claim7"));
 
+        ArrayList<String> regNumbers = UserManager.getInstance().getCurrentUser().getVehiclesRegNumber();
+        Log.d("Claim", "claim id numbers"+ regNumbers.toString());
+
         ClaimRecViewAdapter adapter = new ClaimRecViewAdapter();
         adapter.setClaims(claims);
 
         claimRecView.setAdapter(adapter);
         claimRecView.setLayoutManager(new GridLayoutManager(this, 1));
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        // The onClick implementation of the RecyclerView item click
+        Claim claim = ClaimManager.getInstance().getQueue().get(position);
+
+        Intent intent = new Intent(ViewClaimsListActivity.this, ViewClaimActivity.class );
+        intent.putExtra("claimNumber" , claim.getClaimId());
+        startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")

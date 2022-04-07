@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.wecare.R;
+import com.project.wecare.interfaces.ItemClickListener;
 import com.project.wecare.models.Claim;
 
 import java.util.ArrayList;
@@ -18,8 +19,13 @@ import java.util.ArrayList;
 public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapter.ViewHolder> {
 
     private ArrayList<Claim> claims = new ArrayList<>();
+    private ItemClickListener clickListener;
 
     public ClaimRecViewAdapter() {}
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
 
     @NonNull
     @Override
@@ -45,14 +51,18 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-//        private final ImageView imageView;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView textView;
 
         public ViewHolder(@NonNull View view){
             super(view);
-//            imageView = view.findViewById(R.id.claimSampleImage);
             textView = view.findViewById(R.id.claimName);
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAbsoluteAdapterPosition());
         }
     }
 }
