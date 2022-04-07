@@ -16,7 +16,7 @@ import java.util.Date;
 public class ClaimManager {
 
     private GPSTracker gps;
-    private ArrayList<Claim> queue; // claims to be submitted
+    private ArrayList<Claim> queue; // all the claims
     private Claim currentClaim;
     private boolean accidentDetails;
     private boolean accidentEvidence;

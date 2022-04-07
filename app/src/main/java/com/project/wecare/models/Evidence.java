@@ -16,6 +16,7 @@ public class Evidence implements Parcelable, Serializable {
     private double latitude;
     private double longitude;
     private String imagePath;
+    private String remoteUri;
 
     public static final int IMAGE_COMPRESSION_RATIO = 80;
 
@@ -25,7 +26,9 @@ public class Evidence implements Parcelable, Serializable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.imagePath = photoPath;
+        this.remoteUri = "";
     }
+
 
     protected Evidence(Parcel in) {
         evidenceID = in.readString();
@@ -33,6 +36,7 @@ public class Evidence implements Parcelable, Serializable {
         latitude = in.readDouble();
         longitude = in.readDouble();
         imagePath = in.readString();
+        remoteUri = in.readString();
     }
 
     public static final Creator<Evidence> CREATOR = new Creator<Evidence>() {
@@ -83,6 +87,10 @@ public class Evidence implements Parcelable, Serializable {
         this.imagePath = imagePath;
     }
 
+    public String getRemoteUri() { return remoteUri;}
+
+    public void setRemoteUri(String remoteUri) { this.remoteUri = remoteUri;}
+
     @Override
     public int describeContents() {
         return 0;
@@ -95,6 +103,7 @@ public class Evidence implements Parcelable, Serializable {
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
         dest.writeString(imagePath);
+        dest.writeString(remoteUri);
     }
 
     public byte[] getEvidenceImage() {
