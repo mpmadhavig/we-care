@@ -43,6 +43,9 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
         holder.textView.setText(" • " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(date.getTime()));
         Log.d("Wecare", "Claim state: "+ String.valueOf(claims.get(position).getState() ));
         if (claims.get(position).getState()==0){
+            holder.resubmitButton.setVisibility(View.VISIBLE);
+        }
+        if (claims.get(position).getState()==1){
             holder.resubmitButton.setVisibility(View.GONE);
         }
     }
