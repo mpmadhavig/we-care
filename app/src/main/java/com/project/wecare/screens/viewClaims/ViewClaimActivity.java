@@ -104,56 +104,45 @@ public class ViewClaimActivity extends AppCompatActivity {
         evidenceGridView.setAdapter(adapter);
 
         // Claim2Activity
-        if (ClaimManager.getInstance().isThirdPartDetails()) {
-            if (!currentClaim.isPropertyDamage()) {
-                isPropertyDamageYes.setChecked(currentClaim.isPropertyDamage());
-                isPropertyDamageNo.setChecked(!currentClaim.isPropertyDamage());
+        isPropertyDamageYes.setChecked(currentClaim.isPropertyDamage());
+        isPropertyDamageNo.setChecked(!currentClaim.isPropertyDamage());
+        isOtherVehicleDamagedYes.setChecked(currentClaim.getOtherVehicleDamaged());
+        isOtherVehicleDamagedNo.setChecked(!currentClaim.getOtherVehicleDamaged());
 
-            } else {
-                isPropertyDamageYes.setChecked(currentClaim.isPropertyDamage());
-                isPropertyDamageNo.setChecked(!currentClaim.isPropertyDamage());
+        if (currentClaim.isPropertyDamage()) {
+            propertyContactPersonName.setText(currentClaim.getPropertyContactPersonName());
+            propertyContactPersonAddress.setText(currentClaim.getPropertyContactPersonAddress());
+            propertyContactPersonNumber.setText((currentClaim.getPropertyContactPersonNumber()));
+            propertyDamage.setText(currentClaim.getPropertyDamage());
 
-                propertyContactPersonName.setText(currentClaim.getPropertyContactPersonName());
-                propertyContactPersonAddress.setText(currentClaim.getPropertyContactPersonAddress());
-                propertyContactPersonNumber.setText((currentClaim.getPropertyContactPersonNumber()));
-                propertyDamage.setText(currentClaim.getPropertyDamage());
+            propertyContactPersonAccNumber.setText(String.valueOf(currentClaim.getPropertyContactPersonAccNumber()));
+            propertyContactPersonBankName.setText(currentClaim.getPropertyContactPersonBankName());
+            propertyContactPersonBankBranch.setText(currentClaim.getPropertyContactPersonBankBranch());
 
-                propertyContactPersonAccNumber.setText(String.valueOf(currentClaim.getPropertyContactPersonAccNumber()));
-                propertyContactPersonBankName.setText(currentClaim.getPropertyContactPersonBankName());
-                propertyContactPersonBankBranch.setText(currentClaim.getPropertyContactPersonBankBranch());
+            ImageViewAdapter adapter2 = new ImageViewAdapter(this, R.layout.image_grid_item, currentClaim.getPropertyDamageEvidences());
+            gatherPropertyEvidence.setAdapter(adapter2);
+        }
 
-                ImageViewAdapter adapter2 = new ImageViewAdapter(this, R.layout.image_grid_item, currentClaim.getPropertyDamageEvidences());
-                gatherPropertyEvidence.setAdapter(adapter2);
-            }
+        if (currentClaim.getOtherVehicleDamaged()) {
+            otherVehicleRegNumber.setText(currentClaim.getOtherVehicleRegNumber());
+            otherPartyDriverName.setText(currentClaim.getOtherPartyDriverName());
+            otherPartyDriverNumber.setText(currentClaim.getOtherPartyDriverNumber());
 
-            if (!currentClaim.getOtherVehicleDamaged()) {
-                isOtherVehicleDamagedYes.setChecked(currentClaim.getOtherVehicleDamaged());
-                isOtherVehicleDamagedNo.setChecked(!currentClaim.getOtherVehicleDamaged());
+            checkBox_2_1.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("1"));
+            checkBox_2_2.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("2"));
+            checkBox_2_3.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("3"));
+            checkBox_2_4.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("4"));
+            checkBox_2_5.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("5"));
+            checkBox_2_6.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("6"));
+            checkBox_2_7.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("7"));
+            checkBox_2_8.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("8"));
 
-            } else {
-                isOtherVehicleDamagedYes.setChecked(currentClaim.getOtherVehicleDamaged());
-                isOtherVehicleDamagedNo.setChecked(!currentClaim.getOtherVehicleDamaged());
+            otherPartyAccNumber.setText(String.valueOf(currentClaim.getOtherPartyAccNumber()));
+            otherPartyBankName.setText(currentClaim.getOtherPartyBankName());
+            otherPartyBankBranch.setText(currentClaim.getOtherPartyBankBranch());
 
-                otherVehicleRegNumber.setText(currentClaim.getOtherVehicleRegNumber());
-                otherPartyDriverName.setText(currentClaim.getOtherPartyDriverName());
-                otherPartyDriverNumber.setText(currentClaim.getOtherPartyDriverNumber());
-
-                checkBox_2_1.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("1"));
-                checkBox_2_2.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("2"));
-                checkBox_2_3.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("3"));
-                checkBox_2_4.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("4"));
-                checkBox_2_5.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("5"));
-                checkBox_2_6.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("6"));
-                checkBox_2_7.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("7"));
-                checkBox_2_8.setChecked(currentClaim.getOtherVehicleDamagedRegions().contains("8"));
-
-                otherPartyAccNumber.setText(String.valueOf(currentClaim.getOtherPartyAccNumber()));
-                otherPartyBankName.setText(currentClaim.getOtherPartyBankName());
-                otherPartyBankBranch.setText(currentClaim.getOtherPartyBankBranch());
-
-                ImageViewAdapter adapter3 = new ImageViewAdapter(this, R.layout.image_grid_item, currentClaim.getOtherVehicleDamageEvidences());
-                gatherVehicleEvidence.setAdapter(adapter3);
-            }
+            ImageViewAdapter adapter3 = new ImageViewAdapter(this, R.layout.image_grid_item, currentClaim.getOtherVehicleDamageEvidences());
+            gatherVehicleEvidence.setAdapter(adapter3);
         }
     }
 
@@ -256,6 +245,8 @@ public class ViewClaimActivity extends AppCompatActivity {
         evidenceGridView.setEnabled(false);
 
         // Claim2Activity
+        isPropertyDamageYes.setEnabled(false);
+        isPropertyDamageNo.setEnabled(false);
         propertyContactPersonName.setEnabled(false);
         propertyContactPersonAddress.setEnabled(false);
         propertyContactPersonNumber.setEnabled(false);
@@ -264,6 +255,8 @@ public class ViewClaimActivity extends AppCompatActivity {
         propertyContactPersonBankName.setEnabled(false);
         propertyContactPersonBankBranch.setEnabled(false);
 
+        isOtherVehicleDamagedYes.setEnabled(false);
+        isOtherVehicleDamagedNo.setEnabled(false);
         otherVehicleRegNumber.setEnabled(false);
         otherPartyDriverName.setEnabled(false);
         otherPartyDriverNumber.setEnabled(false);

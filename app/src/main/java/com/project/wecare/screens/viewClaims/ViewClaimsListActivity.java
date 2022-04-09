@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.project.wecare.R;
@@ -36,6 +35,8 @@ import java.util.Objects;
 
 public class ViewClaimsListActivity extends AppCompatActivity implements ItemClickListener {
 
+    private ClaimManager claimManager;
+
     private TextView tv_model;
     private TextView tv_year;
     private TextView tv_insuranceType;
@@ -52,6 +53,10 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
         ActionBar actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
 
+        claimManager = ClaimManager.getInstance();
+
+        claimManager.setSharedPref(ViewClaimsListActivity.this);
+
         Intent intent = getIntent();
         regNumber = intent.getStringExtra("regNumber");
 
@@ -66,15 +71,7 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
 
         setVehicleDetails(regNumber);
 
-        ArrayList<Claim> claims = new ArrayList<>();
-        claims.add(new Claim("2021/2/9 Claim1"));
-        claims.add(new Claim("2021/2/9 Claim2"));
-        claims.add(new Claim("2021/2/9 Claim3"));
-        claims.add(new Claim("2021/2/9 Claim4"));
-        claims.add(new Claim("2021/2/9 Claim5"));
-        claims.add(new Claim("2021/2/9 Claim6"));
-        claims.add(new Claim("2021/2/9 Claim7"));
-        ClaimManager.getInstance().setQueue(claims);
+        ArrayList<Claim> claims = ClaimManager.getInstance().initializeQueue(this);
 
         ArrayList<String> regNumbers = UserManager.getInstance().getCurrentUser().getVehiclesRegNumber();
         Log.d("Claim", "claim id numbers"+ regNumbers.toString());
@@ -90,14 +87,11 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
     @Override
     public void onClick(View view, int position) {
         // The onClick implementation of the RecyclerView item click
-        Claim claim = ClaimManager.getInstance().getQueue().get(position);
-
-        Toast.makeText(this, "claim: " + claim.getClaimId(), Toast.LENGTH_LONG).show();
+        Claim claim = ClaimManager.getInstance().getQueue(this).get(position);
 
         Intent intent = new Intent(ViewClaimsListActivity.this, ViewClaimActivity.class );
         intent.putExtra("claimNumber" , claim.getClaimId());
-        // todo: complete claim storing
-        // startActivity(intent);
+        startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")

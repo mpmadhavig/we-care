@@ -1,18 +1,22 @@
 package com.project.wecare.database.claims;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 //import com.example.govimithuruapp.accountManagement.AuthController;
 
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.models.Claim;
-import com.project.wecare.models.Vehicle;
+import com.project.wecare.models.SharedPreferenceModel;
 import com.project.wecare.services.GPSTracker;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 public class ClaimManager {
 
@@ -23,6 +27,7 @@ public class ClaimManager {
     private boolean accidentEvidence;
     private boolean thirdPartDetails;
     private boolean thirdPartyEvidence;
+    private SharedPreferenceModel sharedPref;
 
     // Singleton
     private static ClaimManager instance;
@@ -45,7 +50,7 @@ public class ClaimManager {
 
     public Claim createNewClaim(String regNumber) {
         String userNIC = UserManager.getInstance().getCurrentUser().getNic();
-        String currentTimestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String currentTimestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         currentTimestamp = currentTimestamp.replace(".","");
         String claimId = userNIC + currentTimestamp;
 
@@ -109,11 +114,21 @@ public class ClaimManager {
         this.thirdPartyEvidence = thirdPartyEvidence;
     }
 
-    public ArrayList<Claim> getQueue() {
-        return queue;
+    public ArrayList<Claim> initializeQueue(Activity activity) {
+        // get stored claims
+        Set<String> claims = sharedPref.getClaimIds(UserManager.getInstance().getCurrentUser().getNic());
+        Toast.makeText(activity, "ids: " + claims.size(), Toast.LENGTH_SHORT).show();
+        for (String claimId: claims ) {
+            this.queue.add(sharedPref.getClaim(claimId));
+        }
+        return this.queue;
     }
 
-    public void setQueue(ArrayList<Claim> queue) {
+    public ArrayList<Claim> getQueue(Activity activity) {
+        return this.queue;
+    }
+
+    private void setQueue(ArrayList<Claim> queue) {
         this.queue = queue;
     }
 
@@ -126,4 +141,14 @@ public class ClaimManager {
         }
         return null;
     }
+
+    public SharedPreferenceModel getSharedPref() {
+        return this.sharedPref;
+    }
+
+    public void setSharedPref(Activity activity) {
+        this.sharedPref = SharedPreferenceModel.getInstance(activity);
+    }
 }
+
+
