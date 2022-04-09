@@ -1,5 +1,6 @@
 package com.project.wecare.screens.viewClaims;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,41 +10,58 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.project.wecare.R;
+import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.database.vehicles.VehiclesManager;
 import com.project.wecare.helpers.ClaimRecViewAdapter;
+import com.project.wecare.interfaces.ItemClickListener;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Vehicle;
 import com.project.wecare.screens.login.LoginActivity;
 import com.project.wecare.screens.newClaimForm.ClaimActivity;
-import com.project.wecare.screens.newClaimForm.RecordActivity;
+import com.project.wecare.screens.viewVehicles.VehiclesActivity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class ViewClaimsListActivity extends AppCompatActivity {
+public class ViewClaimsListActivity extends AppCompatActivity implements ItemClickListener {
 
-    private RecyclerView claimRecView;
-    private TextView tv_vehicleTitle, tv_model, tv_year, tv_insuranceType, tv_insuredDate;
+    private ClaimManager claimManager;
+
+    private TextView tv_model;
+    private TextView tv_year;
+    private TextView tv_insuranceType;
+    private TextView tv_insuredDate;
     private String regNumber;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_claims_list);
+
+        // action bar initialize
+        ActionBar actionBar = getSupportActionBar();
+        Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
+
+        claimManager = ClaimManager.getInstance();
+
+        claimManager.setSharedPref(ViewClaimsListActivity.this);
+
         Intent intent = getIntent();
         regNumber = intent.getStringExtra("regNumber");
 
-        claimRecView = findViewById(R.id.claimRecView);
-        tv_vehicleTitle = findViewById(R.id.titleVehicle);
+        RecyclerView claimRecView = findViewById(R.id.claimRecView);
+        TextView tv_vehicleTitle = findViewById(R.id.titleVehicle);
         tv_model = findViewById(R.id.txt_vehicleModel);
         tv_year = findViewById(R.id.txt_vehicleYear);
         tv_insuranceType = findViewById(R.id.txt_insuranceType);
@@ -51,25 +69,33 @@ public class ViewClaimsListActivity extends AppCompatActivity {
 
         tv_vehicleTitle.setText("Vehicle : "+ regNumber);
 
-        setvehicleDetails(regNumber);
+        setVehicleDetails(regNumber);
 
-        ArrayList<Claim> claims = new ArrayList<>();
-        claims.add(new Claim("2021/2/9 Claim1"));
-        claims.add(new Claim("2021/2/9 Claim2"));
-        claims.add(new Claim("2021/2/9 Claim3"));
-        claims.add(new Claim("2021/2/9 Claim4"));
-        claims.add(new Claim("2021/2/9 Claim5"));
-        claims.add(new Claim("2021/2/9 Claim6"));
-        claims.add(new Claim("2021/2/9 Claim7"));
+        ArrayList<Claim> claims = ClaimManager.getInstance().initializeQueue(this);
+
+        ArrayList<String> regNumbers = UserManager.getInstance().getCurrentUser().getVehiclesRegNumber();
+        Log.d("Claim", "claim id numbers"+ regNumbers.toString());
 
         ClaimRecViewAdapter adapter = new ClaimRecViewAdapter();
         adapter.setClaims(claims);
+        adapter.setClickListener((ItemClickListener) ViewClaimsListActivity.this);
 
         claimRecView.setAdapter(adapter);
         claimRecView.setLayoutManager(new GridLayoutManager(this, 1));
     }
 
-    private void setvehicleDetails(String regNumber){
+    @Override
+    public void onClick(View view, int position) {
+        // The onClick implementation of the RecyclerView item click
+        Claim claim = ClaimManager.getInstance().getQueue(this).get(position);
+
+        Intent intent = new Intent(ViewClaimsListActivity.this, ViewClaimActivity.class );
+        intent.putExtra("claimNumber" , claim.getClaimId());
+        startActivity(intent);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setVehicleDetails(String regNumber){
         Vehicle v = VehiclesManager.getInstance().getVehicleByRegNumber(regNumber);
         tv_model.setText("Model : " + v.getModel().toString());
         tv_year.setText("Year : " + v.getYear().toString());
@@ -125,34 +151,9 @@ public class ViewClaimsListActivity extends AppCompatActivity {
                 return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
+                startActivity(new Intent(ViewClaimsListActivity.this, VehiclesActivity.class));
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-
-    public void openNewClaim(View view) {
-        Intent intent = new Intent(this, ClaimActivity.class);
-        startActivity(intent);
-    }
-
-    public void getEvidence(View view){
-        Intent intent = new Intent(this, RecordActivity.class);
-        startActivity(intent);
-    }
-
-    public void refresh(View view){
-        Toast.makeText(this, "refresh", Toast.LENGTH_SHORT).show();
-    }
-
-    public void switchLang(View view){
-        Toast.makeText(this, "switchLang", Toast.LENGTH_SHORT).show();
-    }
-
-
-    public void logout(View view){
-        Intent intent = new Intent(this, ClaimActivity.class);
-        startActivity(intent);
     }
 }

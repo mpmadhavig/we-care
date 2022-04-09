@@ -1,30 +1,58 @@
 package com.project.wecare.helpers;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.google.gson.Gson;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class Helper {
-    public static Float convertToDegree(String stringDMS){
-        Float result = null;
-        String[] DMS = stringDMS.split(",", 3);
+    static Gson gson = new Gson();
+    private static String CLAIM_ID_KEY = "claim-ids-";
 
-        String[] stringD = DMS[0].split("/", 2);
-        Double D0 = Double.valueOf(stringD[0]);
-        Double D1 = Double.valueOf(stringD[1]);
-        double FloatD = D0/D1;
+    public static void storeData(Activity activity, String key, Object value) {
+        // save in shared pref
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
 
-        String[] stringM = DMS[1].split("/", 2);
-        Double M0 = Double.valueOf(stringM[0]);
-        Double M1 = Double.valueOf(stringM[1]);
-        double FloatM = M0/M1;
+        // convert to json string
+        String jsonValue = gson.toJson(value);
 
-        String[] stringS = DMS[2].split("/", 2);
-        Double S0 = Double.valueOf(stringS[0]);
-        Double S1 = Double.valueOf(stringS[1]);
-        double FloatS = S0/S1;
+        // edit and store
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(key, jsonValue);
+        editor.apply();
+    }
 
-        result = (float) (FloatD + (FloatM / 60) + (FloatS / 3600));
+    public static Object getData(Activity activity, String key) {
+        // get from shared pref
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        // convert to object
+        String jsonString = sharedPref.getString(key, "defaultValue");
 
-        return result;
+        return gson.fromJson(jsonString, Object.class);
+    }
 
+    @SuppressLint("MutatingSharedPrefs")
+    public static void storeClaimId(Activity activity, String newClaimId, String userId) {
+        // save in shared pref
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
 
-    };
+        // add new claim id
+        Set<String> claimIds = sharedPref.getStringSet(CLAIM_ID_KEY+userId, new HashSet<>());
+        claimIds.add(newClaimId);
 
+        // edit and store
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putStringSet(CLAIM_ID_KEY+userId, claimIds);
+        editor.apply();
+    }
+
+    public static Set<String> getClaimIds(Activity activity, String userId) {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getStringSet(CLAIM_ID_KEY+userId, new HashSet<>());
+    }
 }
