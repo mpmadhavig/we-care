@@ -1,6 +1,7 @@
 package com.project.wecare.database.users;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.project.wecare.models.User;
 
@@ -35,7 +36,7 @@ public class UserManager {
 
     public boolean saveUser(Context context) {
         try {
-            System.out.println("Saving User");
+            Log.d("Wecare", "Saving user");
             // Save in the path returned by getFilesDir()
             FileOutputStream fos = context.openFileOutput(USER_DATA_FILE, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -65,21 +66,21 @@ public class UserManager {
     }
 
     //upon success login set currentUser to the new login user
-    public void completeLogin(JSONObject o, Context context) {
-        try {
-            currentUser = new User(
-                    o.getString("name"),
-                    o.getString("nic"),
-                    o.getString("licenseNo"),
-                    o.getString("contactNo"),
-                    o.getString("address"),
-                    o.getString("occupation"),
-//                    o.getString("licenseExp"), // Todo: To be added
-                    o.getString("preferredLocale"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void completeLogin(JSONObject o, Context context) {
+//        try {
+//            currentUser = new User(
+//                    o.getString("name"),
+//                    o.getString("nic"),
+//                    o.getString("licenseNo"),
+//                    o.getString("contactNo"),
+//                    o.getString("address"),
+//                    o.getString("occupation"),
+////                    o.getString("licenseExp"), // Todo: To be added
+//                    o.getString("preferredLocale"));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void setCurrentUser(Context context, User user) {
         this.currentUser = user;

@@ -8,6 +8,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.project.wecare.models.Claim;
+import com.project.wecare.models.Evidence;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -84,12 +85,33 @@ public class ClaimDatabaseManager {
 
         Log.d("Wecare", "Claim initialization for firebase success");
 
+        // Add claims general informations
         db.collection(COLLECTION_CLAIMS)
                 .document(claim.getClaimId())
                 .set(newClaim)
                 .addOnSuccessListener( successListenerObj)
                 .addOnFailureListener(failureListenerObj);
     }
-//
+
+
+    public void addEvidence(String ClaimId, String evidenceType, Evidence evidence, OnSuccessListener<Void> successListenerObj, OnFailureListener failureListenerObj) {
+
+        Map<String, Object> newEvidence = new HashMap<>();
+
+        newEvidence.put("evidenceId", evidence.getEvidenceID());
+        newEvidence.put("date", evidence.getDate());
+        newEvidence.put("localUri", evidence.getImagePath());
+        newEvidence.put("remoteUri", evidence.getRemoteUri());
+        newEvidence.put("latitude", evidence.getLatitude());
+        newEvidence.put("longitude", evidence.getLongitude());
+
+        db.collection(COLLECTION_CLAIMS)
+                .document(ClaimId)
+                .collection(evidenceType)
+                .document(evidence.getEvidenceID())
+                .set(newEvidence)
+                .addOnSuccessListener( successListenerObj)
+                .addOnFailureListener(failureListenerObj);
+    }
 
 }

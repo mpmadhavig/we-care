@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.project.wecare.R;
 import com.project.wecare.models.SharedPreferenceModel;
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        User user = UserManager.getInstance().getSavedUser(MainActivity.this);
+        if(currentUser != null && user.isAuthenticated()){
+            Log.d("Wecare", "User successfully authenticated");
             reload();
         }else{
             Intent intent = new Intent(this, LoginActivity.class);
@@ -40,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reload(){
-        User existingUser =  UserManager.getInstance().getSavedUser(MainActivity.this);
         Intent intent = new Intent(this, VehiclesActivity.class);
         startActivity(intent);
         finish();

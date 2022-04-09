@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(){
-        //Todo : check the validity of the credentials and create a user via usermanger
 
         nic = et_nic.getText().toString().trim();
         password = et_password.getText().toString().trim();
@@ -145,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                                     user.setAuthenticated(true);
                                     user.setVehiclesRegNumber( (ArrayList<String>) document.get("vehicles"));
                                     UserManager.getInstance().setCurrentUser(LoginActivity.this, user);
+                                    UserManager.getInstance().saveUser(LoginActivity.this);
 
                                     // Move to the screen that displays the vehicles own by the user
                                     Intent intent = new Intent(LoginActivity.this, VehiclesActivity.class);

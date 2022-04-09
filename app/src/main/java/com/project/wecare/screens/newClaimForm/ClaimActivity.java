@@ -37,6 +37,7 @@ public class ClaimActivity extends AppCompatActivity {
 
     private TextView titleDriverDetails;
     private TextView titleAccidentDetails;
+    private TextView tv_DamagedArea, tv_visibility;
 
     private EditText et_driverName, et_driverNIC, et_driverLicense, et_driverLicenseExp,
             et_driverAddress, et_driverContactNo ;
@@ -64,6 +65,8 @@ public class ClaimActivity extends AppCompatActivity {
         // Initialize buttons and edit texts for form
         titleDriverDetails = findViewById(R.id.titleDriverDetails);
         titleAccidentDetails = findViewById(R.id.titleAccidentDetails);
+        tv_DamagedArea = findViewById(R.id.txtDamagedArea);
+        tv_visibility = findViewById(R.id.txtQVisibility);
         et_driverName = (EditText) findViewById(R.id.txtDriverName);
         et_driverNIC = (EditText) findViewById(R.id.txtDriverNIC);
         et_driverLicense = (EditText) findViewById(R.id.txtDriverLicense);
@@ -189,6 +192,17 @@ public class ClaimActivity extends AppCompatActivity {
                 et_driverContactNo.setError("Please enter a valid contact Number");
                 valid = false;
             }
+
+            if (
+                    !(rb_roadDry.isChecked()| rb_roadWet.isChecked()| rb_roadUphill.isChecked() |
+                            rb_roadDownhill.isChecked() |rb_roadFlat.isChecked() |rb_roadSmooth.isChecked() |
+                            rb_roadRough.isChecked() ) ){
+                tv_DamagedArea.setError("Please select one or more area");
+            }
+
+            if (!(rb_visGood.isChecked() | rb_visModerate.isChecked() | rb_visPoor.isChecked())){
+                tv_visibility.setError("Please select one of the visibility");
+            }
         }
 
         return valid;
@@ -278,9 +292,9 @@ public class ClaimActivity extends AppCompatActivity {
         if(roadStatus.contains("Smooth")){rb_roadSmooth.setChecked(true);}
         if(roadStatus.contains("Rough")){rb_roadRough.setChecked(true);}
 
-        if(roadVisibility == "Good"){rb_visGood.setChecked(true);}
-        if(roadVisibility == "Moderate"){rb_visModerate.setChecked(true);}
-        if(roadVisibility == "Poor"){rb_visPoor.setChecked(true);}
+        if(roadVisibility.equals("Good")){rb_visGood.setChecked(true);}
+        if(roadVisibility.equals("Moderate")){rb_visModerate.setChecked(true);}
+        if(roadVisibility.equals("Poor")){rb_visPoor.setChecked(true);}
 
     }
 
