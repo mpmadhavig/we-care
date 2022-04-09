@@ -74,6 +74,8 @@ public class Claim implements Parcelable, Serializable {
         this.otherVehicleDamageEvidences = new ArrayList<Evidence>();
         this.propertyDamageEvidences = new ArrayList<Evidence>();
         this.state = State.SUBMISSION_PENDING.getValue();
+        this.roadStatus =  new ArrayList<String>();
+        this.roadVisibility = "";
     }
 
     protected Claim(Parcel in) {

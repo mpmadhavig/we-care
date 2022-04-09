@@ -95,9 +95,9 @@ public class ViewClaimActivity extends AppCompatActivity {
         if(roadStatus.contains("Smooth")){rb_roadSmooth.setChecked(true);}
         if(roadStatus.contains("Rough")){rb_roadRough.setChecked(true);}
 
-        if(currentClaim.getRoadVisibility().equals("Good")){rb_visGood.setChecked(true);}
-        if(currentClaim.getRoadVisibility().equals("Moderate")){rb_visModerate.setChecked(true);}
-        if(currentClaim.getRoadVisibility().equals("Poor")){rb_visPoor.setChecked(true);}
+        if((currentClaim.getRoadVisibility()).equals("Good")){rb_visGood.setChecked(true);}
+        if((currentClaim.getRoadVisibility()).equals( "Moderate")){rb_visModerate.setChecked(true);}
+        if((currentClaim.getRoadVisibility()).equals("Poor")){rb_visPoor.setChecked(true);}
 
         // record
         ImageViewAdapter adapter = new ImageViewAdapter(this, R.layout.image_grid_item, currentClaim.getOwnVehicleDamageEvidences());

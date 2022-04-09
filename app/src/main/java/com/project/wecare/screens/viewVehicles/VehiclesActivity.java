@@ -64,8 +64,6 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
         setUserVehicles(regNumbers);
         initiateGPSTracker();
 
-        //todo: Alert dialogue for logout
-
 
     }
 

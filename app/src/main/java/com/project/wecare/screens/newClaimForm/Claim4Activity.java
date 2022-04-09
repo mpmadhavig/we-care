@@ -3,7 +3,10 @@ package com.project.wecare.screens.newClaimForm;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +34,7 @@ public class Claim4Activity extends AppCompatActivity {
     ClaimManager claimManager;
 
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private Boolean isInternetAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,46 @@ public class Claim4Activity extends AppCompatActivity {
 
         Claim claim = claimManager.getCurrentClaim();
         claim.setDate(new Date());
-        submitClaimToDatabase(claim);
+
+        isInternetAvailable = isConnected();
+
+        Log.d("Wecare", isInternetAvailable.toString());
+
+        if(isInternetAvailable){
+            submitClaimToDatabase(claim);
+        }else{
+            // save claim in local storage
+            claimManager.getSharedPref().storeClaim(claim.getClaimId(), claim);
+            claimManager.getSharedPref().storeClaimId(claim.getClaimId(), UserManager.getInstance().getCurrentUser().getNic());
+
+            //Define intents to redirect
+            Intent intent=new Intent(Claim4Activity.this,ViewClaimsListActivity.class);
+            intent.putExtra("regNumber",claim.getOwnVehicleRegNumber());
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            //Update the claim manager
+            ClaimManager claimManager=ClaimManager.getInstance();
+            claimManager.setCurrentClaim(null);
+            claimManager.setAccidentDetails(false);
+            claimManager.setAccidentEvidence(false);
+            claimManager.setThirdPartDetails(false);
+            claimManager.setThirdPartyEvidence(false);
+
+            //redirect
+            startActivity(intent);
+        }
+
+    }
+
+    public boolean isConnected(){
+        try{
+            String command = "ping -c 1 google.com";
+            return Runtime.getRuntime().exec(command).waitFor() == 0;
+        }catch(Exception e){
+            Log.d("Wecare", e.toString());
+            return false;
+        }
     }
 
     public void submitClaimToDatabase(Claim claim){
@@ -65,10 +108,7 @@ public class Claim4Activity extends AppCompatActivity {
                 });
 
 
-        // save claim in local storage
-        claimManager.getSharedPref().storeClaim(claim.getClaimId(), claim);
-        claimManager.getSharedPref().storeClaimId(claim.getClaimId(), UserManager.getInstance().getCurrentUser().getNic());
-    }
+        }
 
 
     public void uploadPhotos ( Claim claim, int evidenceType){
@@ -139,7 +179,9 @@ public class Claim4Activity extends AppCompatActivity {
                                             if(claim.isAllEvidencesSubmitted()){
                                                 Toast.makeText(Claim4Activity.this,"All evidence files Uploaded Successfully",Toast.LENGTH_SHORT).show();
                                                 claim.setState(1);
-                                                //Todo : Save the claim in local device
+                                                // save claim in local storage
+                                                claimManager.getSharedPref().storeClaim(claim.getClaimId(), claim);
+                                                claimManager.getSharedPref().storeClaimId(claim.getClaimId(), UserManager.getInstance().getCurrentUser().getNic());
 
                                                 //Update the claim manager
                                                 ClaimManager claimManager=ClaimManager.getInstance();
@@ -161,8 +203,7 @@ public class Claim4Activity extends AppCompatActivity {
                                     new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            claim.setState(1);
-                                            //Todo : Save the claim in local device
+                                            claim.setState(0);
                                         }
                                     });
 
