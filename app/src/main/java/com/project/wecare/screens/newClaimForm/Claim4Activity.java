@@ -46,10 +46,10 @@ public class Claim4Activity extends AppCompatActivity {
 
     public void submitClaimToDatabase(Claim claim){
 
-//        // Upload photos to firebase storage and store the remote uri
-//        uploadPhotos(claim, 0);
-//        uploadPhotos(claim, 1);
-//        uploadPhotos(claim, 2);
+        // Upload photos to firebase storage and store the remote uri
+        uploadPhotos(claim, 0);
+        uploadPhotos(claim, 1);
+        uploadPhotos(claim, 2);
 
         // save claim in local storage
         claimManager.getSharedPref().storeClaim(claim.getClaimId(), claim);
