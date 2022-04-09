@@ -137,6 +137,7 @@ public class RecordActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        
         if (isValidate())
             startActivity(new Intent(RecordActivity.this, ClaimActivity.class));
         return super.onOptionsItemSelected(item);

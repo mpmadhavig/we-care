@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.project.wecare.R;
+import com.project.wecare.models.SharedPreferenceModel;
 import com.project.wecare.screens.viewVehicles.VehiclesActivity;
 
 import com.google.firebase.auth.FirebaseAuth;

@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.EditText;
 
@@ -33,6 +35,9 @@ public class ClaimActivity extends AppCompatActivity {
     private Claim currentClaim;
     private ClaimManager claimManager;
 
+    private TextView titleDriverDetails;
+    private TextView titleAccidentDetails;
+
     private EditText et_driverName, et_driverNIC, et_driverLicense, et_driverLicenseExp,
             et_driverAddress, et_driverContactNo ;
     private CheckBox cb_damage1, cb_damage2, cb_damage3, cb_damage4, cb_damage5,cb_damage6,
@@ -40,7 +45,7 @@ public class ClaimActivity extends AppCompatActivity {
     private RadioButton rb_roadDry ,rb_roadWet,  rb_roadUphill, rb_roadDownhill, rb_roadFlat,
         rb_roadSmooth, rb_roadRough, rb_visGood, rb_visModerate, rb_visPoor;
 
-    private String name,nic, licencesNo, address, contactNo, roadVisibility;
+    private String name, nic, licencesNo, address, contactNo, roadVisibility;
     private Date licenseExp;
     private ArrayList<String> damagedRegions;
     private ArrayList<String> roadStatus;
@@ -57,6 +62,8 @@ public class ClaimActivity extends AppCompatActivity {
         Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
 
         // Initialize buttons and edit texts for form
+        titleDriverDetails = findViewById(R.id.titleDriverDetails);
+        titleAccidentDetails = findViewById(R.id.titleAccidentDetails);
         et_driverName = (EditText) findViewById(R.id.txtDriverName);
         et_driverNIC = (EditText) findViewById(R.id.txtDriverNIC);
         et_driverLicense = (EditText) findViewById(R.id.txtDriverLicense);
@@ -82,12 +89,22 @@ public class ClaimActivity extends AppCompatActivity {
         rb_visGood = (RadioButton) findViewById(R.id.radioBtnGood);
         rb_visModerate = (RadioButton) findViewById(R.id.radioBtnModerate);
         rb_visPoor = (RadioButton) findViewById(R.id.radioBtnPoor);
-        FloatingActionButton btn_next = (FloatingActionButton) findViewById(R.id.nextPage_claimForm1);
 
+        FloatingActionButton btn_next = (FloatingActionButton) findViewById(R.id.nextPage_claimForm1);
         btn_next.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                next();
+                extractDataFromView();
+
+                if (!validate()) {
+                    Toast.makeText(ClaimActivity.this, "Invalid information provided", Toast.LENGTH_SHORT).show();
+                } else{
+                    Intent intent = new Intent(ClaimActivity.this, RecordActivity.class);
+                    extractFirstFormData();
+                    claimManager.setCurrentClaim(currentClaim);
+                    claimManager.setAccidentDetails(true);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -117,11 +134,9 @@ public class ClaimActivity extends AppCompatActivity {
         } else {
             String regNumber = intent.getStringExtra("regNumber");
             currentClaim = claimManager.createNewClaim(regNumber);
-            adjustForNewClaim();
         }
 
     }
-
 
     private void updateLabel(){
         String myFormat="MM/dd/yy";
@@ -130,59 +145,56 @@ public class ClaimActivity extends AppCompatActivity {
         et_driverLicenseExp.setError(null);
     }
 
-    public void next(){
-
-        initialize();
-
-        if (!validate()) {
-            Toast.makeText(this, "Invalid information provided", Toast.LENGTH_SHORT).show();
-        } else{
-            Intent intent = new Intent(ClaimActivity.this, RecordActivity.class);
-            extractFirstFormData();
-            claimManager.setCurrentClaim(currentClaim);
-            claimManager.setAccidentDetails(true);
-            startActivity(intent);
-        }
-    }
-
 
     public boolean validate(){
         boolean valid = true;
 
-        if (name.isEmpty() | ! name.matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*") | !(name.length()>3)){
-            et_driverName.setError("Please enter a valid name");
-            valid = false;
-        }
+        if (name == null |
+                nic == null |
+                licencesNo == null |
+                et_driverLicenseExp == null |
+                address == null |
+                contactNo == null) {
 
-        if (nic.isEmpty()){
-            et_driverNIC.setError("Please enter nic");
+            titleDriverDetails.setError("Please complete the form");
             valid = false;
-        }
 
-        if (licencesNo.isEmpty()){
-            et_driverLicense.setError("Please enter license Number");
-            valid = false;
-        }
+        } else {
+            if (name.isEmpty() | ! name.matches("[a-zA-Z]+(\\s+[a-zA-Z]+)*") | !(name.length()>3)){
+                et_driverName.setError("Please enter a valid name");
+                valid = false;
+            }
 
-        if (et_driverLicenseExp.getText().toString().isEmpty()){
-            et_driverLicenseExp.setError("Please enter license expiry date");
-            valid = false;
-        }
+            if (nic.isEmpty()){
+                et_driverNIC.setError("Please enter nic");
+                valid = false;
+            }
 
-        if (address.isEmpty()){
-            et_driverAddress.setError("Please enter your address");
-            valid = false;
-        }
+            if (licencesNo.isEmpty()){
+                et_driverLicense.setError("Please enter license Number");
+                valid = false;
+            }
 
-        if (contactNo.isEmpty() | !(contactNo.length()==10)){
-            et_driverContactNo.setError("Please enter a valid contact Number");
-            valid = false;
+            if (et_driverLicenseExp.getText().toString().isEmpty()){
+                et_driverLicenseExp.setError("Please enter license expiry date");
+                valid = false;
+            }
+
+            if (address.isEmpty()){
+                et_driverAddress.setError("Please enter your address");
+                valid = false;
+            }
+
+            if (contactNo.isEmpty() | !(contactNo.length()==10)){
+                et_driverContactNo.setError("Please enter a valid contact Number");
+                valid = false;
+            }
         }
 
         return valid;
     }
 
-    public void initialize(){
+    public void extractDataFromView(){
         name = et_driverName.getText().toString().trim();
         nic = et_driverNIC.getText().toString().trim();
         licencesNo = et_driverLicense.getText().toString().trim();
@@ -230,10 +242,6 @@ public class ClaimActivity extends AppCompatActivity {
 
     }
 
-    public void adjustForNewClaim(){
-        // Todo : auto fill the form data for driver details
-    }
-
     public void adjustForViewingClaim(){
         name = currentClaim.getDriverName();
         nic = currentClaim.getDriverNic();
@@ -278,7 +286,8 @@ public class ClaimActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        startActivity(new Intent(this, ViewClaimsListActivity.class));
+        if (validate())
+            startActivity(new Intent(this, ViewClaimsListActivity.class));
         return super.onOptionsItemSelected(item);
     }
 

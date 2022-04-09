@@ -11,13 +11,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.project.wecare.R;
 import com.project.wecare.database.claims.ClaimDatabaseManager;
 import com.project.wecare.database.claims.ClaimManager;
+import com.project.wecare.database.users.UserManager;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Evidence;
 import com.project.wecare.screens.viewClaims.ViewClaimsListActivity;
@@ -28,6 +28,8 @@ import java.util.Date;
 
 public class Claim4Activity extends AppCompatActivity {
 
+    ClaimManager claimManager;
+
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     @Override
@@ -35,7 +37,9 @@ public class Claim4Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_claim4);
 
-        Claim claim = ClaimManager.getInstance().getCurrentClaim();
+        claimManager = ClaimManager.getInstance();
+
+        Claim claim = claimManager.getCurrentClaim();
         claim.setDate(new Date());
         submitClaimToDatabase(claim);
     }
@@ -61,11 +65,14 @@ public class Claim4Activity extends AppCompatActivity {
                 });
 
 
+        // save claim in local storage
+        claimManager.getSharedPref().storeClaim(claim.getClaimId(), claim);
+        claimManager.getSharedPref().storeClaimId(claim.getClaimId(), UserManager.getInstance().getCurrentUser().getNic());
     }
 
 
     public void uploadPhotos ( Claim claim, int evidenceType){
-        //regNumber/claimmId/ownVehicleEvidence
+        //regNumber/claimId/ownVehicleEvidence
 
         String regNumber = claim.getOwnVehicleRegNumber();
         String claimId = claim.getClaimId();
