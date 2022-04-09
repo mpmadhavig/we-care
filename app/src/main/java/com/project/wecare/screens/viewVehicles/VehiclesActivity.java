@@ -64,7 +64,7 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
         setUserVehicles(regNumbers);
         initiateGPSTracker();
 
-        //Alert dialogue for logout
+        //todo: Alert dialogue for logout
 
 
     }
@@ -216,8 +216,6 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
                         double latitude = gps.getLatitude();
                         double longitude = gps.getLongitude();
 
-                        // \n is for new line
-                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                     } else {
                         // Can't get location.
                         // GPS or network is not enabled.
@@ -225,12 +223,6 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
                         gps.showSettingsAlert();
                     }
 
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-
-                    Toast.makeText(mContext, "You need to grant permission", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
