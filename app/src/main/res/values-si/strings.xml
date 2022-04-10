@@ -43,6 +43,7 @@
     <string name="txt_moderate">මධ්යස්ථයි</string>
     <string name="txt_poor">දුර්වලයි</string>
     <string name="txt_damagedArea">වාහනයට හානි වූ ප්රදේශය තෝරන්න.</string>
+    <string name="txt_damagedAreaView">වාහනයට හානි වූ ප්රදේශය තෝරන්න.</string>
     <string name="txt_repairerDetails">Repairer Details</string>
     <string name="txt_companyName">සමාගම් නාමය</string>
     <string name="txt_location">ස්ථානය</string>

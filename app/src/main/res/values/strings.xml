@@ -42,6 +42,7 @@
     <string name="txt_moderate">Moderate</string>
     <string name="txt_poor">Poor</string>
     <string name="txt_damagedArea">Select the vehicle damaged area</string>
+    <string name="txt_damagedAreaView">Select the vehicle damaged area</string>
     <string name="txt_repairerDetails">Repairer Details</string>
     <string name="txt_companyName">Company Name</string>
     <string name="txt_location">Location</string>

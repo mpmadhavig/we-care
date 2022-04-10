@@ -118,7 +118,6 @@ public class ViewClaimsListActivity extends BaseActivity implements ItemClickLis
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // todo: set titles
         setTitle(resources.getString(R.string.app_name));
         tv_vehicleTitle.setText(resources.getString(R.string.txt_vehicles) + " " + regNumber);
         titleInfo.setText(resources.getString(R.string.txt_basicDetails));
