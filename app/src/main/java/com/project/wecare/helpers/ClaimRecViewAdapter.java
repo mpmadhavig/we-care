@@ -5,12 +5,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.wecare.R;
 import com.project.wecare.interfaces.ItemClickListener;
 import com.project.wecare.models.Claim;
@@ -61,26 +61,30 @@ public class ClaimRecViewAdapter extends RecyclerView.Adapter<ClaimRecViewAdapte
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder{
         private final TextView textView;
-        private final Button resubmitButton;
+        private final FloatingActionButton resubmitButton;
+        private final FloatingActionButton viewButton;
 
         public ViewHolder(@NonNull View view){
             super(view);
             textView = view.findViewById(R.id.claimName);
             resubmitButton = view.findViewById(R.id.btn_resubmit);
+            viewButton = view.findViewById(R.id.btn_view);
 
-//            resubmitButton.setOnClickListener(
-//                if(isInternetAvailable){
-////                    submitClaimToDatabase(claim);
-//                }
-//            );
-            view.setOnClickListener(this);
-        }
+            resubmitButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null) clickListener.onButtonClick(view, getAbsoluteAdapterPosition());
+                }
+            });
 
-        @Override
-        public void onClick(View view) {
-            if (clickListener != null) clickListener.onClick(view, getAbsoluteAdapterPosition());
+            viewButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null) clickListener.onClick(view, getAbsoluteAdapterPosition());
+                }
+            });
         }
 
         public boolean isConnected(){

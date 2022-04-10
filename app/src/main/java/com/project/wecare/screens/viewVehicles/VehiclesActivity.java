@@ -115,6 +115,9 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
         startActivity(intent);
     }
 
+    @Override
+    public void onButtonClick(View view, int position) {}
+
     public void initiateGPSTracker() {
         mContext = this;
 
