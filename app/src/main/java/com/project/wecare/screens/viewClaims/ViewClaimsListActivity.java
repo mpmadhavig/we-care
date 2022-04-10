@@ -1,14 +1,10 @@
 package com.project.wecare.screens.viewClaims;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,23 +14,39 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.project.wecare.R;
+import com.project.wecare.database.claims.ClaimDatabaseManager;
 import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.database.vehicles.VehiclesManager;
 import com.project.wecare.helpers.ClaimRecViewAdapter;
 import com.project.wecare.interfaces.ItemClickListener;
 import com.project.wecare.models.Claim;
+import com.project.wecare.models.Evidence;
 import com.project.wecare.models.Vehicle;
 import com.project.wecare.screens.login.LoginActivity;
 import com.project.wecare.screens.newClaimForm.ClaimActivity;
 import com.project.wecare.screens.viewVehicles.VehiclesActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class ViewClaimsListActivity extends AppCompatActivity implements ItemClickListener {
+
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     private ClaimManager claimManager;
     private ArrayList<Claim> claims;
@@ -68,14 +80,14 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
         tv_insuranceType = findViewById(R.id.txt_insuranceType);
         tv_insuredDate = findViewById(R.id.txt_insuranceDate);
 
-        tv_vehicleTitle.setText("Vehicle : "+ regNumber);
+        tv_vehicleTitle.setText("Vehicle : " + regNumber);
 
         setVehicleDetails(regNumber);
 
         claims = claimManager.initializeQueue(this);
 
         ArrayList<String> regNumbers = UserManager.getInstance().getCurrentUser().getVehiclesRegNumber();
-        Log.d("Claim", "claim id numbers"+ regNumbers.toString());
+        Log.d("Claim", "claim id numbers" + regNumbers.toString());
 
         ClaimRecViewAdapter adapter = new ClaimRecViewAdapter();
         adapter.setClaims(claims);
@@ -90,24 +102,29 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
         // The onClick implementation of the RecyclerView item click
         Claim claim = ClaimManager.getInstance().getQueue().get(position);
 
-        Intent intent = new Intent(ViewClaimsListActivity.this, ViewClaimActivity.class );
-        intent.putExtra("claimNumber" , claim.getClaimId());
-        intent.putExtra("regNumber" , regNumber);
+        Intent intent = new Intent(ViewClaimsListActivity.this, ViewClaimActivity.class);
+        intent.putExtra("claimNumber", claim.getClaimId());
+        intent.putExtra("regNumber", regNumber);
         startActivity(intent);
     }
 
     @Override
     public void onButtonClick(View view, int position) {
-        Toast.makeText(this, "Resubmit", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Resubmit", Toast.LENGTH_SHORT).show();
+        if (isConnected()) {
+            Claim claim = ClaimManager.getInstance().getQueue().get(position);
+            submitClaimToDatabase(claim);
+        }
     }
 
+
     @SuppressLint("SetTextI18n")
-    private void setVehicleDetails(String regNumber){
+    private void setVehicleDetails(String regNumber) {
         Vehicle v = VehiclesManager.getInstance().getVehicleByRegNumber(regNumber);
         tv_model.setText("Model : " + v.getModel().toString());
         tv_year.setText("Year : " + v.getYear().toString());
         tv_insuranceType.setText("Insurance type : " + v.getInsuranceType().toString());
-        tv_insuredDate.setText("Insured date : "+"05/10/2020"); // Todo: Add the real date
+        tv_insuredDate.setText("Insured date : " + "05/10/2020"); // Todo: Add the real date
     }
 
     @Override
@@ -153,7 +170,7 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
 
             case R.id.action_new_claim2:
                 Intent intent = new Intent(ViewClaimsListActivity.this, ClaimActivity.class);
-                intent.putExtra("regNumber",regNumber);
+                intent.putExtra("regNumber", regNumber);
                 startActivity(intent);
                 return true;
 
@@ -161,6 +178,143 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
                 startActivity(new Intent(ViewClaimsListActivity.this, VehiclesActivity.class));
                 return super.onOptionsItemSelected(item);
 
+        }
+    }
+
+    public boolean isConnected() {
+        try {
+            String command = "ping -c 1 google.com";
+            return Runtime.getRuntime().exec(command).waitFor() == 0;
+        } catch (Exception e) {
+            Log.d("Wecare", e.toString());
+            return false;
+        }
+    }
+
+    public void submitClaimToDatabase(Claim claim) {
+
+        ClaimDatabaseManager.getInstance().addClaim(claim,
+                new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(ViewClaimsListActivity.this, "Successfully submitted the claim general information.", Toast.LENGTH_LONG).show();
+                        // Upload photos to firebase storage and store the remote uri
+                        uploadPhotos(claim, 0);
+                        uploadPhotos(claim, 1);
+                        uploadPhotos(claim, 2);
+                    }
+                },
+                new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ViewClaimsListActivity.this, "Submission failed.Try again later", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+    }
+
+
+    public void uploadPhotos(Claim claim, int evidenceType) {
+        //regNumber/claimId/ownVehicleEvidence
+
+        String regNumber = claim.getOwnVehicleRegNumber();
+        String claimId = claim.getClaimId();
+
+        ArrayList<Evidence> evidences;
+        String evidenceName;
+
+        if (evidenceType == 0) {
+            //own vehicle damage
+            evidences = claim.getOwnVehicleDamageEvidences();
+            evidenceName = "ownVehicleDamageEvidences";
+        } else if (evidenceType == 1) {
+            //other vehicle damage
+            evidences = claim.getOtherVehicleDamageEvidences();
+            evidenceName = "otherVehicleDamageEvidences";
+        } else {
+            //property damage
+            evidences = claim.getPropertyDamageEvidences();
+            evidenceName = "propertyDamageEvidences";
+        }
+
+
+        for (int i = 0; i < evidences.size(); i++) {
+
+            Evidence e = evidences.get(i);
+            Uri uri = Uri.fromFile(new File(e.getImagePath()));
+
+            StorageReference imageRef = storageReference.child(regNumber).child(claimId).child(evidenceName).child(uri.getLastPathSegment());
+            UploadTask uploadTask = imageRef.putFile(uri);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("Wecare", "Error : " + e.toString());
+                    Toast.makeText(ViewClaimsListActivity.this, "File Upload Failed", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Uri downloadUri = uri;
+                            String remoteUri = downloadUri.toString();
+                            e.setRemoteUri(remoteUri);
+                            Log.d("Wecare", "Remote uri : " + remoteUri);
+
+
+                            if (evidenceType == 0) {
+                                //If own vehicle damage, increment the count of uploaded images
+                                claim.incOwnVehicleEvidenceUploadedCount();
+
+                            } else if (evidenceType == 1) {
+                                //If other vehicle damage, increment the count of uploaded images
+                                claim.incOtherVehicleEvidenceUploadedCount();
+                            } else {
+                                //If property damage, increment the count of uploaded images
+                                claim.incPropertyEvidenceUploadedCount();
+                            }
+
+                            ClaimDatabaseManager.getInstance().addEvidence(claim.getClaimId(), evidenceName, e,
+                                    new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            if (claim.isAllEvidencesSubmitted()) {
+                                                Toast.makeText(ViewClaimsListActivity.this, "All evidence files Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                                                claim.setState(1);
+                                                // save claim in local storage
+                                                claimManager.getSharedPref().storeClaim(claim.getClaimId(), claim);
+                                                claimManager.getSharedPref().storeClaimId(claim.getClaimId(), UserManager.getInstance().getCurrentUser().getNic());
+
+                                                //Update the claim manager
+                                                ClaimManager claimManager = ClaimManager.getInstance();
+                                                claimManager.setCurrentClaim(null);
+                                                claimManager.setAccidentDetails(false);
+                                                claimManager.setAccidentEvidence(false);
+                                                claimManager.setThirdPartDetails(false);
+                                                claimManager.setThirdPartyEvidence(false);
+
+                                                //Redirect
+                                                Intent intent = new Intent(ViewClaimsListActivity.this, ViewClaimsListActivity.class);
+                                                intent.putExtra("regNumber", claim.getOwnVehicleRegNumber());
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(intent);
+                                            }
+                                        }
+                                    },
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(ViewClaimsListActivity.this, "Submission failed.Try again later", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
+                        }
+                    });
+                }
+            });
         }
     }
 }
