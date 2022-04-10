@@ -1,12 +1,8 @@
 package com.project.wecare.screens.newClaimForm;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,13 +19,14 @@ import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Evidence;
+import com.project.wecare.screens.Base2Activity;
 import com.project.wecare.screens.viewClaims.ViewClaimsListActivity;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Claim4Activity extends AppCompatActivity {
+public class Claim4Activity extends Base2Activity {
 
     ClaimManager claimManager;
 

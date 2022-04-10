@@ -7,11 +7,11 @@
         android:textColor="@color/accent"
         android:title="Language"
         app:actionViewClass="android.widget.Spinner"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="collapseActionView"/>
 
     <item android:id="@+id/action_logout"
         android:icon="@drawable/signouticon"
         android:title="@string/logout"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="collapseActionView"/>
 
 </menu>

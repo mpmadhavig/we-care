@@ -2,12 +2,10 @@ package com.project.wecare.screens.newClaimForm;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -19,6 +17,7 @@ import android.widget.EditText;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.wecare.R;
+import com.project.wecare.screens.Base2Activity;
 import com.project.wecare.screens.viewClaims.ViewClaimsListActivity;
 import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.models.Claim;
@@ -30,7 +29,7 @@ import java.util.Locale;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ClaimActivity extends AppCompatActivity {
+public class ClaimActivity extends Base2Activity {
 
     private Claim currentClaim;
     private ClaimManager claimManager;

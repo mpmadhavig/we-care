@@ -1,6 +1,5 @@
 package com.project.wecare.screens.newClaimForm;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +9,9 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.project.wecare.R;
+import com.project.wecare.screens.Base2Activity;
 
-public class Claim3Activity extends AppCompatActivity {
+public class Claim3Activity extends Base2Activity {
 
     private CheckBox cb_pledgeChecked ;
     private Button btn_submitClaim ;

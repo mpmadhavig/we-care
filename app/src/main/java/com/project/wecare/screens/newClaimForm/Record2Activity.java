@@ -2,7 +2,6 @@ package com.project.wecare.screens.newClaimForm;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.exifinterface.media.ExifInterface;
 
@@ -26,6 +25,7 @@ import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.helpers.ImageViewAdapter;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Evidence;
+import com.project.wecare.screens.Base2Activity;
 import com.project.wecare.services.GPSTracker;
 
 import java.io.File;
@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Record2Activity extends AppCompatActivity {
+public class Record2Activity extends Base2Activity {
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int NO_OF_GRIDS = 2;

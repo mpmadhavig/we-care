@@ -2,7 +2,6 @@ package com.project.wecare.screens.viewClaims;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -25,6 +24,7 @@ import com.project.wecare.database.vehicles.VehiclesManager;
 import com.project.wecare.helpers.ImageViewAdapter;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Vehicle;
+import com.project.wecare.screens.Base2Activity;
 import com.project.wecare.screens.BaseActivity;
 import com.project.wecare.screens.login.LoginActivity;
 import com.project.wecare.screens.newClaimForm.ClaimActivity;
