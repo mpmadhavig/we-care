@@ -118,7 +118,6 @@ public class ClaimManager {
         // get stored claims
         this.queue = new ArrayList<>();
         Set<String> claims = sharedPref.getClaimIds(UserManager.getInstance().getCurrentUser().getNic());
-        Toast.makeText(activity, "ids: " + claims.size(), Toast.LENGTH_SHORT).show();
         for (String claimId: claims ) {
             this.queue.add(sharedPref.getClaim(claimId));
         }

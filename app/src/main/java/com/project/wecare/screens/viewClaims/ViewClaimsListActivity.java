@@ -1,25 +1,23 @@
 package com.project.wecare.screens.viewClaims;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,6 +35,7 @@ import com.project.wecare.interfaces.ItemClickListener;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Evidence;
 import com.project.wecare.models.Vehicle;
+import com.project.wecare.screens.BaseActivity;
 import com.project.wecare.screens.login.LoginActivity;
 import com.project.wecare.screens.newClaimForm.ClaimActivity;
 import com.project.wecare.screens.viewVehicles.VehiclesActivity;
@@ -45,15 +44,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ViewClaimsListActivity extends AppCompatActivity implements ItemClickListener {
+public class ViewClaimsListActivity extends BaseActivity implements ItemClickListener {
 
-    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private TextView titleInfo;
+    private TextView claimsInfo;
+    private TextView tv_vehicleTitle;
+    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     //Firebase submission progress
     ProgressDialog progressDialog;
 
     private ClaimManager claimManager;
-    private ArrayList<Claim> claims;
 
     private TextView tv_model;
     private TextView tv_year;
@@ -78,7 +79,9 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
         regNumber = intent.getStringExtra("regNumber");
 
         RecyclerView claimRecView = findViewById(R.id.claimRecView);
-        TextView tv_vehicleTitle = findViewById(R.id.titleVehicle);
+        titleInfo = findViewById(R.id.titleInfo);
+        claimsInfo = findViewById(R.id.claimsInfo);
+        tv_vehicleTitle = findViewById(R.id.titleVehicle);
         tv_model = findViewById(R.id.txt_vehicleModel);
         tv_year = findViewById(R.id.txt_vehicleYear);
         tv_insuranceType = findViewById(R.id.txt_insuranceType);
@@ -88,7 +91,7 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
 
         setVehicleDetails(regNumber);
 
-        claims = claimManager.initializeQueue(this);
+        ArrayList<Claim> claims = claimManager.initializeQueue(this);
 
         ArrayList<String> regNumbers = UserManager.getInstance().getCurrentUser().getVehiclesRegNumber();
         Log.d("Claim", "claim id numbers" + regNumbers.toString());
@@ -142,11 +145,20 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
         tv_insuredDate.setText("Insured date : " + "05/10/2020"); // Todo: Add the real date
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setTitle(resources.getString(R.string.app_name));
+        tv_vehicleTitle.setText(resources.getString(R.string.txt_vehicles) + " " + regNumber);
+        titleInfo.setText(resources.getString(R.string.txt_basicDetails));
+        claimsInfo.setText(resources.getString(R.string.txt_Claims));
+
+        Vehicle v = VehiclesManager.getInstance().getVehicleByRegNumber(regNumber);
+        tv_model.setText(resources.getString(R.string.txt_model) + " : " + v.getModel().toString());
+        tv_year.setText(resources.getString(R.string.yearTxt) + " : " + v.getYear().toString());
+        tv_insuranceType.setText(resources.getString(R.string.insurance_type) + " : " + v.getInsuranceType().toString());
+        tv_insuredDate.setText(resources.getString(R.string.insurance_date) + " : "+"05/10/2020"); // Todo: Add the real date
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -183,7 +195,7 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
 
                 return true;
 
-            case R.id.action_new_claim2:
+            case R.id.action_new_claim:
                 Intent intent = new Intent(ViewClaimsListActivity.this, ClaimActivity.class);
                 intent.putExtra("regNumber", regNumber);
                 startActivity(intent);

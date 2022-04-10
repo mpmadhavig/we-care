@@ -2,7 +2,6 @@ package com.project.wecare.screens.newClaimForm;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,11 +18,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.project.wecare.R;
 import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.models.Claim;
+import com.project.wecare.screens.Base2Activity;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Claim2Activity extends AppCompatActivity {
+public class Claim2Activity extends Base2Activity {
 
     private Claim currentClaim;
     private ClaimManager claimManager;
