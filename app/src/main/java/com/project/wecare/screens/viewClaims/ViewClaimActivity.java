@@ -1,25 +1,42 @@
 package com.project.wecare.screens.viewClaims;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.RadioButton;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.project.wecare.R;
 import com.project.wecare.database.claims.ClaimManager;
+import com.project.wecare.database.users.UserManager;
 import com.project.wecare.helpers.ImageViewAdapter;
 import com.project.wecare.models.Claim;
 import com.project.wecare.models.Evidence;
+import com.project.wecare.screens.login.LoginActivity;
+import com.project.wecare.screens.newClaimForm.Claim2Activity;
+import com.project.wecare.screens.newClaimForm.ClaimActivity;
+import com.project.wecare.screens.newClaimForm.Record2Activity;
+import com.project.wecare.screens.viewVehicles.VehiclesActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 public class ViewClaimActivity extends AppCompatActivity {
+
+    String regNumber;
+    String claimNumber;
 
     // ClaimActivity
     private EditText et_driverName, et_driverNIC, et_driverLicense, et_driverLicenseExp,
@@ -57,12 +74,66 @@ public class ViewClaimActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_claim);
 
+        // action bar initialize
+        ActionBar actionBar = getSupportActionBar();
+        Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
-        String claimNumber = intent.getStringExtra("claimNumber");
+        claimNumber = intent.getStringExtra("claimNumber");
+        regNumber = intent.getStringExtra("regNumber");
 
         initializeViewElements();
         setClaimDetails(claimNumber);
         setEnableOrDisable();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+
+                //Prompt an alert dialogue to user for verification
+                new AlertDialog.Builder(this)
+                        .setTitle("Confirmation logout")
+                        .setMessage("Are you sure you want to logout?")
+
+                        // Specifying a listener allows you to take an action before dismissing the dialog.
+                        // The dialog is automatically dismissed when a dialog button is clicked.
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //Update locally stored user authentication info
+                                UserManager.getInstance().logoutUser(ViewClaimActivity.this);
+
+                                //Update the firebase user info
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(ViewClaimActivity.this, LoginActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        })
+
+                        // A null listener allows the button to dismiss the dialog and take no further action.
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(android.R.drawable.ic_lock_power_off)
+                        .show();
+
+                return true;
+
+            case R.id.action_new_claim2:
+                Intent intent = new Intent(ViewClaimActivity.this, ClaimActivity.class);
+                intent.putExtra("regNumber", regNumber);
+                startActivity(intent);
+                return true;
+
+            default:
+                Intent intent2 = new Intent(ViewClaimActivity.this, ViewClaimsListActivity.class);
+                intent2.putExtra("regNumber" , regNumber);
+                startActivity(intent2);
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     private void setClaimDetails(String claimNumber){

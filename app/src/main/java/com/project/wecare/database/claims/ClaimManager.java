@@ -116,6 +116,7 @@ public class ClaimManager {
 
     public ArrayList<Claim> initializeQueue(Activity activity) {
         // get stored claims
+        this.queue = new ArrayList<>();
         Set<String> claims = sharedPref.getClaimIds(UserManager.getInstance().getCurrentUser().getNic());
         Toast.makeText(activity, "ids: " + claims.size(), Toast.LENGTH_SHORT).show();
         for (String claimId: claims ) {
@@ -124,7 +125,7 @@ public class ClaimManager {
         return this.queue;
     }
 
-    public ArrayList<Claim> getQueue(Activity activity) {
+    public ArrayList<Claim> getQueue() {
         return this.queue;
     }
 
