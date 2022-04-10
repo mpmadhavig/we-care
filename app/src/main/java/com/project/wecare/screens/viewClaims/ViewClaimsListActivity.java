@@ -311,14 +311,6 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
 
                                                 progressDialog.dismiss();
 
-                                                //Update the claim manager
-                                                ClaimManager claimManager = ClaimManager.getInstance();
-                                                claimManager.setCurrentClaim(null);
-                                                claimManager.setAccidentDetails(false);
-                                                claimManager.setAccidentEvidence(false);
-                                                claimManager.setThirdPartDetails(false);
-                                                claimManager.setThirdPartyEvidence(false);
-
                                                 //Redirect
                                                 Intent intent = new Intent(ViewClaimsListActivity.this, ViewClaimsListActivity.class);
                                                 intent.putExtra("regNumber", claim.getOwnVehicleRegNumber());
