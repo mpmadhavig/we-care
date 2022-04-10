@@ -1,6 +1,5 @@
 package com.project.wecare.screens.viewClaims;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,12 +20,8 @@ import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
 import com.project.wecare.helpers.ImageViewAdapter;
 import com.project.wecare.models.Claim;
-import com.project.wecare.models.Evidence;
 import com.project.wecare.screens.login.LoginActivity;
-import com.project.wecare.screens.newClaimForm.Claim2Activity;
 import com.project.wecare.screens.newClaimForm.ClaimActivity;
-import com.project.wecare.screens.newClaimForm.Record2Activity;
-import com.project.wecare.screens.viewVehicles.VehiclesActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -121,7 +116,7 @@ public class ViewClaimActivity extends AppCompatActivity {
 
                 return true;
 
-            case R.id.action_new_claim2:
+            case R.id.action_new_claim:
                 Intent intent = new Intent(ViewClaimActivity.this, ClaimActivity.class);
                 intent.putExtra("regNumber", regNumber);
                 startActivity(intent);

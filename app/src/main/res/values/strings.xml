@@ -16,7 +16,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-    <string name="language">en</string>
+    <string name="language">Language</string>
     <string name="topic">Topic</string>
     <string name="new_claim_button">New Claim</string>
     <string name="settings">Settings</string>
@@ -45,7 +45,7 @@
     <string name="txt_repairerDetails">Repairer Details</string>
     <string name="txt_companyName">Company Name</string>
     <string name="txt_location">Location</string>
-    <string name="txt_vehicles">Vehicles</string>
+    <string name="txt_vehicles">Vehicles No</string>
     <string name="is_other_property_damaged_title">Is other property damaged?</string>
     <string name="isItAVehicle">Is the property vehicle?</string>
     <string name="RadioYes">Yes</string>
@@ -81,4 +81,9 @@
     <string name="txt_Claims">Claims : </string>
     <string name="logout">logout</string>
     <string name="txt_Submit">Resubmit</string>
+    <string name="vehicles">Vehicles</string>
+
+    <string name="yearTxt">Year</string>
+    <string name="insurance_type">Insurance type</string>
+    <string name="insurance_date">Insured date</string>
 </resources>

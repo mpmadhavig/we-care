@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,7 +33,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.project.wecare.R;
+import com.project.wecare.screens.BaseActivity;
 import com.project.wecare.screens.login.LoginActivity;
+import com.project.wecare.screens.newClaimForm.ClaimActivity;
 import com.project.wecare.screens.viewClaims.ViewClaimsListActivity;
 import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
@@ -43,10 +48,11 @@ import com.project.wecare.services.GPSTracker;
 
 import java.util.ArrayList;
 
-public class VehiclesActivity extends AppCompatActivity implements ItemClickListener, AdapterView.OnItemSelectedListener {
+public class VehiclesActivity extends BaseActivity implements ItemClickListener {
     Context mContext;
     GPSTracker gps;
 
+    private TextView title;
     private RecyclerView vehicleRecView;
     private VehicleRecViewAdapter adapter;
 
@@ -60,6 +66,7 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
 
         Log.d(TAG, "Vehicles activity arrived: success");
         vehicleRecView = findViewById(R.id.vehicleRecView);
+        title = findViewById(R.id.vehiclesTxtView);
 
         ArrayList<String> regNumbers = UserManager.getInstance().getCurrentUser().getVehiclesRegNumber();
         Log.d(TAG, "Vehicles reg numbers"+ regNumbers.toString());
@@ -68,41 +75,10 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.top_menu, menu);
-
-        String[] items = new String[]{"English", "සිංහල"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-
-        MenuItem item = menu.findItem(R.id.action_change_language);
-        Spinner spinner = (Spinner) item.getActionView(); // get the spinner
-
-        if (spinner == null)
-            Toast.makeText(this, "NULL", Toast.LENGTH_SHORT).show();
-        else{
-            spinner.setAdapter(adapter);
-            spinner.setOnItemSelectedListener(this);
-        }
-        return true;
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "YOUR SELECTION IS : " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-        switch (position) {
-            case 0:
-                Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
-                break;
-            case 1:
-                Toast.makeText(this, "සිංහල", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // TODO Auto-generated method stub
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setTitle(resources.getString(R.string.app_name));
+        title.setText(resources.getString(R.string.vehicles));
     }
 
     public void setUserVehicles(ArrayList<String> regNumbers){
@@ -217,12 +193,12 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
 
                 return true;
 
+            case R.id.action_new_claim:
+                Toast.makeText(this, "Please select a vehicle!", Toast.LENGTH_LONG).show();
+                return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 

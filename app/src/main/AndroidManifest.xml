@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeCare">
         <activity
+            android:name=".screens.BaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".screens.newClaimForm.Claim4Activity"
             android:exported="false" />
         <activity
