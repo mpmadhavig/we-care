@@ -35,19 +35,28 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
-            <Button
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_resubmit"
-                android:layout_width="162dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="@string/txt_Submit"
-                android:textAllCaps="false"
-                android:textSize="16sp" />
+                android:backgroundTint="@color/primary"
+                android:clickable="true"
+                android:contentDescription="@string/nextButton"
+                app:srcCompat="@android:drawable/stat_sys_upload" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:backgroundTint="@color/primary"
+                android:clickable="true"
+                android:contentDescription="@string/nextButton"
+                app:srcCompat="@android:drawable/ic_menu_send" />
+
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
