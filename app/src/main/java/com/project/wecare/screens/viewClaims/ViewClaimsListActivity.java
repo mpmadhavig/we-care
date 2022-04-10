@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.project.wecare.R;
@@ -93,6 +94,11 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
         intent.putExtra("claimNumber" , claim.getClaimId());
         intent.putExtra("regNumber" , regNumber);
         startActivity(intent);
+    }
+
+    @Override
+    public void onButtonClick(View view, int position) {
+        Toast.makeText(this, "Resubmit", Toast.LENGTH_SHORT).show();
     }
 
     @SuppressLint("SetTextI18n")
