@@ -17,9 +17,11 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,7 +43,7 @@ import com.project.wecare.services.GPSTracker;
 
 import java.util.ArrayList;
 
-public class VehiclesActivity extends AppCompatActivity implements ItemClickListener {
+public class VehiclesActivity extends AppCompatActivity implements ItemClickListener, AdapterView.OnItemSelectedListener {
     Context mContext;
     GPSTracker gps;
 
@@ -54,7 +56,7 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles);
-        setTitle("Welcome to We Care");
+        setTitle("We Care");
 
         Log.d(TAG, "Vehicles activity arrived: success");
         vehicleRecView = findViewById(R.id.vehicleRecView);
@@ -63,8 +65,44 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
         Log.d(TAG, "Vehicles reg numbers"+ regNumbers.toString());
         setUserVehicles(regNumbers);
         initiateGPSTracker();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.top_menu, menu);
 
+        String[] items = new String[]{"English", "සිංහල"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+
+        MenuItem item = menu.findItem(R.id.action_change_language);
+        Spinner spinner = (Spinner) item.getActionView(); // get the spinner
+
+        if (spinner == null)
+            Toast.makeText(this, "NULL", Toast.LENGTH_SHORT).show();
+        else{
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(this);
+        }
+        return true;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, "YOUR SELECTION IS : " + parent.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+        switch (position) {
+            case 0:
+                Toast.makeText(this, "English", Toast.LENGTH_SHORT).show();
+                break;
+            case 1:
+                Toast.makeText(this, "සිංහල", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        // TODO Auto-generated method stub
     }
 
     public void setUserVehicles(ArrayList<String> regNumbers){
@@ -142,13 +180,6 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
             }
         }
         
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_menu, menu);
-        return true;
     }
 
     @SuppressLint("NonConstantResourceId")

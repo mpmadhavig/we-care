@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_change_language_2"
-        android:icon="@drawable/language"
+        android:id="@+id/action_change_language"
+        android:textColor="@color/accent"
         android:title="Language"
+        app:actionViewClass="android.widget.Spinner"
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/action_logout"
