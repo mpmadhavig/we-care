@@ -2,6 +2,7 @@ package com.project.wecare.screens.viewClaims;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -47,6 +48,9 @@ import java.util.Objects;
 public class ViewClaimsListActivity extends AppCompatActivity implements ItemClickListener {
 
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+    //Firebase submission progress
+    ProgressDialog progressDialog;
 
     private ClaimManager claimManager;
     private ArrayList<Claim> claims;
@@ -114,6 +118,17 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
         if (isConnected()) {
             Claim claim = ClaimManager.getInstance().getQueue().get(position);
             submitClaimToDatabase(claim);
+        }else{
+            //Prompt an alert dialogue to user for verification
+            new AlertDialog.Builder(this)
+                    .setTitle("No Internet")
+                    .setMessage("Please check your internet connection and try again.")
+
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton("OK", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
     }
 
@@ -193,11 +208,16 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
 
     public void submitClaimToDatabase(Claim claim) {
 
+        progressDialog = new ProgressDialog(ViewClaimsListActivity.this);
+        progressDialog.setMessage("uploading..."); // Setting Message
+        progressDialog.setTitle("Claim Submission"); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+        progressDialog.show(); // Display Progress Dialog
+
         ClaimDatabaseManager.getInstance().addClaim(claim,
                 new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(ViewClaimsListActivity.this, "Successfully submitted the claim general information.", Toast.LENGTH_LONG).show();
                         // Upload photos to firebase storage and store the remote uri
                         uploadPhotos(claim, 0);
                         uploadPhotos(claim, 1);
@@ -207,6 +227,7 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
                 new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
                         Toast.makeText(ViewClaimsListActivity.this, "Submission failed.Try again later", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -250,7 +271,8 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.d("Wecare", "Error : " + e.toString());
-                    Toast.makeText(ViewClaimsListActivity.this, "File Upload Failed", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                    Toast.makeText(ViewClaimsListActivity.this, "File Upload Failed. Try again later", Toast.LENGTH_SHORT).show();
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -281,11 +303,13 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             if (claim.isAllEvidencesSubmitted()) {
-                                                Toast.makeText(ViewClaimsListActivity.this, "All evidence files Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(ViewClaimsListActivity.this, "Claim successfully uploaded", Toast.LENGTH_SHORT).show();
                                                 claim.setState(1);
                                                 // save claim in local storage
                                                 claimManager.getSharedPref().storeClaim(claim.getClaimId(), claim);
                                                 claimManager.getSharedPref().storeClaimId(claim.getClaimId(), UserManager.getInstance().getCurrentUser().getNic());
+
+                                                progressDialog.dismiss();
 
                                                 //Update the claim manager
                                                 ClaimManager claimManager = ClaimManager.getInstance();
@@ -307,6 +331,7 @@ public class ViewClaimsListActivity extends AppCompatActivity implements ItemCli
                                     new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
+                                            progressDialog.dismiss();
                                             Toast.makeText(ViewClaimsListActivity.this, "Submission failed.Try again later", Toast.LENGTH_LONG).show();
                                         }
                                     });
