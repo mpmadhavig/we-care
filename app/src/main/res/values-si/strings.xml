@@ -67,8 +67,8 @@
     <string name="brief_description">කෙටි විස්තරය</string>
     <string name="is_another_vehicle_damaged">වෙනත් වාහනයකට හානි වී තිබේද?</string>
     <string name="property_damaged_party_account_details">බැංකු ගිණුම් විස්තර</string>
-    <string name="property_damage_evidence"> </string>
-    <string name="vehicle_damage_evidence"> </string>
+    <string name="property_damage_evidence">දේපල හානි සාක්ෂි</string>
+    <string name="vehicle_damage_evidence">වාහන හානි සාක්ෂි</string>
     <string name="password">මුරපදය</string>
     <string name="txt_nicNumber">ජාතික හැඳුනුම්පත අංකය</string>
     <string name="btn_login">ඇතුල් වන්න</string>
