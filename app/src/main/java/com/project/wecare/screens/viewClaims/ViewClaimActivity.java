@@ -2,41 +2,54 @@ package com.project.wecare.screens.viewClaims;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.project.wecare.R;
 import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
+import com.project.wecare.database.vehicles.VehiclesManager;
 import com.project.wecare.helpers.ImageViewAdapter;
 import com.project.wecare.models.Claim;
-import com.project.wecare.models.Evidence;
+import com.project.wecare.models.Vehicle;
+import com.project.wecare.screens.Base2Activity;
+import com.project.wecare.screens.BaseActivity;
 import com.project.wecare.screens.login.LoginActivity;
-import com.project.wecare.screens.newClaimForm.Claim2Activity;
 import com.project.wecare.screens.newClaimForm.ClaimActivity;
-import com.project.wecare.screens.newClaimForm.Record2Activity;
-import com.project.wecare.screens.viewVehicles.VehiclesActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
-public class ViewClaimActivity extends AppCompatActivity {
+public class ViewClaimActivity extends BaseActivity {
 
     String regNumber;
     String claimNumber;
+
+    private TextView titleDriverDetails;
+    private TextView titleAccidentDetails;
+    private TextView isOtherPropertyDamaged;
+    private TextView propertyDamagePartyAccDetails;
+    private TextView isOtherVehicleDamagedTitle;
+    private TextView otherVehicleDetails;
+    private TextView otherPartyAccDetails;
+    private TextView txtQRoadStatus;
+    private TextView txtQVisibility;
+    private TextView damageAreaOwnVehicle;
+    private TextView damageArea2;
 
     // ClaimActivity
     private EditText et_driverName, et_driverNIC, et_driverLicense, et_driverLicenseExp,
@@ -62,6 +75,7 @@ public class ViewClaimActivity extends AppCompatActivity {
             otherPartyDriverName,
             otherPartyDriverNumber,
             otherPartyAccNumber, otherPartyBankName, otherPartyBankBranch;
+
     private CheckBox
             checkBox_2_1, checkBox_2_2, checkBox_2_3, checkBox_2_4,
             checkBox_2_5, checkBox_2_6, checkBox_2_7, checkBox_2_8;
@@ -86,6 +100,52 @@ public class ViewClaimActivity extends AppCompatActivity {
         setClaimDetails(claimNumber);
         setEnableOrDisable();
     }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // todo: set titles
+        setTitle(resources.getString(R.string.app_name));
+
+        titleDriverDetails.setText(resources.getString(R.string.txt_driverDetails));
+        titleAccidentDetails.setText(resources.getString(R.string.txt_accidentDetails));
+        isOtherPropertyDamaged.setText(resources.getString(R.string.other_damaged_property_details_title));
+        propertyDamagePartyAccDetails.setText(resources.getString(R.string.property_damaged_party_account_details));
+        otherVehicleDetails.setText(resources.getString(R.string.other_damaged_vehicle_details_title));
+        otherPartyAccDetails.setText(resources.getString(R.string.third_party_bank_account_details_title));
+
+        et_driverName.setHint(resources.getString(R.string.txt_name));
+        et_driverNIC.setHint(resources.getString(R.string.txt_NIC));
+        et_driverLicense.setHint(resources.getString(R.string.txt_drivingLicenseNo));
+        et_driverLicenseExp.setHint(resources.getString(R.string.txt_expirationDate));
+        et_driverAddress.setHint(resources.getString(R.string.txt_address));
+        et_driverContactNo.setHint(resources.getString(R.string.txt_contactNo));
+
+        txtQRoadStatus.setText(resources.getString(R.string.txt_roadStatusQuestion));
+        rb_roadDry.setText(resources.getString(R.string.txt_dry));
+        rb_roadWet.setText(resources.getString(R.string.txt_wet));
+        rb_roadUphill.setText(resources.getString(R.string.txt_uphill));
+        rb_roadDownhill.setText(resources.getString(R.string.txt_downhill));
+        rb_roadFlat.setText(resources.getString(R.string.txt_flat));
+        rb_roadSmooth.setText(resources.getString(R.string.txt_smooth));
+        rb_roadRough.setText(resources.getString(R.string.txt_rough));
+
+        txtQVisibility.setText(resources.getString(R.string.txt_visibilityQuestion));
+        rb_visGood.setText(resources.getString(R.string.txt_good));
+        rb_visModerate.setText(resources.getString(R.string.txt_moderate));
+        rb_visPoor.setText(resources.getString(R.string.txt_poor));
+
+
+        isOtherPropertyDamaged.setText(resources.getString(R.string.is_other_property_damaged_title));
+        isPropertyDamageYes.setText(resources.getString(R.string.RadioYes));
+        isPropertyDamageNo.setText(resources.getString(R.string.RadioNo));
+        isOtherVehicleDamagedTitle.setText(resources.getString(R.string.is_another_vehicle_damaged));
+
+        damageAreaOwnVehicle.setText(resources.getString(R.string.txt_damagedArea));
+        damageArea2.setText(resources.getString(R.string.txt_damagedArea));
+    }
+
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -121,7 +181,7 @@ public class ViewClaimActivity extends AppCompatActivity {
 
                 return true;
 
-            case R.id.action_new_claim2:
+            case R.id.action_new_claim:
                 Intent intent = new Intent(ViewClaimActivity.this, ClaimActivity.class);
                 intent.putExtra("regNumber", regNumber);
                 startActivity(intent);
@@ -218,6 +278,19 @@ public class ViewClaimActivity extends AppCompatActivity {
     }
 
     private void initializeViewElements() {
+        // titles
+        titleDriverDetails = findViewById(R.id.titleDriverDetails);
+        titleAccidentDetails = findViewById(R.id.titleAccidentDetails);
+        isOtherPropertyDamaged = findViewById(R.id.isOtherPropertyDamaged);
+        isOtherVehicleDamagedTitle = findViewById(R.id.isOtherVehicleDamagedTitle);
+        propertyDamagePartyAccDetails = findViewById(R.id.propertyDamagePartyAccDetails);
+        otherVehicleDetails = findViewById(R.id.otherVehicleDetails);
+        otherPartyAccDetails = findViewById(R.id.otherPartyAccDetails);
+        txtQRoadStatus = findViewById(R.id.txtQRoadStatus);
+        txtQVisibility = findViewById(R.id.txtQVisibility);
+        damageAreaOwnVehicle = findViewById(R.id.damageAreaOwnVehicle);
+        damageArea2 = findViewById(R.id.damageArea2);
+
         // ClaimActivity
         et_driverName = (EditText) findViewById(R.id.txtDriverName);
         et_driverNIC = (EditText) findViewById(R.id.txtDriverNIC);
@@ -225,16 +298,16 @@ public class ViewClaimActivity extends AppCompatActivity {
         et_driverLicenseExp = (EditText) findViewById(R.id.txtDriverLicenseExpiration);
         et_driverAddress = (EditText) findViewById(R.id.txtDriverAddress);
         et_driverContactNo = (EditText) findViewById(R.id.txtDriverContactNo);
-        cb_damage1 = (CheckBox) findViewById(R.id.checkBox1);
-        cb_damage2 = (CheckBox) findViewById(R.id.checkBox2);
-        cb_damage3 = (CheckBox) findViewById(R.id.checkBox3);
-        cb_damage4 = (CheckBox) findViewById(R.id.checkBox4);
-        cb_damage5 = (CheckBox) findViewById(R.id.checkBox5);
-        cb_damage6 = (CheckBox) findViewById(R.id.checkBox6);
-        cb_damage7 = (CheckBox) findViewById(R.id.checkBox7);
-        cb_damage8 = (CheckBox) findViewById(R.id.checkBox8);
-        rb_roadDry = (RadioButton) findViewById(R.id.radioBtnDry);
-        rb_roadWet = (RadioButton) findViewById(R.id.radioBtnWet);
+        cb_damage1 = findViewById(R.id.checkBox1);
+        cb_damage2 = findViewById(R.id.checkBox2);
+        cb_damage3 = findViewById(R.id.checkBox3);
+        cb_damage4 = findViewById(R.id.checkBox4);
+        cb_damage5 = findViewById(R.id.checkBox5);
+        cb_damage6 = findViewById(R.id.checkBox6);
+        cb_damage7 = findViewById(R.id.checkBox7);
+        cb_damage8 = findViewById(R.id.checkBox8);
+        rb_roadDry = findViewById(R.id.radioBtnDry);
+        rb_roadWet = findViewById(R.id.radioBtnWet);
         rb_roadSmooth = (RadioButton) findViewById(R.id.radioBtnSmooth);
         rb_roadUphill = (RadioButton) findViewById(R.id.radioBtnUphill);
         rb_roadDownhill = (RadioButton) findViewById(R.id.radioBtnDownhill);

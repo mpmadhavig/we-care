@@ -9,17 +9,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,7 +33,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.project.wecare.R;
+import com.project.wecare.screens.BaseActivity;
 import com.project.wecare.screens.login.LoginActivity;
+import com.project.wecare.screens.newClaimForm.ClaimActivity;
 import com.project.wecare.screens.viewClaims.ViewClaimsListActivity;
 import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
@@ -41,10 +48,11 @@ import com.project.wecare.services.GPSTracker;
 
 import java.util.ArrayList;
 
-public class VehiclesActivity extends AppCompatActivity implements ItemClickListener {
+public class VehiclesActivity extends BaseActivity implements ItemClickListener {
     Context mContext;
     GPSTracker gps;
 
+    private TextView title;
     private RecyclerView vehicleRecView;
     private VehicleRecViewAdapter adapter;
 
@@ -54,17 +62,23 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles);
-        setTitle("Welcome to We Care");
+        setTitle("We Care");
 
         Log.d(TAG, "Vehicles activity arrived: success");
         vehicleRecView = findViewById(R.id.vehicleRecView);
+        title = findViewById(R.id.vehiclesTxtView);
 
         ArrayList<String> regNumbers = UserManager.getInstance().getCurrentUser().getVehiclesRegNumber();
         Log.d(TAG, "Vehicles reg numbers"+ regNumbers.toString());
         setUserVehicles(regNumbers);
         initiateGPSTracker();
+    }
 
-
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setTitle(resources.getString(R.string.app_name));
+        title.setText(resources.getString(R.string.vehicles));
     }
 
     public void setUserVehicles(ArrayList<String> regNumbers){
@@ -144,13 +158,6 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
         
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.top_menu, menu);
-        return true;
-    }
-
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -186,12 +193,12 @@ public class VehiclesActivity extends AppCompatActivity implements ItemClickList
 
                 return true;
 
+            case R.id.action_new_claim:
+                Toast.makeText(this, "Please select a vehicle!", Toast.LENGTH_LONG).show();
+                return true;
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 

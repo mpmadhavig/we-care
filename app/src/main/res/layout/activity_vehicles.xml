@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Vehicles"
+            android:text="@string/vehicles"
             android:textAllCaps="false"
             android:textSize="24sp"
             android:textStyle="bold" />

@@ -1,5 +1,6 @@
 package com.project.wecare.screens.newClaimForm;
 
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.project.wecare.R;
+import com.project.wecare.screens.Base2Activity;
 import com.project.wecare.database.claims.ClaimDatabaseManager;
 import com.project.wecare.database.claims.ClaimManager;
 import com.project.wecare.database.users.UserManager;
@@ -30,15 +31,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Claim3Activity extends AppCompatActivity {
+public class Claim3Activity extends Base2Activity {
 
     ClaimManager claimManager;
 
-    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     ProgressDialog progressDialog;
 
     private CheckBox cb_pledgeChecked ;
-    private Button btn_submitClaim ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class Claim3Activity extends AppCompatActivity {
         setTitle("New Claim : Step 5");
 
         cb_pledgeChecked = findViewById(R.id.cbCheckPledge);
-        btn_submitClaim = findViewById(R.id.btnSubmitClaim);
+        Button btn_submitClaim = findViewById(R.id.btnSubmitClaim);
 
         claimManager = ClaimManager.getInstance();
         Claim claim = claimManager.getCurrentClaim();
